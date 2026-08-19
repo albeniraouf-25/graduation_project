@@ -24,10 +24,20 @@ class ProfileRemoteDataSource extends BaseRemoteDataSource<dynamic> {
   Future<Either<AppException, BaseModel<dynamic>?>> updateDriverProfile(
     UpdateDriverProfileEntity data,
   ) {
+    final files = <Map<String, dynamic>>[
+      if (data.profilePicturePath != null && data.profilePicturePath!.isNotEmpty)
+        {'field_name': 'profile_picture', 'path': data.profilePicturePath},
+      if (data.carImagePath != null && data.carImagePath!.isNotEmpty)
+        {'field_name': 'car_image', 'path': data.carImagePath},
+    ];
+    final hasFiles = files.isNotEmpty;
+
     return patchData(
       endpoint: ApiEndpoints.updateDriverProfile,
       data: data.toJson(),
-      isFormData: false,
+      // عند وجود صور نرسل الطلب كـ multipart، وإلا JSON عادي
+      isFormData: hasFiles,
+      files: hasFiles ? files : null,
     );
   }
 
@@ -35,10 +45,18 @@ class ProfileRemoteDataSource extends BaseRemoteDataSource<dynamic> {
   Future<Either<AppException, BaseModel<dynamic>?>> updateRiderProfile(
     UpdateRiderProfileEntity data,
   ) {
+    final files = <Map<String, dynamic>>[
+      if (data.profilePicturePath != null && data.profilePicturePath!.isNotEmpty)
+        {'field_name': 'profile_picture', 'path': data.profilePicturePath},
+    ];
+    final hasFiles = files.isNotEmpty;
+
     return patchData(
       endpoint: ApiEndpoints.updateRiderProfile,
       data: data.toJson(),
-      isFormData: false,
+      // عند وجود صورة نرسل الطلب كـ multipart، وإلا JSON عادي
+      isFormData: hasFiles,
+      files: hasFiles ? files : null,
     );
   }
 }

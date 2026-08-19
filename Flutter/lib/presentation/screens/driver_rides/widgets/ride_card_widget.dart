@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/text/body_title.dart';
@@ -28,12 +28,12 @@ class RideCardWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(AppPaddingWidth.p16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.appColors.white,
         borderRadius: BorderRadius.circular(AppRadius.r16),
         // إضافة ظل ناعم وفخم جداً باستخدام لون الهوية الأساسي #006874
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.3),
+            color: context.appColors.primary.withOpacity(0.3),
             blurRadius: 12,
             spreadRadius: 1,
             offset: const Offset(0, 4),
@@ -53,17 +53,17 @@ class RideCardWidget extends StatelessWidget {
                 SectionTitle(
                   text: fromCity,
                   fontSize: AppFontSize.s16,
-                  color: AppColors.blackText,
+                  color: context.appColors.blackText,
                 ),
                 FaIcon(
                   FontAwesomeIcons.arrowRightLong,
                   size: AppSize.s14,
-                  color: AppColors.primary,
+                  color: context.appColors.primary,
                 ),
                 SectionTitle(
                   text: toCity,
                   fontSize: AppFontSize.s16,
-                  color: AppColors.blackText,
+                  color: context.appColors.blackText,
                 ),
               ],
             ),
@@ -72,14 +72,14 @@ class RideCardWidget extends StatelessWidget {
             BodyTitle(
               text: dateAndPriceText,
               fontSize: AppFontSize.s13,
-              color: AppColors.greyText,
+              color: context.appColors.greyText,
             ),
 
             // المقاعد المتاحة
             BodyTitle(
               text: seatsText,
               fontSize: AppFontSize.s13,
-              color: AppColors.primary,
+              color: context.appColors.primary,
               fontWeight: AppFontWeight.bold,
             ),
           ],

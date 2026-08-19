@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/core/routes/app_routes.dart';
@@ -36,7 +36,7 @@ class _SearchRideFormScreenState extends State<SearchRideFormScreen> {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -54,7 +54,7 @@ class _SearchRideFormScreenState extends State<SearchRideFormScreen> {
                     onPressed: () => context.pop(),
                     icon: FaIcon(
                       FontAwesomeIcons.xmark,
-                      color: AppColors.blackText,
+                      color: context.appColors.blackText,
                       size: AppSize.s20,
                     ),
                   ),
@@ -69,7 +69,7 @@ class _SearchRideFormScreenState extends State<SearchRideFormScreen> {
                       isRtl
                           ? FontAwesomeIcons.chevronRight
                           : FontAwesomeIcons.chevronLeft,
-                      color: AppColors.blackText,
+                      color: context.appColors.blackText,
                       size: AppSize.s20,
                     ),
                   ),
@@ -93,7 +93,7 @@ class _SearchRideFormScreenState extends State<SearchRideFormScreen> {
                   widthFactor: 1.0,
                   child: FaIcon(
                     FontAwesomeIcons.locationDot,
-                    color: AppColors.grey,
+                    color: context.appColors.grey,
                     size: AppSize.s18,
                   ),
                 ),
@@ -116,7 +116,7 @@ class _SearchRideFormScreenState extends State<SearchRideFormScreen> {
                   widthFactor: 1.0,
                   child: FaIcon(
                     FontAwesomeIcons.chevronDown,
-                    color: AppColors.grey,
+                    color: context.appColors.grey,
                     size: AppSize.s16,
                   ),
                 ),
@@ -129,7 +129,7 @@ class _SearchRideFormScreenState extends State<SearchRideFormScreen> {
                 height: AppHeight.h50,
                 width: double.infinity,
                 borderRadius: AppRadius.r12,
-                color: AppColors.primary,
+                color: context.appColors.primary,
                 onPressed: () {
                   SearchResultsRoute(
                     fromCity: _departureController.text.trim(),
@@ -138,7 +138,7 @@ class _SearchRideFormScreenState extends State<SearchRideFormScreen> {
                 },
                 child: BodyTitle(
                   text: tr.search,
-                  color: AppColors.white,
+                  color: context.appColors.white,
                   fontSize: AppFontSize.s16,
                   fontWeight: AppFontWeight.bold,
                 ),

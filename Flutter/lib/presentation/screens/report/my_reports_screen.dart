@@ -11,7 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/text/body_title.dart';
@@ -39,7 +39,7 @@ class _MyReportsContent extends StatelessWidget {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: Column(
           children: [
@@ -57,7 +57,7 @@ class _MyReportsContent extends StatelessWidget {
                       isRtl
                           ? FontAwesomeIcons.chevronRight
                           : FontAwesomeIcons.chevronLeft,
-                      color: AppColors.blackText,
+                      color: context.appColors.blackText,
                       size: AppSize.s20,
                     ),
                   ),
@@ -77,7 +77,7 @@ class _MyReportsContent extends StatelessWidget {
                       state is GetMyReportsInitial) {
                     return Center(
                       child:
-                          CircularProgressIndicator(color: AppColors.primary),
+                          CircularProgressIndicator(color: context.appColors.primary),
                     );
                   }
                   if (state is GetMyReportsFailed) {
@@ -124,11 +124,11 @@ class _MyReportsContent extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(AppPaddingWidth.p16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.appColors.white,
         borderRadius: BorderRadius.circular(AppRadius.r16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.06),
+            color: context.appColors.primary.withOpacity(0.06),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -150,14 +150,14 @@ class _MyReportsContent extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: isPending
-                        ? AppColors.lightOrange
-                        : AppColors.lightPrim,
+                        ? context.appColors.lightOrange
+                        : context.appColors.lightPrim,
                     borderRadius: BorderRadius.circular(AppRadius.r6),
                   ),
                   child: BodyTitle(
                     text: localizeReportStatus(tr, report.status),
                     fontSize: AppFontSize.s12,
-                    color: isPending ? AppColors.orange : AppColors.darkGreen,
+                    color: isPending ? context.appColors.orange : context.appColors.darkGreen,
                     fontWeight: AppFontWeight.bold,
                   ),
                 ),
@@ -173,21 +173,21 @@ class _MyReportsContent extends StatelessWidget {
                   child: BodyTitle(
                     text: report.reason ?? '',
                     fontSize: AppFontSize.s13,
-                    color: AppColors.greyText,
+                    color: context.appColors.greyText,
                     maxLines: 2,
                   ),
                 ),
                 FaIcon(
                   FontAwesomeIcons.chevronLeft,
                   size: AppSize.s14,
-                  color: AppColors.greyText,
+                  color: context.appColors.greyText,
                 ),
               ],
             ),
             BodyTitle(
               text: formatReportDate(report.createdAt),
               fontSize: AppFontSize.s12,
-              color: AppColors.greyText,
+              color: context.appColors.greyText,
             ),
           ],
         ),
@@ -213,12 +213,12 @@ class _MessageView extends StatelessWidget {
           BodyTitle(
             text: message,
             textAlign: TextAlign.center,
-            color: AppColors.greyText,
+            color: context.appColors.greyText,
           ),
           if (onRetry != null)
             TextButton(
               onPressed: onRetry,
-              child: BodyTitle(text: tr.retry, color: AppColors.primary),
+              child: BodyTitle(text: tr.retry, color: context.appColors.primary),
             ),
         ],
       ),

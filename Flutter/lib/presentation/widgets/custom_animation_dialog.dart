@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/presentation/widgets/text/body_title.dart';
 import '../../core/resources/app_fonts.dart';
 
@@ -21,7 +21,7 @@ class CustomAnimationDialog {
     return AwesomeDialog(
       useRootNavigator: true,
 
-      dialogBackgroundColor: AppColors.white,
+      dialogBackgroundColor: context.appColors.white,
       context: context,
       dismissOnBackKeyPress: dismissOnBackKeyPress ?? true,
       animType: AnimType.scale,
@@ -37,7 +37,7 @@ class CustomAnimationDialog {
               fontWeight: AppFontWeight.medium,
             ),
       ),
-      btnOkColor: okColor ?? AppColors.primaryLight,
+      btnOkColor: okColor ?? context.appColors.primaryLight,
       btnCancelColor: cancelColor,
       btnCancelText: cancelText ?? "Cancel",
       btnOkText: okText ?? "Retry",

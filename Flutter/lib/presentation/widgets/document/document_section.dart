@@ -1,6 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/text/body_title.dart';
@@ -60,7 +61,7 @@ class DocumentSection extends StatelessWidget {
             ),
             strokeCap: StrokeCap.butt,
             dashPattern: [3],
-            color: AppColors.lightBlack,
+            color: context.appColors.lightBlack,
             borderType: BorderType.RRect,
             radius: Radius.circular(AppRadius.r16),
             padding: EdgeInsets.symmetric(vertical: AppPaddingHeight.p7, horizontal: AppPaddingWidth.p4),

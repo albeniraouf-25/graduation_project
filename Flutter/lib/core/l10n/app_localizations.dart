@@ -920,6 +920,12 @@ abstract class AppLocalizations {
   /// **'My Rides'**
   String get my_rides;
 
+  /// No description provided for @my_reservations.
+  ///
+  /// In en, this message translates to:
+  /// **'My Reservations'**
+  String get my_reservations;
+
   /// No description provided for @uncompleted.
   ///
   /// In en, this message translates to:

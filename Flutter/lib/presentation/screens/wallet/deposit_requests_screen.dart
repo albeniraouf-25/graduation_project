@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/data/models/payment/payment_models.dart';
@@ -27,7 +27,7 @@ class DepositRequestsScreen extends StatelessWidget {
       create: (_) => GetDepositRequestsBloc()
         ..add(const GetDepositRequestsEvent(RidesNoParamsEntity())),
       child: Scaffold(
-        backgroundColor: AppColors.backGround,
+        backgroundColor: context.appColors.backGround,
         body: SafeArea(
           child: Column(
             children: [
@@ -45,7 +45,7 @@ class DepositRequestsScreen extends StatelessWidget {
                         isRtl
                             ? FontAwesomeIcons.chevronRight
                             : FontAwesomeIcons.chevronLeft,
-                        color: AppColors.blackText,
+                        color: context.appColors.blackText,
                         size: AppSize.s20,
                       ),
                     ),
@@ -66,7 +66,7 @@ class DepositRequestsScreen extends StatelessWidget {
                         state is GetDepositRequestsInitial) {
                       return Center(
                         child:
-                            CircularProgressIndicator(color: AppColors.primary),
+                            CircularProgressIndicator(color: context.appColors.primary),
                       );
                     }
                     if (state is GetDepositRequestsFailed) {
@@ -120,19 +120,19 @@ class DepositRequestsScreen extends StatelessWidget {
     String statusLabel;
     switch (req.status) {
       case 'approved':
-        statusColor = AppColors.darkGreen;
-        statusBg = AppColors.lightPrim;
+        statusColor = context.appColors.darkGreen;
+        statusBg = context.appColors.lightPrim;
         statusLabel = tr.approved_status;
         break;
       case 'rejected':
-        statusColor = AppColors.red;
-        statusBg = AppColors.lightOrange;
+        statusColor = context.appColors.red;
+        statusBg = context.appColors.lightOrange;
         statusLabel = tr.rejected_status;
         break;
       case 'pending':
       default:
-        statusColor = AppColors.orange;
-        statusBg = AppColors.lightOrange;
+        statusColor = context.appColors.orange;
+        statusBg = context.appColors.lightOrange;
         statusLabel = tr.pending_status;
     }
 
@@ -142,9 +142,9 @@ class DepositRequestsScreen extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(AppPaddingWidth.p16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.appColors.white,
         borderRadius: BorderRadius.circular(AppRadius.r16),
-        border: Border.all(color: AppColors.lightGreySec),
+        border: Border.all(color: context.appColors.lightGreySec),
       ),
       child: Column(
         spacing: AppHeight.h8,
@@ -181,12 +181,12 @@ class DepositRequestsScreen extends StatelessWidget {
               BodyTitle(
                 text: methodLabel,
                 fontSize: AppFontSize.s13,
-                color: AppColors.greyText,
+                color: context.appColors.greyText,
               ),
               BodyTitle(
                 text: _formatDate(req.createdAt),
                 fontSize: AppFontSize.s12,
-                color: AppColors.greyText,
+                color: context.appColors.greyText,
               ),
             ],
           ),
@@ -194,7 +194,7 @@ class DepositRequestsScreen extends StatelessWidget {
             BodyTitle(
               text: '${tr.sender_number}: ${req.transactionReference}',
               fontSize: AppFontSize.s12,
-              color: AppColors.greyText,
+              color: context.appColors.greyText,
             ),
         ],
       ),
@@ -225,12 +225,12 @@ class _MessageView extends StatelessWidget {
           BodyTitle(
             text: message,
             textAlign: TextAlign.center,
-            color: AppColors.greyText,
+            color: context.appColors.greyText,
           ),
           if (onRetry != null)
             TextButton(
               onPressed: onRetry,
-              child: BodyTitle(text: tr.retry, color: AppColors.primary),
+              child: BodyTitle(text: tr.retry, color: context.appColors.primary),
             ),
         ],
       ),

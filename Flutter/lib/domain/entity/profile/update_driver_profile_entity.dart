@@ -7,13 +7,18 @@ class UpdateDriverProfileEntity extends Equatable {
   final String? email;
   final String? carNumber;
   final String? carColor;
-  
+  // مسارات محلية للصور — تُرسل كملفات multipart وليست ضمن toJson
+  final String? profilePicturePath;
+  final String? carImagePath;
+
   const UpdateDriverProfileEntity({
     this.name,
     this.phone,
     this.email,
     this.carNumber,
     this.carColor,
+    this.profilePicturePath,
+    this.carImagePath,
   });
 
   Map<String, dynamic> toJson() => {
@@ -25,5 +30,6 @@ class UpdateDriverProfileEntity extends Equatable {
       };
 
   @override
-  List<Object?> get props => [name, phone, email, carNumber, carColor];
+  List<Object?> get props =>
+      [name, phone, email, carNumber, carColor, profilePicturePath, carImagePath];
 }

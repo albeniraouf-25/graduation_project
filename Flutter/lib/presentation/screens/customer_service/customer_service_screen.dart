@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/cubit/customer_service/customer_service_cubit.dart';
@@ -48,10 +48,10 @@ class _CustomerServiceContentState extends State<_CustomerServiceContent> {
         children: [
           CircleAvatar(
             radius: AppRadius.r30,
-            backgroundColor: AppColors.green,
+            backgroundColor: context.appColors.green,
             child: FaIcon(
               FontAwesomeIcons.check,
-              color: AppColors.white,
+              color: context.appColors.white,
               size: AppSize.s24,
             ),
           ),
@@ -64,14 +64,14 @@ class _CustomerServiceContentState extends State<_CustomerServiceContent> {
             height: AppHeight.h45,
             width: double.infinity,
             borderRadius: AppRadius.r12,
-            color: AppColors.primary,
+            color: context.appColors.primary,
             onPressed: () {
               context.pop();
               context.pop();
             },
             child: BodyTitle(
               text: tr.ok,
-              color: AppColors.white,
+              color: context.appColors.white,
               fontWeight: AppFontWeight.bold,
             ),
           ),
@@ -86,7 +86,7 @@ class _CustomerServiceContentState extends State<_CustomerServiceContent> {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: BlocListener<CustomerServiceCubit, CustomerServiceState>(
           listener: (context, state) {
@@ -112,7 +112,7 @@ class _CustomerServiceContentState extends State<_CustomerServiceContent> {
                         isRtl
                             ? FontAwesomeIcons.chevronRight
                             : FontAwesomeIcons.chevronLeft,
-                        color: AppColors.blackText,
+                        color: context.appColors.blackText,
                         size: AppSize.s20,
                       ),
                     ),
@@ -128,7 +128,7 @@ class _CustomerServiceContentState extends State<_CustomerServiceContent> {
                 BodyTitle(
                   text: tr.customer_service_subtitle,
                   fontSize: AppFontSize.s13,
-                  color: AppColors.greyText,
+                  color: context.appColors.greyText,
                 ),
 
                 // حقل وصف المشكلة مع عداد الأحرف 0/500
@@ -146,7 +146,7 @@ class _CustomerServiceContentState extends State<_CustomerServiceContent> {
                       height: AppHeight.h50,
                       width: double.infinity,
                       borderRadius: AppRadius.r12,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                       loading: state is CustomerServiceLoadingState,
                       onPressed: () {
                         context
@@ -155,7 +155,7 @@ class _CustomerServiceContentState extends State<_CustomerServiceContent> {
                       },
                       child: BodyTitle(
                         text: tr.send,
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         fontSize: AppFontSize.s16,
                         fontWeight: AppFontWeight.bold,
                       ),

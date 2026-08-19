@@ -16,7 +16,7 @@ import 'package:go_router/go_router.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/core/routes/app_routes.dart';
@@ -152,7 +152,7 @@ class _CheckCodeContentState extends State<_CheckCodeContent> {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: MultiBlocListener(
           listeners: [
@@ -252,7 +252,7 @@ class _CheckCodeContentState extends State<_CheckCodeContent> {
                       isRtl
                           ? FontAwesomeIcons.chevronRight
                           : FontAwesomeIcons.chevronLeft,
-                      color: AppColors.blackText,
+                      color: context.appColors.blackText,
                       size: AppSize.s20,
                     ),
                   ),
@@ -264,7 +264,7 @@ class _CheckCodeContentState extends State<_CheckCodeContent> {
                     width: AppWidth.w130,
                     height: AppHeight.h130,
                     decoration: BoxDecoration(
-                      color: AppColors.lightGrey,
+                      color: context.appColors.lightGrey,
                       borderRadius: BorderRadius.circular(AppRadius.r20),
                     ),
                     child: Stack(
@@ -273,17 +273,17 @@ class _CheckCodeContentState extends State<_CheckCodeContent> {
                         FaIcon(
                           FontAwesomeIcons.envelope,
                           size: AppSize.s100,
-                          color: AppColors.primary,
+                          color: context.appColors.primary,
                         ),
                         Positioned(
                           bottom: AppHeight.h12,
                           right: AppWidth.w12,
                           child: CircleAvatar(
                             radius: AppRadius.r12,
-                            backgroundColor: AppColors.green,
+                            backgroundColor: context.appColors.green,
                             child: FaIcon(
                               FontAwesomeIcons.check,
-                              color: AppColors.white,
+                              color: context.appColors.white,
                               size: AppSize.s12,
                             ),
                           ),
@@ -302,20 +302,20 @@ class _CheckCodeContentState extends State<_CheckCodeContent> {
                       text: tr.verify_email_title,
                       fontSize: AppFontSize.s22,
                       fontWeight: AppFontWeight.bold,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                       textAlign: TextAlign.center,
                     ),
                     BodyTitle(
                       text: '${tr.verify_email_sub} ',
                       fontSize: AppFontSize.s14,
-                      color: AppColors.greyText,
+                      color: context.appColors.greyText,
                       textAlign: TextAlign.center,
                     ),
                     BodyTitle(
                       text: widget.email,
                       fontSize: AppFontSize.s14,
                       fontWeight: AppFontWeight.bold,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -343,7 +343,7 @@ class _CheckCodeContentState extends State<_CheckCodeContent> {
                               style: TextStyle(
                                 fontSize: AppFontSize.s20,
                                 fontWeight: AppFontWeight.bold,
-                                color: AppColors.blackText,
+                                color: context.appColors.blackText,
                               ),
                               maxLength: 1,
                               inputFormatters: [
@@ -352,19 +352,19 @@ class _CheckCodeContentState extends State<_CheckCodeContent> {
                               decoration: InputDecoration(
                                 counterText: '',
                                 filled: true,
-                                fillColor: AppColors.white,
+                                fillColor: context.appColors.white,
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.circular(AppRadius.r12),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.lightGreySec,
+                                  borderSide: BorderSide(
+                                    color: context.appColors.lightGreySec,
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.circular(AppRadius.r12),
-                                  borderSide: const BorderSide(
-                                    color: AppColors.primary,
+                                  borderSide: BorderSide(
+                                    color: context.appColors.primary,
                                     width: 1.5,
                                   ),
                                 ),
@@ -400,12 +400,12 @@ class _CheckCodeContentState extends State<_CheckCodeContent> {
                             children: [
                               BodyTitle(
                                 text: tr.resend_code_in,
-                                color: AppColors.greyText,
+                                color: context.appColors.greyText,
                                 fontSize: AppFontSize.s14,
                               ),
                               BodyTitle(
                                 text: _formatTime(cubitState.timerSeconds),
-                                color: AppColors.primary,
+                                color: context.appColors.primary,
                                 fontWeight: AppFontWeight.bold,
                                 fontSize: AppFontSize.s14,
                               ),
@@ -443,14 +443,14 @@ class _CheckCodeContentState extends State<_CheckCodeContent> {
                                 FontAwesomeIcons.arrowsRotate,
                                 size: AppSize.s18,
                                 color: cubitState.canResend
-                                    ? AppColors.primary
-                                    : AppColors.grey,
+                                    ? context.appColors.primary
+                                    : context.appColors.grey,
                               ),
                               BodyTitle(
                                 text: tr.resend_code,
                                 color: cubitState.canResend
-                                    ? AppColors.primary
-                                    : AppColors.grey,
+                                    ? context.appColors.primary
+                                    : context.appColors.grey,
                                 fontWeight: AppFontWeight.bold,
                                 fontSize: AppFontSize.s14,
                               ),
@@ -475,12 +475,12 @@ class _CheckCodeContentState extends State<_CheckCodeContent> {
                           height: AppHeight.h50,
                           width: double.infinity,
                           borderRadius: AppRadius.r12,
-                          color: AppColors.primary,
+                          color: context.appColors.primary,
                           loading: isLoading,
                           onPressed: () => _onVerifyPressed(context),
                           child: BodyTitle(
                             text: tr.verify_code_btn,
-                            color: AppColors.white,
+                            color: context.appColors.white,
                             fontSize: AppFontSize.s16,
                             fontWeight: AppFontWeight.bold,
                           ),

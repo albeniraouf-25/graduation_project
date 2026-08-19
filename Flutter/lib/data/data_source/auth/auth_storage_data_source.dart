@@ -8,7 +8,9 @@ import '../base/base_storage_data_source.dart';
 class AuthStorageDataSource extends BaseStorageDataSource {
   AuthStorageDataSource() : super(AppStoragePaths.auth);
 
-  Future<Either<AppException, void>> logout() {
+  Future<Either<AppException, void>> logout() async {
+    // حذف كلا الرمزين عند تسجيل الخروج
+    await deleteData(key: AppStoragePaths.refreshToken);
     return deleteData(
       key: AppStoragePaths.token,
     );
@@ -24,6 +26,20 @@ class AuthStorageDataSource extends BaseStorageDataSource {
   Future<Either<AppException, String?>> getToken() {
     return getData(
       key: AppStoragePaths.token,
+    ).then((e) => e.fold((l) => Left(l), (r) => Right(r as String?)));
+  }
+
+  // رمز التحديث (refresh token) — يُستخدم لتجديد رمز الوصول عند انتهائه
+  Future<Either<AppException, dynamic>> storeRefreshToken(String? token) {
+    return saveData(
+      key: AppStoragePaths.refreshToken,
+      data: token,
+    );
+  }
+
+  Future<Either<AppException, String?>> getRefreshToken() {
+    return getData(
+      key: AppStoragePaths.refreshToken,
     ).then((e) => e.fold((l) => Left(l), (r) => Right(r as String?)));
   }
 

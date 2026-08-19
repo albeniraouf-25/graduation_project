@@ -8,8 +8,8 @@ import 'package:go_router/go_router.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/extension/validation_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 
@@ -52,7 +52,7 @@ class _ForgotPasswordContentState extends State<_ForgotPasswordContent> {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: BlocConsumer<ForgotPasswordBloc, IForgotPasswordState>(
           listener: (context, apiState) {
@@ -104,7 +104,7 @@ class _ForgotPasswordContentState extends State<_ForgotPasswordContent> {
                           isRtl
                               ? FontAwesomeIcons.chevronRight
                               : FontAwesomeIcons.chevronLeft,
-                          color: AppColors.blackText,
+                          color: context.appColors.blackText,
                           size: AppSize.s20,
                         ),
                       ),
@@ -129,7 +129,7 @@ class _ForgotPasswordContentState extends State<_ForgotPasswordContent> {
                         widthFactor: 1.0,
                         child: FaIcon(
                           FontAwesomeIcons.envelope,
-                          color: AppColors.grey,
+                          color: context.appColors.grey,
                           size: AppSize.s20,
                         ),
                       ),
@@ -149,7 +149,7 @@ class _ForgotPasswordContentState extends State<_ForgotPasswordContent> {
                       height: AppHeight.h50,
                       width: double.infinity,
                       borderRadius: AppRadius.r12,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                       loading: apiState is ForgotPasswordLoading,
                       onPressed: () {
                         if (_formKey.currentState?.validate() ?? false) {
@@ -165,7 +165,7 @@ class _ForgotPasswordContentState extends State<_ForgotPasswordContent> {
                       },
                       child: BodyTitle(
                         text: tr.send,
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         fontSize: AppFontSize.s16,
                         fontWeight: AppFontWeight.bold,
                       ),

@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../core/extension/image_type_extension.dart';
-import '../../core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import '../../core/resources/app_values.dart';
 import 'custom_avatar.dart';
 
@@ -58,47 +58,47 @@ class ImageView extends StatelessWidget {
     return alignment != null
         ? Align(
             alignment: alignment!,
-            child: _buildWidget(),
+            child: _buildWidget(context),
           )
-        : _buildWidget();
+        : _buildWidget(context);
   }
 
-  Widget _buildWidget() {
+  Widget _buildWidget(BuildContext context) {
     return Padding(
       padding: margin ?? EdgeInsets.zero,
       child: InkWell(
         onTap: onTap,
-        child: _buildCircleImage(),
+        child: _buildCircleImage(context),
       ),
     );
   }
 
-  Widget _buildCircleImage() {
+  Widget _buildCircleImage(BuildContext context) {
     if (radius != null) {
       return ClipRRect(
         borderRadius: radius ?? BorderRadius.zero,
-        child: _buildImageWithBorder(),
+        child: _buildImageWithBorder(context),
       );
     } else {
-      return _buildImageWithBorder();
+      return _buildImageWithBorder(context);
     }
   }
 
-  Widget _buildImageWithBorder() {
+  Widget _buildImageWithBorder(BuildContext context) {
     if (border != null) {
       return Container(
         decoration: BoxDecoration(
           border: border,
           borderRadius: radius,
         ),
-        child: _buildImageView(),
+        child: _buildImageView(context),
       );
     } else {
-      return _buildImageView();
+      return _buildImageView(context);
     }
   }
 
-  Widget _buildImageView() {
+  Widget _buildImageView(BuildContext context) {
     switch (imagePath.imageType) {
       case ImageType.svg:
         return SizedBox(
@@ -112,7 +112,7 @@ class ImageView extends StatelessWidget {
             placeholderBuilder: (context) => Container(
               height: height,
               width: width,
-              decoration: const BoxDecoration(color: AppColors.backGround),
+              decoration: BoxDecoration(color: context.appColors.backGround),
             ),
             colorFilter: color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
           ),
@@ -133,7 +133,7 @@ class ImageView extends StatelessWidget {
               placeholderBuilder: (context) => Container(
                 height: height,
                 width: width,
-                decoration: const BoxDecoration(color: AppColors.backGround),
+                decoration: BoxDecoration(color: context.appColors.backGround),
               ),
               colorFilter: color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
             ),
@@ -151,7 +151,7 @@ class ImageView extends StatelessWidget {
               placeholderBuilder: (context) => Container(
                 height: height,
                 width: width,
-                decoration: const BoxDecoration(color: AppColors.backGround),
+                decoration: BoxDecoration(color: context.appColors.backGround),
               ),
             ),
           );
@@ -181,7 +181,7 @@ class ImageView extends StatelessWidget {
             width: width,
             imageUrl: imagePath,
             color: color,
-            errorWidget: (_, __, ___) => errorWidget ?? Icon(Icons.image_outlined, color: color ?? AppColors.red),
+            errorWidget: (_, __, ___) => errorWidget ?? Icon(Icons.image_outlined, color: color ?? context.appColors.red),
             placeholder: (context, url) => Skeletonizer(
               effect: ShimmerEffect(
                 baseColor: Colors.grey[300]!,
@@ -199,8 +199,8 @@ class ImageView extends StatelessWidget {
                     Radius.circular(AppRadius.r10),
                   ),
                   value: 1,
-                  color: AppColors.backGround,
-                  backgroundColor: AppColors.lightGrey,
+                  color: context.appColors.backGround,
+                  backgroundColor: context.appColors.lightGrey,
                 ),
               ),
             ),
@@ -216,7 +216,7 @@ class ImageView extends StatelessWidget {
         );
      
       case ImageType.empty:
-        return Icon(Icons.image_outlined, color: color ?? AppColors.red);
+        return Icon(Icons.image_outlined, color: color ?? context.appColors.red);
       case ImageType.png:
       default:
         return Image.asset(

@@ -3,7 +3,7 @@ import 'package:a_tareqaak/presentation/widgets/text/body_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import '../../core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import '../../core/resources/app_values.dart';
 
 class LoadingWidget2 extends StatelessWidget {
@@ -20,7 +20,7 @@ class LoadingWidget2 extends StatelessWidget {
       child: [
         const ThreeBounceWidgetsFactory(),
         const WaveSpinnerWidgetsFactory(),
-      ][index].create().render(color: color ?? AppColors.primary, size: size ?? AppSize.s50, noCenter: noCenter),
+      ][index].create().render(color: color ?? context.appColors.primary, size: size ?? AppSize.s50, noCenter: noCenter),
     );
   }
 }
@@ -117,9 +117,9 @@ class LoadingWidget extends StatelessWidget {
             SizedBox(
               width: AppWidth.w90,
               height: AppHeight.h90,
-              child: const CircularProgressIndicator(
+              child: CircularProgressIndicator(
                 strokeWidth: 2.8,
-                valueColor: AlwaysStoppedAnimation(AppColors.primary),
+                valueColor: AlwaysStoppedAnimation(context.appColors.primary),
               ),
             ),
 
@@ -127,7 +127,7 @@ class LoadingWidget extends StatelessWidget {
               text: 'qwafil',
               fontSize: AppFontSize.s16,
               fontWeight: FontWeight.w600,
-              color: AppColors.primary,
+              color: context.appColors.primary,
             ),
           ],
         ),

@@ -10,7 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/custom_elevated_button.dart';
@@ -48,7 +48,7 @@ class _ReportDetailsContent extends StatelessWidget {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: BlocBuilder<GetReportDetailsBloc, IGetReportDetailsState>(
           builder: (context, state) {
@@ -77,7 +77,7 @@ class _ReportDetailsContent extends StatelessWidget {
                           isRtl
                               ? FontAwesomeIcons.chevronRight
                               : FontAwesomeIcons.chevronLeft,
-                          color: AppColors.blackText,
+                          color: context.appColors.blackText,
                           size: AppSize.s20,
                         ),
                       ),
@@ -92,17 +92,17 @@ class _ReportDetailsContent extends StatelessWidget {
 
                   if (isLoading)
                     LinearProgressIndicator(
-                      color: AppColors.primary,
-                      backgroundColor: AppColors.lightGreySec,
+                      color: context.appColors.primary,
+                      backgroundColor: context.appColors.lightGreySec,
                     ),
 
                   // بطاقة بيانات البلاغ الرئيسية
                   Container(
                     padding: EdgeInsets.all(AppPaddingWidth.p16),
                     decoration: BoxDecoration(
-                      color: AppColors.white,
+                      color: context.appColors.white,
                       borderRadius: BorderRadius.circular(AppRadius.r16),
-                      border: Border.all(color: AppColors.lightGreySec),
+                      border: Border.all(color: context.appColors.lightGreySec),
                     ),
                     child: Column(
                       spacing: AppHeight.h12,
@@ -117,32 +117,32 @@ class _ReportDetailsContent extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                               color: isPending
-                                  ? AppColors.lightOrange
-                                  : AppColors.lightPrim,
+                                  ? context.appColors.lightOrange
+                                  : context.appColors.lightPrim,
                               borderRadius: BorderRadius.circular(AppRadius.r6),
                             ),
                             child: BodyTitle(
                               text: localizeReportStatus(tr, report.status),
                               fontSize: AppFontSize.s12,
                               color: isPending
-                                  ? AppColors.orange
-                                  : AppColors.darkGreen,
+                                  ? context.appColors.orange
+                                  : context.appColors.darkGreen,
                               fontWeight: AppFontWeight.bold,
                             ),
                           ),
                         ),
-                        _buildDetailRow(
+                        _buildDetailRow(context,
                             tr.report_type, localizeReportType(tr, report.type)),
-                        _buildDetailRow(
+                        _buildDetailRow(context,
                             tr.report_date, formatReportDate(report.createdAt)),
                         if (report.ride != null)
-                          _buildDetailRow(
+                          _buildDetailRow(context,
                               tr.related_ride, '#${report.ride}'),
-                        Divider(color: AppColors.lightGreySec),
+                        Divider(color: context.appColors.lightGreySec),
                         SectionTitle(
                           text: tr.report_text,
                           fontSize: AppFontSize.s13,
-                          color: AppColors.greyText,
+                          color: context.appColors.greyText,
                         ),
                         BodyTitle(
                           text: report.reason ?? '',
@@ -157,9 +157,9 @@ class _ReportDetailsContent extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.all(AppPaddingWidth.p16),
                       decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         borderRadius: BorderRadius.circular(AppRadius.r16),
-                        border: Border.all(color: AppColors.lightGreySec),
+                        border: Border.all(color: context.appColors.lightGreySec),
                       ),
                       child: Column(
                         spacing: AppHeight.h10,
@@ -172,11 +172,11 @@ class _ReportDetailsContent extends StatelessWidget {
                           Container(
                             padding: EdgeInsets.all(AppPaddingWidth.p12),
                             decoration: BoxDecoration(
-                              color: AppColors.lightOrange.withOpacity(0.5),
+                              color: context.appColors.lightOrange.withOpacity(0.5),
                               borderRadius:
                                   BorderRadius.circular(AppRadius.r12),
                               border: Border.all(
-                                  color: AppColors.orange.withOpacity(0.3)),
+                                  color: context.appColors.orange.withOpacity(0.3)),
                             ),
                             child: Column(
                               spacing: AppHeight.h6,
@@ -190,7 +190,7 @@ class _ReportDetailsContent extends StatelessWidget {
                                   BodyTitle(
                                     text: formatReportDate(report.updatedAt),
                                     fontSize: AppFontSize.s11,
-                                    color: AppColors.greyText,
+                                    color: context.appColors.greyText,
                                   ),
                               ],
                             ),
@@ -205,11 +205,11 @@ class _ReportDetailsContent extends StatelessWidget {
                     height: AppHeight.h50,
                     width: double.infinity,
                     borderRadius: AppRadius.r12,
-                    color: AppColors.primary,
+                    color: context.appColors.primary,
                     onPressed: () => context.pop(),
                     child: BodyTitle(
                       text: tr.close_btn,
-                      color: AppColors.white,
+                      color: context.appColors.white,
                       fontSize: AppFontSize.s16,
                       fontWeight: AppFontWeight.bold,
                     ),
@@ -223,7 +223,7 @@ class _ReportDetailsContent extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailRow(String label, String value) {
+  Widget _buildDetailRow(BuildContext context, String label, String value) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing: AppHeight.h2,
@@ -231,7 +231,7 @@ class _ReportDetailsContent extends StatelessWidget {
         BodyTitle(
           text: label,
           fontSize: AppFontSize.s12,
-          color: AppColors.greyText,
+          color: context.appColors.greyText,
         ),
         BodyTitle(
           text: value,

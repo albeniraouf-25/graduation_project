@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import '../../core/resources/app_values.dart';
 import 'text/section_title.dart';
 
@@ -66,7 +66,7 @@ class CustomBottomSheet extends StatelessWidget {
                     width: AppWidth.w132,
                     height: AppHeight.h7,
                     decoration: BoxDecoration(
-                      color: AppColors.lightGrey,
+                      color: context.appColors.lightGrey,
                       borderRadius: BorderRadius.circular(AppRadius.r35),
                     ),
                   ),
@@ -91,11 +91,11 @@ class CustomBottomSheet extends StatelessWidget {
                               width: AppWidth.w52,
                               height: AppHeight.h52,
                               decoration: BoxDecoration(
-                                color: AppColors.white,
-                                border: Border.all(color: AppColors.greyDivider),
+                                color: context.appColors.white,
+                                border: Border.all(color: context.appColors.greyDivider),
                                 borderRadius: BorderRadius.circular(AppRadius.r18),
                               ),
-                              child: const Icon(Icons.close, color: AppColors.primary),
+                              child: Icon(Icons.close, color: context.appColors.primary),
                             ),
                           ),
                         ),
@@ -104,8 +104,8 @@ class CustomBottomSheet extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Divider(
-                  color: AppColors.lightBlack,
+                Divider(
+                  color: context.appColors.lightBlack,
                   thickness: 0.1,
                   height: 0,
                 ),

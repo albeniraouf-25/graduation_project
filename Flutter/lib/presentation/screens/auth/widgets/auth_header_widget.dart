@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_assets.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/image_view.dart';
@@ -32,13 +32,13 @@ class AuthHeaderWidget extends StatelessWidget {
           text: title,
           fontSize: AppFontSize.s22,
           fontWeight: AppFontWeight.bold,
-          color: AppColors.primary,
+          color: context.appColors.primary,
           textAlign: TextAlign.center,
         ),
         BodyTitle(
           text: subtitle,
           fontSize: AppFontSize.s14,
-          color: AppColors.greyText,
+          color: context.appColors.greyText,
           textAlign: TextAlign.center,
         ),
       ],

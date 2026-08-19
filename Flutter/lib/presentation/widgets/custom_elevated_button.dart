@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import '../../core/resources/app_values.dart';
 import 'loading_widget.dart';
 
@@ -71,7 +71,7 @@ class CustomElevatedButton extends StatelessWidget {
             //   vertical: VisualDensity.minimumDensity,
             // ),
             backgroundColor: color ?? Colors.transparent,
-            shadowColor: AppColors.searchColor,
+            shadowColor: context.appColors.searchColor,
 
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(borderRadius),
@@ -81,7 +81,7 @@ class CustomElevatedButton extends StatelessWidget {
           child: loading ?? false
               ? LoadingWidget2(
                   0,
-                  color: colorLoading ?? AppColors.white,
+                  color: colorLoading ?? context.appColors.white,
                   size: AppSize.s35,
                 )
               : child,

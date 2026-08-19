@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import '../../../core/resources/app_values.dart';
 import '../image_view.dart';
 import '../text/section_title.dart';
@@ -46,9 +46,9 @@ class DocumentUploadPlaceholder extends StatelessWidget {
                     child: IconButton(
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
-                      icon: const FaIcon(
+                      icon: FaIcon(
                         FontAwesomeIcons.circleXmark,
-                        color: AppColors.red,
+                        color: context.appColors.red,
                       ),
                       onPressed: onRemove,
                     ),
@@ -60,13 +60,13 @@ class DocumentUploadPlaceholder extends StatelessWidget {
               children: [
                 FaIcon(
                   isVideo ? FontAwesomeIcons.video : FontAwesomeIcons.camera,
-                  color: AppColors.grey,
+                  color: context.appColors.grey,
                   size: AppSize.s42,
                 ),
                 SizedBox(height: AppHeight.h7),
                 SectionTitle(
                   text: isVideo ? "أضف فيديو" : "أضف صورة",
-                  color: AppColors.greyText,
+                  color: context.appColors.greyText,
                 ),
                 SizedBox(height: AppHeight.h18),
               ],

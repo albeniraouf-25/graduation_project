@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import '../../presentation/widgets/custom_bottom_sheet.dart';
 import '../../presentation/widgets/custom_elevated_button.dart';
 import '../../presentation/widgets/text/body_title.dart';
-import '../resources/app_colors.dart';
 import '../resources/app_values.dart';
 
 class ConnectionService {
@@ -49,12 +49,12 @@ class ConnectionService {
           CustomElevatedButton(
             marginTop: AppMarginHeight.m20,
             width: double.infinity,
-            child: const BodyTitle(
+            child: BodyTitle(
               text: "حسناً",
               overflow: TextOverflow.visible,
-              color: AppColors.white,
+              color: context.appColors.white,
             ),
-            color: AppColors.primary,
+            color: context.appColors.primary,
             borderRadius: AppRadius.r15,
             onPressed: () {
               context.pop();

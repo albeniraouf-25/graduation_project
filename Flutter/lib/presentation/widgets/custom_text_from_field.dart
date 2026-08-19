@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import '../../core/resources/app_fonts.dart';
 import '../../core/resources/app_values.dart';
 
@@ -118,7 +118,7 @@ class CustomTextFromField extends StatelessWidget {
     
       onChanged: onChanged,
       focusNode: focusNode,
-      cursorColor: cursorColor ?? AppColors.primary,
+      cursorColor: cursorColor ?? context.appColors.primary,
       keyboardType: textInputType,
       obscureText: obscureText ?? false,
       style: Theme.of(
@@ -136,7 +136,7 @@ class CustomTextFromField extends StatelessWidget {
         ), 
         errorStyle: Theme.of(
           context,
-        ).textTheme.titleMedium!.copyWith(fontSize: AppFontSize.s12, color: AppColors.red),
+        ).textTheme.titleMedium!.copyWith(fontSize: AppFontSize.s12, color: context.appColors.red),
         border: InputBorder.none,
         enabledBorder:
         enableInputBorder ??
@@ -173,26 +173,26 @@ class CustomTextFromField extends StatelessWidget {
         prefixIcon: Padding(padding: EdgeInsetsDirectional.only(start: AppPaddingWidth.p15), child: prefixIcon),
         prefixIconColor: WidgetStateColor.resolveWith((Set<WidgetState> states) {
           if (states.contains(WidgetState.error)) {
-            return AppColors.red;
+            return context.appColors.red;
           }
           if (states.contains(WidgetState.focused)) {
-            return AppColors.primary;
+            return context.appColors.primary;
           }
 
-          return AppColors.grey;
+          return context.appColors.grey;
         }),
         suffixIcon: suffixIcon,
         filled: filled,
         fillColor: color,
         hintText: hintText,
         hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-          color: hintColor ?? AppColors.grey,
+          color: hintColor ?? context.appColors.grey,
           fontSize: fontSize,
           fontWeight: AppFontWeight.regular,
         ),
         labelText: labelText,
-        floatingLabelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(color: AppColors.primary),
-        labelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(color: AppColors.grey),
+        floatingLabelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(color: context.appColors.primary),
+        labelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(color: context.appColors.grey),
       ),
     );
   }

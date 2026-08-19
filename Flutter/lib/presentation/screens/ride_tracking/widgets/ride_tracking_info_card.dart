@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/data/models/rides/ride_data_model.dart';
@@ -24,11 +24,11 @@ class RideTrackingInfoCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(AppPaddingWidth.p16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.appColors.white,
         borderRadius: BorderRadius.circular(AppRadius.r16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.black.withOpacity(0.08),
+            color: context.appColors.black.withOpacity(0.08),
             blurRadius: 10,
             offset: const Offset(0, -2),
           ),
@@ -47,12 +47,12 @@ class RideTrackingInfoCard extends StatelessWidget {
                   CircleAvatar(
                     radius: AppRadius.r6,
                     backgroundColor:
-                        isConnected ? AppColors.green : AppColors.red,
+                        isConnected ? context.appColors.green : context.appColors.red,
                   ),
                   BodyTitle(
                     text: isConnected ? "تتبع مباشر نشط" : "جاري الاتصال...",
                     fontSize: AppFontSize.s13,
-                    color: isConnected ? AppColors.green : AppColors.greyText,
+                    color: isConnected ? context.appColors.green : context.appColors.greyText,
                     fontWeight: AppFontWeight.bold,
                   ),
                 ],
@@ -60,19 +60,19 @@ class RideTrackingInfoCard extends StatelessWidget {
               SectionTitle(
                 text: "${ride.cost ?? ''} ل.س",
                 fontSize: AppFontSize.s15,
-                color: AppColors.primary,
+                color: context.appColors.primary,
               ),
             ],
           ),
-          const Divider(color: AppColors.lightGreySec),
+          Divider(color: context.appColors.lightGreySec),
           Row(
             children: [
               CircleAvatar(
                 radius: AppRadius.r20,
-                backgroundColor: AppColors.lightGrey,
+                backgroundColor: context.appColors.lightGrey,
                 child: FaIcon(
                   FontAwesomeIcons.user,
-                  color: AppColors.primary,
+                  color: context.appColors.primary,
                   size: AppSize.s18,
                 ),
               ),
@@ -89,7 +89,7 @@ class RideTrackingInfoCard extends StatelessWidget {
                     BodyTitle(
                       text: "${ride.location ?? ''} ➔ ${ride.destination ?? ''}",
                       fontSize: AppFontSize.s12,
-                      color: AppColors.greyText,
+                      color: context.appColors.greyText,
                     ),
                   ],
                 ),

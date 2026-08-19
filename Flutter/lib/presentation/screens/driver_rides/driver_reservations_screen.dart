@@ -1,5 +1,5 @@
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/domain/entity/rides/id_entity.dart';
@@ -37,7 +37,7 @@ class _DriverReservationsContent extends StatelessWidget {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: BlocListener<ReservationActionBloc, IReservationActionState>(
           listener: (context, state) {
@@ -71,7 +71,7 @@ class _DriverReservationsContent extends StatelessWidget {
                       onPressed: () => context.pop(),
                       icon: FaIcon(
                         FontAwesomeIcons.xmark,
-                        color: AppColors.blackText,
+                        color: context.appColors.blackText,
                         size: AppSize.s20,
                       ),
                     ),
@@ -86,7 +86,7 @@ class _DriverReservationsContent extends StatelessWidget {
                         isRtl
                             ? FontAwesomeIcons.chevronRight
                             : FontAwesomeIcons.chevronLeft,
-                        color: AppColors.blackText,
+                        color: context.appColors.blackText,
                         size: AppSize.s20,
                       ),
                     ),
@@ -102,11 +102,11 @@ class _DriverReservationsContent extends StatelessWidget {
                     return Container(
                       padding: EdgeInsets.all(AppPaddingWidth.p16),
                       decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         borderRadius: BorderRadius.circular(AppRadius.r16),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.primary.withOpacity(0.08),
+                            color: context.appColors.primary.withOpacity(0.08),
                             blurRadius: 12,
                             spreadRadius: 1,
                             offset: const Offset(0, 4),
@@ -130,14 +130,14 @@ class _DriverReservationsContent extends StatelessWidget {
                                   vertical: AppPaddingHeight.p4,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: AppColors.primary.withOpacity(0.1),
+                                  color: context.appColors.primary.withOpacity(0.1),
                                   borderRadius:
                                       BorderRadius.circular(AppRadius.r6),
                                 ),
                                 child: BodyTitle(
                                   text: "معلّق",
                                   fontSize: AppFontSize.s12,
-                                  color: AppColors.primary,
+                                  color: context.appColors.primary,
                                   fontWeight: AppFontWeight.bold,
                                 ),
                               ),
@@ -146,7 +146,7 @@ class _DriverReservationsContent extends StatelessWidget {
                           BodyTitle(
                             text: "مكان التجمع: اللاذقية - ساحة أ any",
                             fontSize: AppFontSize.s13,
-                            color: AppColors.greyText,
+                            color: context.appColors.greyText,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -154,7 +154,7 @@ class _DriverReservationsContent extends StatelessWidget {
                               CustomElevatedButton(
                                 height: AppHeight.h40,
                                 borderRadius: AppRadius.r10,
-                                color: AppColors.primary,
+                                color: context.appColors.primary,
                                 onPressed: () {
                                   context.read<ReservationActionBloc>().add(
                                         AcceptReservationEvent(
@@ -164,7 +164,7 @@ class _DriverReservationsContent extends StatelessWidget {
                                 },
                                 child: BodyTitle(
                                   text: "قبول الحجز",
-                                  color: AppColors.white,
+                                  color: context.appColors.white,
                                   fontSize: AppFontSize.s13,
                                   fontWeight: AppFontWeight.bold,
                                 ),
@@ -172,9 +172,9 @@ class _DriverReservationsContent extends StatelessWidget {
                               CustomElevatedButton(
                                 height: AppHeight.h40,
                                 borderRadius: AppRadius.r10,
-                                color: AppColors.lightRed,
+                                color: context.appColors.lightRed,
                                 borderSide:
-                                    const BorderSide(color: AppColors.red),
+                                    BorderSide(color: context.appColors.red),
                                 onPressed: () {
                                   context.read<ReservationActionBloc>().add(
                                         RejectReservationEvent(
@@ -184,7 +184,7 @@ class _DriverReservationsContent extends StatelessWidget {
                                 },
                                 child: BodyTitle(
                                   text: "رفض الحجز",
-                                  color: AppColors.red,
+                                  color: context.appColors.red,
                                   fontSize: AppFontSize.s13,
                                   fontWeight: AppFontWeight.bold,
                                 ),

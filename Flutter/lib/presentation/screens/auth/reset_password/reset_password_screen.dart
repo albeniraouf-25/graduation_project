@@ -9,7 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/bloc/auth/reset_password/reset_password_bloc.dart';
@@ -58,7 +58,7 @@ class _ResetPasswordContentState extends State<_ResetPasswordContent> {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: BlocConsumer<ResetPasswordBloc, IResetPasswordState>(
           listener: (context, apiState) {
@@ -101,7 +101,7 @@ class _ResetPasswordContentState extends State<_ResetPasswordContent> {
                           isRtl
                               ? FontAwesomeIcons.chevronRight
                               : FontAwesomeIcons.chevronLeft,
-                          color: AppColors.blackText,
+                          color: context.appColors.blackText,
                           size: AppSize.s20,
                         ),
                       ),
@@ -127,7 +127,7 @@ class _ResetPasswordContentState extends State<_ResetPasswordContent> {
                             widthFactor: 1.0,
                             child: FaIcon(
                               FontAwesomeIcons.lock,
-                              color: AppColors.grey,
+                              color: context.appColors.grey,
                               size: AppSize.s20,
                             ),
                           ),
@@ -136,7 +136,7 @@ class _ResetPasswordContentState extends State<_ResetPasswordContent> {
                               cubitState.isPasswordObscured
                                   ? FontAwesomeIcons.eyeSlash
                                   : FontAwesomeIcons.eye,
-                              color: AppColors.grey,
+                              color: context.appColors.grey,
                               size: AppSize.s20,
                             ),
                             onPressed: () {
@@ -170,7 +170,7 @@ class _ResetPasswordContentState extends State<_ResetPasswordContent> {
                             widthFactor: 1.0,
                             child: FaIcon(
                               FontAwesomeIcons.lock,
-                              color: AppColors.grey,
+                              color: context.appColors.grey,
                               size: AppSize.s20,
                             ),
                           ),
@@ -179,7 +179,7 @@ class _ResetPasswordContentState extends State<_ResetPasswordContent> {
                               cubitState.isConfirmPasswordObscured
                                   ? FontAwesomeIcons.eyeSlash
                                   : FontAwesomeIcons.eye,
-                              color: AppColors.grey,
+                              color: context.appColors.grey,
                               size: AppSize.s20,
                             ),
                             onPressed: () {
@@ -204,7 +204,7 @@ class _ResetPasswordContentState extends State<_ResetPasswordContent> {
                       height: AppHeight.h50,
                       width: double.infinity,
                       borderRadius: AppRadius.r12,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                       loading: apiState is ResetPasswordLoading,
                       onPressed: () {
                         if (_formKey.currentState?.validate() ?? false) {
@@ -220,7 +220,7 @@ class _ResetPasswordContentState extends State<_ResetPasswordContent> {
                       },
                       child: BodyTitle(
                         text: tr.save_new_password,
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         fontSize: AppFontSize.s16,
                         fontWeight: AppFontWeight.bold,
                       ),

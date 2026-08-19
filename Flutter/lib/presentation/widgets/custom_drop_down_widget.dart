@@ -1,6 +1,6 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 
@@ -57,22 +57,22 @@ class CustomDropDownWidget extends StatelessWidget {
         ),
         decoration: CustomDropdownDecoration(
           hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-            color: AppColors.grey,
+            color: context.appColors.grey,
             fontWeight: AppFontWeight.regular,
           ),
           listItemStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-            color: AppColors.blackCow,
+            color: context.appColors.blackCow,
             fontSize: AppFontSize.s16,
 
           ),
           headerStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-            color: AppColors.lightBlack,
+            color: context.appColors.lightBlack,
             fontSize: AppFontSize.s16,
           ),
-          closedBorder: Border.all(color: AppColors.grey.withAlpha(40)),
-          expandedBorder: Border.all(color: AppColors.grey.withAlpha(40)),
+          closedBorder: Border.all(color: context.appColors.grey.withAlpha(40)),
+          expandedBorder: Border.all(color: context.appColors.grey.withAlpha(40)),
 
-          closedFillColor: color ?? AppColors.backGround,
+          closedFillColor: color ?? context.appColors.backGround,
           prefixIcon: prefixIcon,
           closedBorderRadius: BorderRadius.circular(borderRadius ?? AppRadius.r13),
           expandedBorderRadius: BorderRadius.circular(AppRadius.r13),

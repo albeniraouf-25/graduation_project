@@ -2,7 +2,7 @@ import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 
 class CustomColorField extends StatelessWidget {
@@ -25,14 +25,14 @@ class CustomColorField extends StatelessWidget {
                     TextSpan(
                       text: "اللون",
                       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: AppColors.primary,
+                        color: context.appColors.primary,
                         fontSize: AppFontSize.s15,
                       ),
                     ),
                     TextSpan(
                       text: ' *',
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: AppColors.red,
+                        color: context.appColors.red,
                         fontSize: AppFontSize.s18,
                       ),
                     ),
@@ -56,7 +56,7 @@ class CustomColorField extends StatelessWidget {
         horizontal: AppPaddingWidth.p8,
       ),
       decoration: BoxDecoration(
-        border: Border.all(color: AppColors.grey),
+        border: Border.all(color: context.appColors.grey),
         borderRadius: BorderRadius.circular(AppRadius.r3),
       ),
       child: SizedBox(
@@ -92,7 +92,7 @@ class CustomColorField extends StatelessWidget {
               end: AppPaddingWidth.p20,
               start: AppPaddingWidth.p20,
             ),
-            backgroundColor: AppColors.backGround,
+            backgroundColor: context.appColors.backGround,
             content: SingleChildScrollView(
               child: ColorPicker(
                 pickerAreaBorderRadius: BorderRadius.circular(AppRadius.r16),

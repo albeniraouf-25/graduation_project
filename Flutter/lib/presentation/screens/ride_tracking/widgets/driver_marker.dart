@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 
 class DriverMarkerWidget extends StatelessWidget {
@@ -10,12 +10,12 @@ class DriverMarkerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: context.appColors.primary,
         shape: BoxShape.circle,
-        border: Border.all(color: AppColors.white, width: 2.5),
+        border: Border.all(color: context.appColors.white, width: 2.5),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.4),
+            color: context.appColors.primary.withOpacity(0.4),
             blurRadius: 8,
             spreadRadius: 2,
           ),
@@ -24,7 +24,7 @@ class DriverMarkerWidget extends StatelessWidget {
       child: Center(
         child: FaIcon(
           FontAwesomeIcons.carSide,
-          color: AppColors.white,
+          color: context.appColors.white,
           size: AppSize.s16,
         ),
       ),

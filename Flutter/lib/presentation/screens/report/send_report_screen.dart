@@ -11,7 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/custom_elevated_button.dart';
@@ -49,36 +49,36 @@ class _SendReportContentState extends State<_SendReportContent> {
   int selectedTypeIndex = 3; // افتراضياً تحرش
   final TextEditingController _detailsController = TextEditingController();
 
-  final List<Map<String, dynamic>> reportTypes = [
+  List<Map<String, dynamic>> _reportTypes(BuildContext context) => [
     {
       'titleKey': 'dangerous',
       'subKey': 'dangerous_sub',
       'icon': FontAwesomeIcons.triangleExclamation,
-      'color': AppColors.red,
+      'color': context.appColors.red,
     },
     {
       'titleKey': 'fake',
       'subKey': 'fake_sub',
       'icon': FontAwesomeIcons.masksTheater,
-      'color': AppColors.primary,
+      'color': context.appColors.primary,
     },
     {
       'titleKey': 'spam',
       'subKey': 'spam_sub',
       'icon': FontAwesomeIcons.envelope,
-      'color': AppColors.primary,
+      'color': context.appColors.primary,
     },
     {
       'titleKey': 'harassment',
       'subKey': 'harassment_sub',
       'icon': FontAwesomeIcons.userGroup,
-      'color': AppColors.primary,
+      'color': context.appColors.primary,
     },
     {
       'titleKey': 'inappropriate_content',
       'subKey': 'inappropriate_sub',
       'icon': FontAwesomeIcons.ban,
-      'color': AppColors.red,
+      'color': context.appColors.red,
     },
   ];
 
@@ -86,9 +86,10 @@ class _SendReportContentState extends State<_SendReportContent> {
   Widget build(BuildContext context) {
     final tr = context.loc;
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
+    final reportTypes = _reportTypes(context);
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: BlocConsumer<CreateReportBloc, ICreateReportState>(
           listener: (context, state) {
@@ -123,7 +124,7 @@ class _SendReportContentState extends State<_SendReportContent> {
                         isRtl
                             ? FontAwesomeIcons.chevronRight
                             : FontAwesomeIcons.chevronLeft,
-                        color: AppColors.blackText,
+                        color: context.appColors.blackText,
                         size: AppSize.s20,
                       ),
                     ),
@@ -146,7 +147,7 @@ class _SendReportContentState extends State<_SendReportContent> {
                       children: [
                         FaIcon(
                           FontAwesomeIcons.circleInfo,
-                          color: AppColors.primary,
+                          color: context.appColors.primary,
                           size: AppSize.s16,
                         ),
                         SectionTitle(
@@ -158,7 +159,7 @@ class _SendReportContentState extends State<_SendReportContent> {
                     BodyTitle(
                       text: tr.choose_report_type_sub,
                       fontSize: AppFontSize.s12,
-                      color: AppColors.greyText,
+                      color: context.appColors.greyText,
                     ),
                   ],
                 ),
@@ -166,22 +167,22 @@ class _SendReportContentState extends State<_SendReportContent> {
                 // خيارات أنواع البلاغات الخمسة مع الراديو والأيقونات
                 Container(
                   decoration: BoxDecoration(
-                    color: AppColors.white,
+                    color: context.appColors.white,
                     borderRadius: BorderRadius.circular(AppRadius.r16),
-                    border: Border.all(color: AppColors.lightGreySec),
+                    border: Border.all(color: context.appColors.lightGreySec),
                   ),
                   child: ListView.separated(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: reportTypes.length,
                     separatorBuilder: (_, __) =>
-                        Divider(color: AppColors.lightGreySec, height: 0),
+                        Divider(color: context.appColors.lightGreySec, height: 0),
                     itemBuilder: (context, index) {
                       final item = reportTypes[index];
                       return RadioListTile<int>(
                         value: index,
                         groupValue: selectedTypeIndex,
-                        activeColor: AppColors.primary,
+                        activeColor: context.appColors.primary,
                         onChanged: (val) {
                           setState(() {
                             selectedTypeIndex = val!;
@@ -202,7 +203,7 @@ class _SendReportContentState extends State<_SendReportContent> {
                                 BodyTitle(
                                   text: _getTranslatedTitle(tr, item['subKey']),
                                   fontSize: AppFontSize.s11,
-                                  color: AppColors.greyText,
+                                  color: context.appColors.greyText,
                                 ),
                               ],
                             ),
@@ -231,7 +232,7 @@ class _SendReportContentState extends State<_SendReportContent> {
                     widthFactor: 1.0,
                     child: FaIcon(
                       FontAwesomeIcons.chevronDown,
-                      color: AppColors.greyText,
+                      color: context.appColors.greyText,
                       size: AppSize.s14,
                     ),
                   ),
@@ -239,7 +240,7 @@ class _SendReportContentState extends State<_SendReportContent> {
                     widthFactor: 1.0,
                     child: FaIcon(
                       FontAwesomeIcons.calendarDay,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                       size: AppSize.s16,
                     ),
                   ),
@@ -257,7 +258,7 @@ class _SendReportContentState extends State<_SendReportContent> {
                     BodyTitle(
                       text: tr.explain_details_sub,
                       fontSize: AppFontSize.s12,
-                      color: AppColors.greyText,
+                      color: context.appColors.greyText,
                     ),
                   ],
                 ),
@@ -276,12 +277,12 @@ class _SendReportContentState extends State<_SendReportContent> {
                       height: AppHeight.h50,
                       width: double.infinity,
                       borderRadius: AppRadius.r12,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                       loading: state is CreateReportLoading,
                       onPressed: () => _submitReport(context, tr),
                       child: BodyTitle(
                         text: tr.send_report_btn,
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         fontSize: AppFontSize.s16,
                         fontWeight: AppFontWeight.bold,
                       ),
@@ -311,7 +312,7 @@ class _SendReportContentState extends State<_SendReportContent> {
 
     final entity = CreateReportEntity(
       userId: widget.userId,
-      type: reportTypes[selectedTypeIndex]['titleKey'] as String,
+      type: _reportTypes(context)[selectedTypeIndex]['titleKey'] as String,
       reason: reason,
       ride: widget.rideId,
     );

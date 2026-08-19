@@ -1,6 +1,6 @@
 from firebase_admin import messaging
 
-from .models import DeviceToken
+from .models import DeviceToken, Notification
 
 
 def send_notification_to_token(
@@ -30,6 +30,18 @@ def send_notification_to_user(
     body,
     data=None
 ):
+
+    # حفظ الإشعار في قاعدة البيانات ليظهر في شاشة الإشعارات داخل التطبيق
+    try:
+        Notification.objects.create(
+            user=user,
+            title=title or "",
+            body=body or "",
+            notification_type=(data or {}).get("type", "") if isinstance(data, dict) else "",
+            data=data if isinstance(data, dict) else None,
+        )
+    except Exception as e:  # noqa: BLE001
+        print(f"Failed to persist notification: {e}")
 
     device_tokens = DeviceToken.objects.filter(
         user=user

@@ -422,6 +422,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get my_rides => 'رحلاتي';
 
   @override
+  String get my_reservations => 'حجوزاتي';
+
+  @override
   String get uncompleted => 'غير منجزة';
 
   @override

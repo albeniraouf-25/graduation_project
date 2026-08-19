@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
-import '../../../core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 
 class SectionTitle extends StatelessWidget {
   const SectionTitle({
@@ -44,7 +44,7 @@ class SectionTitle extends StatelessWidget {
       overflow: overflow ?? TextOverflow.ellipsis,
       maxLines: maxLines,
       style: baseStyle.copyWith(
-        color: color ?? AppColors.blackText,
+        color: color ?? context.appColors.blackText,
         fontWeight: fontWeight ?? AppFontWeight.bold,
         fontSize: fontSize ?? AppFontSize.s16,
         decoration: decoration,

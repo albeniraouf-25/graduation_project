@@ -43,7 +43,7 @@ urlpatterns = [
     path('api/payments/', include('payments.urls')),
 
     # Notifications API Endpoints
-    # path('api/notifications/', include('notifications.urls')),
+    path('api/notifications/', include('notifications.urls')),
 
     # Dashboard API Endpoints
     path('api/dashboard/', include('dashboard.urls')),

@@ -226,7 +226,7 @@ import 'package:go_router/go_router.dart';
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
 import 'package:a_tareqaak/core/helper/share_helper.dart';
 import 'package:a_tareqaak/core/l10n/app_localizations.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/core/routes/app_routes.dart';
@@ -280,7 +280,7 @@ class _RideDetailsContent extends StatelessWidget {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: BlocBuilder<RideDetailsBloc, IRideDetailsState>(
           builder: (context, state) {
@@ -310,7 +310,7 @@ class _RideDetailsContent extends StatelessWidget {
                           onPressed: () => context.pop(),
                           icon: FaIcon(
                             isRtl ? FontAwesomeIcons.chevronRight : FontAwesomeIcons.chevronLeft,
-                            color: AppColors.blackText,
+                            color: context.appColors.blackText,
                             size: AppSize.s20,
                           ),
                         ),
@@ -326,11 +326,11 @@ class _RideDetailsContent extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.all(AppPaddingWidth.p16),
                       decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         borderRadius: BorderRadius.circular(AppRadius.r16),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.primary.withOpacity(0.08),
+                            color: context.appColors.primary.withOpacity(0.08),
                             blurRadius: 12,
                           ),
                         ],
@@ -341,17 +341,17 @@ class _RideDetailsContent extends StatelessWidget {
                           SectionTitle(
                             text: ride.location ?? '',
                             fontSize: AppFontSize.s16,
-                            color: AppColors.primary,
+                            color: context.appColors.primary,
                           ),
                           FaIcon(
                             FontAwesomeIcons.arrowRightLong,
-                            color: AppColors.primary,
+                            color: context.appColors.primary,
                             size: AppSize.s20,
                           ),
                           SectionTitle(
                             text: ride.destination ?? '',
                             fontSize: AppFontSize.s16,
-                            color: AppColors.primary,
+                            color: context.appColors.primary,
                           ),
                         ],
                       ),
@@ -360,19 +360,19 @@ class _RideDetailsContent extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.all(AppPaddingWidth.p14),
                       decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         borderRadius: BorderRadius.circular(AppRadius.r16),
-                        border: Border.all(color: AppColors.lightGreySec),
+                        border: Border.all(color: context.appColors.lightGreySec),
                       ),
                       child: Row(
                         spacing: AppWidth.w12,
                         children: [
                           CircleAvatar(
                             radius: AppRadius.r25,
-                            backgroundColor: AppColors.lightGrey,
+                            backgroundColor: context.appColors.lightGrey,
                             child: FaIcon(
                               FontAwesomeIcons.user,
-                              color: AppColors.primary,
+                              color: context.appColors.primary,
                               size: AppSize.s24,
                             ),
                           ),
@@ -388,7 +388,7 @@ class _RideDetailsContent extends StatelessWidget {
                                 BodyTitle(
                                   text: '${ride.departureDate ?? ''} | ${ride.departureTime ?? ''}',
                                   fontSize: AppFontSize.s12,
-                                  color: AppColors.greyText,
+                                  color: context.appColors.greyText,
                                 ),
                               ],
                             ),
@@ -403,7 +403,7 @@ class _RideDetailsContent extends StatelessWidget {
                       height: AppHeight.h50,
                       width: double.infinity,
                       borderRadius: AppRadius.r12,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                       onPressed: () {
                         RideTrackingRoute($extra: ride, isDriver: false).push(context);
                       },
@@ -413,12 +413,12 @@ class _RideDetailsContent extends StatelessWidget {
                         children: [
                           FaIcon(
                             FontAwesomeIcons.locationCrosshairs,
-                            color: AppColors.white,
+                            color: context.appColors.white,
                             size: AppSize.s18,
                           ),
                           BodyTitle(
                             text: "تتبع مسار الرحلة مباشرة",
-                            color: AppColors.white,
+                            color: context.appColors.white,
                             fontSize: AppFontSize.s16,
                             fontWeight: AppFontWeight.bold,
                           ),
@@ -431,7 +431,7 @@ class _RideDetailsContent extends StatelessWidget {
                       height: AppHeight.h50,
                       width: double.infinity,
                       borderRadius: AppRadius.r12,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                       onPressed: () => _shareRide(context, tr, ride),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -439,12 +439,12 @@ class _RideDetailsContent extends StatelessWidget {
                         children: [
                           FaIcon(
                             FontAwesomeIcons.shareNodes,
-                            color: AppColors.white,
+                            color: context.appColors.white,
                             size: AppSize.s18,
                           ),
                           BodyTitle(
                             text: tr.share_ride,
-                            color: AppColors.white,
+                            color: context.appColors.white,
                             fontSize: AppFontSize.s16,
                             fontWeight: AppFontWeight.bold,
                           ),

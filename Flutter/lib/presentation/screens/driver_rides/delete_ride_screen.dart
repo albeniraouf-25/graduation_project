@@ -1,5 +1,5 @@
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/data/models/rides/ride_data_model.dart';
@@ -57,7 +57,7 @@ class _DeleteRideContent extends StatelessWidget {
           SectionTitle(
             text: tr.confirm_delete_title,
             fontSize: AppFontSize.s16,
-            color: AppColors.red,
+            color: context.appColors.red,
           ),
           BodyTitle(
             text: tr.confirm_delete_msg,
@@ -67,16 +67,16 @@ class _DeleteRideContent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               CustomElevatedButton(
-                borderSide: const BorderSide(color: AppColors.primary, width: 1.0),
+                borderSide: BorderSide(color: context.appColors.primary, width: 1.0),
                 borderRadius: AppRadius.r8,
                 onPressed: () => Navigator.pop(context),
                 child: BodyTitle(
                   text: tr.cancel,
-                  color: AppColors.blackText,
+                  color: context.appColors.blackText,
                 ),
               ),
               CustomElevatedButton(
-                borderSide: const BorderSide(color: AppColors.red, width: 1.0),
+                borderSide: BorderSide(color: context.appColors.red, width: 1.0),
                 borderRadius: AppRadius.r8,
                 onPressed: () {
                   Navigator.pop(context);
@@ -86,7 +86,7 @@ class _DeleteRideContent extends StatelessWidget {
                 },
                 child: BodyTitle(
                   text: tr.delete_btn,
-                  color: AppColors.blackText,
+                  color: context.appColors.blackText,
                   fontWeight: AppFontWeight.bold,
                 ),
               ),
@@ -103,7 +103,7 @@ class _DeleteRideContent extends StatelessWidget {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: BlocListener<CancelRideBloc, ICancelRideState>(
           listener: (context, state) {
@@ -111,7 +111,7 @@ class _DeleteRideContent extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(tr.ride_deleted_success),
-                  backgroundColor: AppColors.red,
+                  backgroundColor: context.appColors.red,
                 ),
               );
               context.read<MyRidesBloc>().add(const GetMyRidesEvent());
@@ -119,7 +119,7 @@ class _DeleteRideContent extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.message),
-                  backgroundColor: AppColors.red,
+                  backgroundColor: context.appColors.red,
                 ),
               );
             }
@@ -138,7 +138,7 @@ class _DeleteRideContent extends StatelessWidget {
                       onPressed: () => context.pop(),
                       icon: FaIcon(
                         FontAwesomeIcons.xmark,
-                        color: AppColors.blackText,
+                        color: context.appColors.blackText,
                         size: AppSize.s20,
                       ),
                     ),
@@ -153,7 +153,7 @@ class _DeleteRideContent extends StatelessWidget {
                         isRtl
                             ? FontAwesomeIcons.chevronRight
                             : FontAwesomeIcons.chevronLeft,
-                        color: AppColors.blackText,
+                        color: context.appColors.blackText,
                         size: AppSize.s20,
                       ),
                     ),
@@ -163,7 +163,7 @@ class _DeleteRideContent extends StatelessWidget {
               Center(
                 child: BodyTitle(
                   text: tr.swipe_to_delete_hint,
-                  color: AppColors.greyText,
+                  color: context.appColors.greyText,
                   fontSize: AppFontSize.s13,
                 ),
               ),
@@ -205,7 +205,7 @@ class _DeleteRideContent extends StatelessWidget {
                             alignment: Alignment.centerLeft,
                             padding: EdgeInsets.only(left: AppPaddingWidth.p20),
                             decoration: BoxDecoration(
-                              color: AppColors.red,
+                              color: context.appColors.red,
                               borderRadius: BorderRadius.circular(AppRadius.r16),
                             ),
                             child: Column(
@@ -213,12 +213,12 @@ class _DeleteRideContent extends StatelessWidget {
                               children: [
                                 FaIcon(
                                   FontAwesomeIcons.trashCan,
-                                  color: AppColors.white,
+                                  color: context.appColors.white,
                                   size: AppSize.s20,
                                 ),
                                 BodyTitle(
                                   text: tr.delete_btn,
-                                  color: AppColors.white,
+                                  color: context.appColors.white,
                                   fontSize: AppFontSize.s12,
                                 ),
                               ],
@@ -227,11 +227,11 @@ class _DeleteRideContent extends StatelessWidget {
                           child: Container(
                             padding: EdgeInsets.all(AppPaddingWidth.p16),
                             decoration: BoxDecoration(
-                              color: AppColors.white,
+                              color: context.appColors.white,
                               borderRadius: BorderRadius.circular(AppRadius.r16),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColors.primary.withOpacity(0.08),
+                                  color: context.appColors.primary.withOpacity(0.08),
                                   blurRadius: 12,
                                   spreadRadius: 1,
                                   offset: const Offset(0, 4),
@@ -255,7 +255,7 @@ class _DeleteRideContent extends StatelessWidget {
                                           FaIcon(
                                             FontAwesomeIcons.arrowRightLong,
                                             size: AppSize.s14,
-                                            color: AppColors.primary,
+                                            color: context.appColors.primary,
                                           ),
                                           SectionTitle(
                                             text: ride.destination ?? '',
@@ -267,13 +267,13 @@ class _DeleteRideContent extends StatelessWidget {
                                         text:
                                             '${ride.departureDate ?? ''} - ${ride.departureTime ?? ''} | ${ride.cost ?? ''} ${tr.syrian_pound}',
                                         fontSize: AppFontSize.s13,
-                                        color: AppColors.greyText,
+                                        color: context.appColors.greyText,
                                       ),
                                       BodyTitle(
                                         text:
                                             '${ride.availableSeats ?? 0} ${tr.available_seats_count}',
                                         fontSize: AppFontSize.s13,
-                                        color: AppColors.primary,
+                                        color: context.appColors.primary,
                                       ),
                                     ],
                                   ),
@@ -284,7 +284,7 @@ class _DeleteRideContent extends StatelessWidget {
                                   icon: FaIcon(
                                     FontAwesomeIcons.ellipsisVertical,
                                     size: AppSize.s18,
-                                    color: AppColors.greyText,
+                                    color: context.appColors.greyText,
                                   ),
                                 ),
                               ],

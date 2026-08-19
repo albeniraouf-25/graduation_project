@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/core/routes/app_routes.dart';
@@ -70,7 +70,7 @@ class _WalletContent extends StatelessWidget {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
@@ -97,7 +97,7 @@ class _WalletContent extends StatelessWidget {
                         isRtl
                             ? FontAwesomeIcons.chevronRight
                             : FontAwesomeIcons.chevronLeft,
-                        color: AppColors.blackText,
+                        color: context.appColors.blackText,
                         size: AppSize.s20,
                       ),
                     ),
@@ -114,7 +114,7 @@ class _WalletContent extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(AppPaddingWidth.p20),
                   decoration: BoxDecoration(
-                    color: AppColors.primary,
+                    color: context.appColors.primary,
                     borderRadius: BorderRadius.circular(AppRadius.r20),
                   ),
                   child: Column(
@@ -123,7 +123,7 @@ class _WalletContent extends StatelessWidget {
                     children: [
                       BodyTitle(
                         text: tr.wallet_balance,
-                        color: AppColors.white.withOpacity(0.8),
+                        color: context.appColors.white.withOpacity(0.8),
                       ),
                       BlocBuilder<GetWalletBalanceBloc,
                           IGetWalletBalanceState>(
@@ -137,7 +137,7 @@ class _WalletContent extends StatelessWidget {
                                 height: AppSize.s24,
                                 width: AppSize.s24,
                                 child: CircularProgressIndicator(
-                                  color: AppColors.white,
+                                  color: context.appColors.white,
                                   strokeWidth: 2,
                                 ),
                               ),
@@ -148,7 +148,7 @@ class _WalletContent extends StatelessWidget {
                               : '0';
                           return SectionTitle(
                             text: '$balance ${tr.syrian_pound}',
-                            color: AppColors.white,
+                            color: context.appColors.white,
                             fontSize: AppFontSize.s24,
                           );
                         },
@@ -162,7 +162,7 @@ class _WalletContent extends StatelessWidget {
                     padding: EdgeInsets.only(top: AppHeight.h20),
                     child: Center(
                       child: CircularProgressIndicator(
-                          color: AppColors.primary),
+                          color: context.appColors.primary),
                     ),
                   )
                 else ...[
@@ -171,12 +171,12 @@ class _WalletContent extends StatelessWidget {
                     SectionTitle(
                       text: tr.charge_balance,
                       fontSize: AppFontSize.s14,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                     ),
                     _buildTile(
                       context,
                       icon: FontAwesomeIcons.mobileRetro,
-                      iconColor: AppColors.red,
+                      iconColor: context.appColors.red,
                       title: tr.syriatel_cash,
                       onTap: () =>
                           ChargeWalletRoute(method: 'syriatel_cash')
@@ -185,7 +185,7 @@ class _WalletContent extends StatelessWidget {
                     _buildTile(
                       context,
                       icon: FontAwesomeIcons.wallet,
-                      iconColor: AppColors.darkGreen,
+                      iconColor: context.appColors.darkGreen,
                       title: tr.sham_cash,
                       onTap: () =>
                           ChargeWalletRoute(method: 'sham_cash').push(context),
@@ -193,7 +193,7 @@ class _WalletContent extends StatelessWidget {
                     _buildTile(
                       context,
                       icon: FontAwesomeIcons.receipt,
-                      iconColor: AppColors.orange,
+                      iconColor: context.appColors.orange,
                       title: tr.deposit_requests_title,
                       onTap: () => DepositRequestsRoute().push(context),
                     ),
@@ -202,14 +202,14 @@ class _WalletContent extends StatelessWidget {
                     BodyTitle(
                       text: tr.wallet_history_only,
                       fontSize: AppFontSize.s13,
-                      color: AppColors.greyText,
+                      color: context.appColors.greyText,
                     ),
 
                   // سجل المعاملات — متاح للطرفين
                   _buildTile(
                     context,
                     icon: FontAwesomeIcons.list,
-                    iconColor: AppColors.blackText,
+                    iconColor: context.appColors.blackText,
                     title: tr.transaction_history,
                     onTap: () => TransactionHistoryRoute().push(context),
                   ),
@@ -231,9 +231,9 @@ class _WalletContent extends StatelessWidget {
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.appColors.white,
         borderRadius: BorderRadius.circular(AppRadius.r14),
-        border: Border.all(color: AppColors.lightGreySec),
+        border: Border.all(color: context.appColors.lightGreySec),
       ),
       child: ListTile(
         onTap: onTap,
@@ -242,7 +242,7 @@ class _WalletContent extends StatelessWidget {
         trailing: FaIcon(
           FontAwesomeIcons.chevronLeft,
           size: AppSize.s14,
-          color: AppColors.greyText,
+          color: context.appColors.greyText,
         ),
       ),
     );

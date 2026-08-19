@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/custom_text_from_field.dart';
@@ -92,7 +92,7 @@ class CustomInputField extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     fontSize: AppFontSize.s12,
                     fontWeight: AppFontWeight.semiBold,
-                    color: AppColors.primaryLight,
+                    color: context.appColors.primaryLight,
                   ),
                 ),
                 if (req)
@@ -100,7 +100,7 @@ class CustomInputField extends StatelessWidget {
                     text: ' *',
                     style: Theme.of(
                       context,
-                    ).textTheme.bodyMedium!.copyWith(color: AppColors.red, fontSize: AppFontSize.s18),
+                    ).textTheme.bodyMedium!.copyWith(color: context.appColors.red, fontSize: AppFontSize.s18),
                   ),
               ],
             ),
@@ -108,14 +108,14 @@ class CustomInputField extends StatelessWidget {
         SizedBox(
           height: height ?? (isExpanded ?? false ? null : AppHeight.h48),
           child: showFlag
-              ? Directionality(textDirection: TextDirection.ltr, child: _buildTextField())
-              : _buildTextField(),
+              ? Directionality(textDirection: TextDirection.ltr, child: _buildTextField(context))
+              : _buildTextField(context),
         ),
       ],
     );
   }
 
-  Widget _buildTextField() {
+  Widget _buildTextField(BuildContext context) {
     return CustomTextFromField(
       onTapOutside: onTapOutside,
       
@@ -135,7 +135,7 @@ class CustomInputField extends StatelessWidget {
       readOnly: readOnly,
       onTap: onTap,
       // color: AppColors.grey.withAlpha(40),
-      color: AppColors.backGround,
+      color: context.appColors.backGround,
       contentPaddingTop: AppPaddingHeight.p10,
       contentPaddingStart: AppPaddingWidth.p10,
       contentPaddingEnd: AppPaddingWidth.p10,
@@ -144,15 +144,15 @@ class CustomInputField extends StatelessWidget {
       validator: validator,
       enableInputBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(borderRadius ?? AppRadius.r8),
-        borderSide: const BorderSide(color: AppColors.greyDivider, width: 0.7),
+        borderSide: BorderSide(color: context.appColors.greyDivider, width: 0.7),
       ),
       focusedInputBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(borderRadius ?? AppRadius.r8),
-        borderSide: const BorderSide(color: AppColors.primary, width: 0.7),
+        borderSide: BorderSide(color: context.appColors.primary, width: 0.7),
       ),
       errorInputBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppRadius.r8),
-        borderSide: const BorderSide(color: AppColors.red),
+        borderSide: BorderSide(color: context.appColors.red),
       ),
       borderRadius: borderRadius ?? AppRadius.r8,
       prefixIcon: showFlag
@@ -177,7 +177,7 @@ class CustomInputField extends StatelessWidget {
                   text: "+963",
                   fontSize: AppFontSize.s14,
                   fontWeight: AppFontWeight.bold,
-                  color: AppColors.black,
+                  color: context.appColors.black,
                 ),
                 SizedBox(width: AppWidth.w10),
               ],
@@ -186,11 +186,11 @@ class CustomInputField extends StatelessWidget {
       suffixIcon:
           suffixIcon ??
           (showPercentage
-              ? FaIcon(FontAwesomeIcons.percent, color: AppColors.primary, size: AppSize.s20)
+              ? FaIcon(FontAwesomeIcons.percent, color: context.appColors.primary, size: AppSize.s20)
               : showClock
               ? Transform.translate(
                 offset: const Offset(0, 12),
-                child: FaIcon(FontAwesomeIcons.clock, color: AppColors.primary, size: AppSize.s20))
+                child: FaIcon(FontAwesomeIcons.clock, color: context.appColors.primary, size: AppSize.s20))
               : null),
     );
   }

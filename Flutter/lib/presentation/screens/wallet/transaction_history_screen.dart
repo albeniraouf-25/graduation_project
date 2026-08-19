@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/data/models/payment/payment_models.dart';
@@ -27,7 +27,7 @@ class TransactionHistoryScreen extends StatelessWidget {
       create: (_) => GetTransactionsBloc()
         ..add(const GetTransactionsEvent(RidesNoParamsEntity())),
       child: Scaffold(
-        backgroundColor: AppColors.backGround,
+        backgroundColor: context.appColors.backGround,
         body: SafeArea(
           child: Column(
             children: [
@@ -45,7 +45,7 @@ class TransactionHistoryScreen extends StatelessWidget {
                         isRtl
                             ? FontAwesomeIcons.chevronRight
                             : FontAwesomeIcons.chevronLeft,
-                        color: AppColors.blackText,
+                        color: context.appColors.blackText,
                         size: AppSize.s20,
                       ),
                     ),
@@ -65,7 +65,7 @@ class TransactionHistoryScreen extends StatelessWidget {
                         state is GetTransactionsInitial) {
                       return Center(
                         child:
-                            CircularProgressIndicator(color: AppColors.primary),
+                            CircularProgressIndicator(color: context.appColors.primary),
                       );
                     }
                     if (state is GetTransactionsFailed) {
@@ -117,32 +117,32 @@ class TransactionHistoryScreen extends StatelessWidget {
     switch (trx.transactionType) {
       case 'deposit':
         icon = FontAwesomeIcons.arrowDown;
-        color = AppColors.darkGreen;
+        color = context.appColors.darkGreen;
         label = tr.trx_deposit;
         break;
       case 'earning':
         icon = FontAwesomeIcons.sackDollar;
-        color = AppColors.darkGreen;
+        color = context.appColors.darkGreen;
         label = tr.trx_earning;
         break;
       case 'refund':
         icon = FontAwesomeIcons.rotateLeft;
-        color = AppColors.orange;
+        color = context.appColors.orange;
         label = tr.trx_refund;
         break;
       case 'payment':
       default:
         icon = FontAwesomeIcons.arrowUp;
-        color = AppColors.red;
+        color = context.appColors.red;
         label = tr.trx_payment;
     }
 
     return Container(
       padding: EdgeInsets.all(AppPaddingWidth.p16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.appColors.white,
         borderRadius: BorderRadius.circular(AppRadius.r16),
-        border: Border.all(color: AppColors.lightGreySec),
+        border: Border.all(color: context.appColors.lightGreySec),
       ),
       child: Row(
         children: [
@@ -161,7 +161,7 @@ class TransactionHistoryScreen extends StatelessWidget {
                 BodyTitle(
                   text: _formatDate(trx.createdAt),
                   fontSize: AppFontSize.s12,
-                  color: AppColors.greyText,
+                  color: context.appColors.greyText,
                 ),
               ],
             ),
@@ -169,7 +169,7 @@ class TransactionHistoryScreen extends StatelessWidget {
           BodyTitle(
             text: '#${trx.id ?? '-'}',
             fontSize: AppFontSize.s12,
-            color: AppColors.greyText,
+            color: context.appColors.greyText,
           ),
         ],
       ),
@@ -201,12 +201,12 @@ class _MessageView extends StatelessWidget {
           BodyTitle(
             text: message,
             textAlign: TextAlign.center,
-            color: AppColors.greyText,
+            color: context.appColors.greyText,
           ),
           if (onRetry != null)
             TextButton(
               onPressed: onRetry,
-              child: BodyTitle(text: tr.retry, color: AppColors.primary),
+              child: BodyTitle(text: tr.retry, color: context.appColors.primary),
             ),
         ],
       ),

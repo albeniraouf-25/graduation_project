@@ -13,7 +13,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/data/models/rides/ride_data_model.dart';
@@ -100,7 +100,7 @@ class _RideTrackingContent extends StatelessWidget {
         ),
       ],
       child: Scaffold(
-        backgroundColor: AppColors.backGround,
+        backgroundColor: context.appColors.backGround,
         body: Stack(
           children: [
             // الخريطة المباشرة مع Google Maps
@@ -126,14 +126,14 @@ class _RideTrackingContent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CircleAvatar(
-                      backgroundColor: AppColors.white,
+                      backgroundColor: context.appColors.white,
                       child: IconButton(
                         onPressed: () => context.pop(),
                         icon: FaIcon(
                           isRtl
                               ? FontAwesomeIcons.chevronRight
                               : FontAwesomeIcons.chevronLeft,
-                          color: AppColors.blackText,
+                          color: context.appColors.blackText,
                           size: AppSize.s18,
                         ),
                       ),
@@ -144,11 +144,11 @@ class _RideTrackingContent extends StatelessWidget {
                         vertical: AppPaddingHeight.p6,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         borderRadius: BorderRadius.circular(AppRadius.r20),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.primary.withOpacity(0.15),
+                            color: context.appColors.primary.withOpacity(0.15),
                             blurRadius: 8,
                           ),
                         ],
@@ -156,7 +156,7 @@ class _RideTrackingContent extends StatelessWidget {
                       child: SectionTitle(
                         text: "تتبع الرحلة مباشرة",
                         fontSize: AppFontSize.s15,
-                        color: AppColors.primary,
+                        color: context.appColors.primary,
                         fontWeight: AppFontWeight.bold,
                       ),
                     ),

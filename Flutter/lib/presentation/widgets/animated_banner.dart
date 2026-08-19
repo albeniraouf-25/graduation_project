@@ -1,4 +1,4 @@
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/presentation/widgets/text/section_title.dart';
 
 import 'package:flutter/material.dart';
@@ -64,13 +64,13 @@ class AnimatedBannerState extends State<AnimatedBanner> with SingleTickerProvide
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color: context.appColors.white,
                 borderRadius: BorderRadius.circular(8),
                 boxShadow: [
-                   const BoxShadow(
-                    color: AppColors.lightGrey,
+                   BoxShadow(
+                    color: context.appColors.lightGrey,
                     blurRadius: 6,
-                    offset: Offset(0, 2),
+                    offset: const Offset(0, 2),
                   ),
                 ],
               ),

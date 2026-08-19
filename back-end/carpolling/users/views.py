@@ -279,6 +279,64 @@ class Login(APIView):
 
         return Response(token_data, status=status.HTTP_200_OK)
 
+
+class RefreshTokenView(APIView):
+    """Exchanges a valid refresh_token for a fresh access/refresh pair.
+
+    Proxies the OAuth2 token endpoint (grant_type=refresh_token) so the
+    client never needs the OAuth client_id/client_secret. Mirrors `Login`.
+    """
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        refresh_token = request.data.get("refresh_token")
+
+        if not refresh_token:
+            return Response(
+                {"error": "refresh_token is required."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        client_id = getattr(settings, "OAUTH_CLIENT_ID", None)
+        client_secret = getattr(settings, "OAUTH_CLIENT_SECRET", None)
+        token_url = getattr(
+            settings, "OAUTH_TOKEN_URL", "http://127.0.0.1:8000/auth/token/"
+        )
+
+        try:
+            resp = requests.post(
+                token_url,
+                data={
+                    "grant_type": "refresh_token",
+                    "refresh_token": refresh_token,
+                },
+                auth=HTTPBasicAuth(client_id, client_secret),
+                timeout=5,
+            )
+        except requests.RequestException as e:
+            return Response(
+                {
+                    "detail": "Token server error",
+                    "error": str(e),
+                },
+                status=status.HTTP_502_BAD_GATEWAY,
+            )
+
+        if resp.status_code != 200:
+            try:
+                return Response(resp.json(), status=resp.status_code)
+            except ValueError:
+                return Response(
+                    {
+                        "detail": "Token server returned an error",
+                        "body": resp.text,
+                    },
+                    status=resp.status_code,
+                )
+
+        return Response(resp.json(), status=status.HTTP_200_OK)
+
+
 class ForgotPasswordView(APIView):
     permission_classes = [permissions.AllowAny]
     def post(self, request):

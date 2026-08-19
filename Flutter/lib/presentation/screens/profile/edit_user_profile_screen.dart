@@ -9,9 +9,9 @@ import 'package:go_router/go_router.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/extension/validation_extension.dart';
 import 'package:a_tareqaak/presentation/widgets/custom_snack_bar.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/custom_elevated_button.dart';
@@ -71,7 +71,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
     return PopScope(
       canPop: !widget.isMandatory,
       child: Scaffold(
-        backgroundColor: AppColors.backGround,
+        backgroundColor: context.appColors.backGround,
         body: SafeArea(
           child: BlocListener<DriverProfileCubit, DriverProfileState>(
             listener: (context, state) {
@@ -102,7 +102,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                             isRtl
                                 ? FontAwesomeIcons.chevronRight
                                 : FontAwesomeIcons.chevronLeft,
-                            color: AppColors.blackText,
+                            color: context.appColors.blackText,
                             size: AppSize.s20,
                           ),
                         )
@@ -121,12 +121,12 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                     Container(
                       padding: EdgeInsets.all(AppPaddingWidth.p12),
                       decoration: BoxDecoration(
-                        color: AppColors.lightOrange,
+                        color: context.appColors.lightOrange,
                         borderRadius: BorderRadius.circular(AppRadius.r12),
                       ),
                       child: BodyTitle(
                         text: tr.complete_profile_mandatory,
-                        color: AppColors.orange,
+                        color: context.appColors.orange,
                         fontSize: AppFontSize.s12,
                         textAlign: TextAlign.center,
                       ),
@@ -184,7 +184,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                         height: AppHeight.h50,
                         width: double.infinity,
                         borderRadius: AppRadius.r12,
-                        color: AppColors.primary,
+                        color: context.appColors.primary,
                         loading: state is DriverProfileLoadingState,
                         onPressed: () {
                           // التحقق من رقم الهاتف السوري قبل الحفظ
@@ -210,7 +210,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                         },
                         child: BodyTitle(
                           text: tr.save_changes,
-                          color: AppColors.white,
+                          color: context.appColors.white,
                           fontSize: AppFontSize.s16,
                           fontWeight: AppFontWeight.bold,
                         ),

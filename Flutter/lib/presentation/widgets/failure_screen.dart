@@ -1,6 +1,6 @@
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
 import 'package:a_tareqaak/core/resources/app_assets.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/core/routes/app_routes.dart';
@@ -63,8 +63,8 @@ class FailureScreen extends StatelessWidget {
                   height: AppHeight.h50,
                   width: AppWidth.w200,
                   color: Colors.white,
-                  borderSide: const BorderSide(
-                    color: AppColors.primary,
+                  borderSide: BorderSide(
+                    color: context.appColors.primary,
                   ),
                   borderRadius: AppRadius.r9,
                   padding: EdgeInsets.symmetric(
@@ -73,7 +73,7 @@ class FailureScreen extends StatelessWidget {
                   ),
                   child: BodyTitle(
                     text: errorMessage!.contains("Unauthenticated") ? context.loc.login : "tr.try_again",
-                    color: AppColors.primary,
+                    color: context.appColors.primary,
                     fontSize: AppFontSize.s16,
                     fontWeight: AppFontWeight.bold,
                   ),

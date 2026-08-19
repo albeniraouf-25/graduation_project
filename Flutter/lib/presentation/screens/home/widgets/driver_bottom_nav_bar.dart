@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/text/body_title.dart';
@@ -24,14 +24,14 @@ class DriverBottomNavBar extends StatelessWidget {
     return Container(
       height: AppHeight.h70,
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.appColors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(AppRadius.r20),
           topRight: Radius.circular(AppRadius.r20),
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.black.withOpacity(0.05),
+            color: context.appColors.black.withOpacity(0.05),
             blurRadius: 10,
             offset: const Offset(0, -2),
           ),
@@ -41,21 +41,25 @@ class DriverBottomNavBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _buildNavItem(
+            context,
             index: 0,
             icon: FontAwesomeIcons.house,
             label: tr.home,
           ),
           _buildNavItem(
+            context,
             index: 1,
             icon: FontAwesomeIcons.car,
             label: tr.my_rides,
           ),
           _buildNavItem(
+            context,
             index: 2,
             icon: FontAwesomeIcons.bell,
             label: tr.notifications,
           ),
           _buildNavItem(
+            context,
             index: 3,
             icon: FontAwesomeIcons.gear,
             label: tr.settings,
@@ -65,7 +69,8 @@ class DriverBottomNavBar extends StatelessWidget {
     );
   }
 
-  Widget _buildNavItem({
+  Widget _buildNavItem(
+    BuildContext context, {
     required int index,
     required FaIconData icon,
     required String label,
@@ -80,13 +85,17 @@ class DriverBottomNavBar extends StatelessWidget {
           FaIcon(
             icon,
             size: AppSize.s18,
-            color: isSelected ? AppColors.primary : AppColors.greyText,
+            color: isSelected
+                ? context.appColors.primary
+                : context.appColors.greyText,
           ),
           BodyTitle(
             text: label,
             fontSize: AppFontSize.s11,
             fontWeight: isSelected ? AppFontWeight.bold : AppFontWeight.regular,
-            color: isSelected ? AppColors.primary : AppColors.greyText,
+            color: isSelected
+                ? context.appColors.primary
+                : context.appColors.greyText,
           ),
         ],
       ),

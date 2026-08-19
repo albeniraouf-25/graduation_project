@@ -33,7 +33,7 @@ class DriverProfileCubit extends Cubit<DriverProfileState> {
   String? profileImagePath;
   String? carCoverImagePath;
 
-  // اختيار صورة البروفايل الشخصية
+  // اختيار صورة البروفايل الشخصية ثم رفعها مباشرة
   Future<void> pickProfileImage(dynamic context) async {
     final imagePath = await _mediaPickerHelper.pickImage(context);
     if (imagePath != null) {
@@ -42,10 +42,11 @@ class DriverProfileCubit extends Cubit<DriverProfileState> {
         profileImagePath: profileImagePath,
         carCoverImagePath: carCoverImagePath,
       ));
+      await _uploadImages(profilePicturePath: imagePath);
     }
   }
 
-  // اختيار صورة غلاف السيارة
+  // اختيار صورة غلاف السيارة ثم رفعها مباشرة
   Future<void> pickCarCoverImage(dynamic context) async {
     final imagePath = await _mediaPickerHelper.pickImage(context);
     if (imagePath != null) {
@@ -54,6 +55,47 @@ class DriverProfileCubit extends Cubit<DriverProfileState> {
         profileImagePath: profileImagePath,
         carCoverImagePath: carCoverImagePath,
       ));
+      await _uploadImages(carImagePath: imagePath);
+    }
+  }
+
+  // رفع الصورة (بروفايل و/أو غلاف السيارة) فقط دون بقية الحقول
+  Future<void> _uploadImages({
+    String? profilePicturePath,
+    String? carImagePath,
+  }) async {
+    emit(DriverProfileImageUploadingState());
+    try {
+      final type = await _loadUserType();
+
+      final result = type == 'rider'
+          ? await locator<
+                  IUseCase<BaseModel<dynamic>?, UpdateRiderProfileEntity>>(
+              instanceName: 'UpdateRiderProfileUseCase',
+            )(UpdateRiderProfileEntity(
+              profilePicturePath: profilePicturePath,
+            ))
+          : await locator<
+                  IUseCase<BaseModel<dynamic>?, UpdateDriverProfileEntity>>(
+              instanceName: 'UpdateDriverProfileUseCase',
+            )(UpdateDriverProfileEntity(
+              profilePicturePath: profilePicturePath,
+              carImagePath: carImagePath,
+            ));
+
+      result.fold(
+        (l) => emit(DriverProfileImageUploadFailedState(l.message)),
+        (r) {
+          final serverError = r?.error;
+          if (serverError != null && serverError.isNotEmpty) {
+            emit(DriverProfileImageUploadFailedState(serverError));
+            return;
+          }
+          emit(DriverProfileImageUploadedState());
+        },
+      );
+    } catch (e) {
+      emit(DriverProfileImageUploadFailedState(e.toString()));
     }
   }
 
@@ -119,6 +161,7 @@ class DriverProfileCubit extends Cubit<DriverProfileState> {
               name: name,
               phone: phoneNum,
               currentLocation: location.isNotEmpty ? location : null,
+              profilePicturePath: profileImagePath,
             ))
           : await locator<
                   IUseCase<BaseModel<dynamic>?, UpdateDriverProfileEntity>>(
@@ -128,6 +171,8 @@ class DriverProfileCubit extends Cubit<DriverProfileState> {
               phone: phoneNum,
               carNumber: plate,
               carColor: color,
+              profilePicturePath: profileImagePath,
+              carImagePath: carCoverImagePath,
             ));
 
       result.fold(

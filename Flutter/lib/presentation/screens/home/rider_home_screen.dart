@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_assets.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 
@@ -22,7 +22,7 @@ class RiderHomeScreen extends StatelessWidget {
     final tr = context.loc;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(
@@ -49,13 +49,13 @@ class RiderHomeScreen extends StatelessWidget {
               Container(
                 height: AppHeight.h160,
                 decoration: BoxDecoration(
-                  color: AppColors.primary,
+                  color: context.appColors.primary,
                   borderRadius: BorderRadius.circular(AppRadius.r20),
                   image: DecorationImage(
                     image: AssetImage(AppAssets.defult),
                     fit: BoxFit.cover,
                     colorFilter: ColorFilter.mode(
-                      AppColors.primary.withOpacity(0.85),
+                      context.appColors.primary.withOpacity(0.85),
                       BlendMode.srcOver,
                     ),
                   ),
@@ -67,12 +67,12 @@ class RiderHomeScreen extends StatelessWidget {
                   children: [
                     SectionTitle(
                       text: tr.search_ride_banner_title,
-                      color: AppColors.white,
+                      color: context.appColors.white,
                       fontSize: AppFontSize.s22,
                     ),
                     BodyTitle(
                       text: tr.search_ride_banner_sub,
-                      color: AppColors.white.withOpacity(0.9),
+                      color: context.appColors.white.withOpacity(0.9),
                       fontSize: AppFontSize.s13,
                     ),
                     InkWell(
@@ -83,7 +83,7 @@ class RiderHomeScreen extends StatelessWidget {
                           vertical: AppPaddingHeight.p10,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.white,
+                          color: context.appColors.white,
                           borderRadius: BorderRadius.circular(AppRadius.r12),
                         ),
                         child: Row(
@@ -91,12 +91,12 @@ class RiderHomeScreen extends StatelessWidget {
                           children: [
                             BodyTitle(
                               text: tr.search_or_request_ride,
-                              color: AppColors.greyText,
+                              color: context.appColors.greyText,
                             ),
                             FaIcon(
                               FontAwesomeIcons.magnifyingGlass,
                               size: AppSize.s16,
-                              color: AppColors.primary,
+                              color: context.appColors.primary,
                             ),
                           ],
                         ),
@@ -117,7 +117,7 @@ class RiderHomeScreen extends StatelessWidget {
                   BodyTitle(
                     text: tr.view_all,
                     fontSize: AppFontSize.s13,
-                    color: AppColors.primary,
+                    color: context.appColors.primary,
                   ),
                 ],
               ),

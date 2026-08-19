@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/loading_widget.dart';
 
@@ -15,11 +15,11 @@ class MapLoading extends StatelessWidget {
         height: AppHeight.h45,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppRadius.r25),
-          color: AppColors.backGround,
-          boxShadow: const [
+          color: context.appColors.backGround,
+          boxShadow: [
             BoxShadow(
-              color: AppColors.black,
-              offset: Offset(0, 0),
+              color: context.appColors.black,
+              offset: const Offset(0, 0),
               spreadRadius: -10,
               blurRadius: 15,
             ),

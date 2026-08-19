@@ -2,13 +2,15 @@ import 'package:a_tareqaak/core/resources/app_assets.dart';
 import 'package:a_tareqaak/core/routes/app_routes.dart';
 import 'package:a_tareqaak/presentation/cubit/profile/driver_profile_cubit.dart';
 import 'package:a_tareqaak/presentation/cubit/profile/driver_profile_state.dart';
+import 'package:a_tareqaak/presentation/widgets/custom_snack_bar.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/helper/launch_url_helper.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/custom_elevated_button.dart';
@@ -69,14 +71,14 @@ class _ProfileContent extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogCtx),
-            child: BodyTitle(text: tr.cancel, color: AppColors.greyText),
+            child: BodyTitle(text: tr.cancel, color: context.appColors.greyText),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(dialogCtx);
               SendReportRoute(userId: otherUserId ?? 0).push(context);
             },
-            child: BodyTitle(text: tr.ok, color: AppColors.red),
+            child: BodyTitle(text: tr.ok, color: context.appColors.red),
           ),
         ],
       ),
@@ -89,7 +91,7 @@ class _ProfileContent extends StatelessWidget {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: BlocConsumer<DriverProfileCubit, DriverProfileState>(
           builder: (context, state) {
@@ -101,17 +103,26 @@ class _ProfileContent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // الهيدر الرئيسي مع غلاف السيارة والصورة الشخصية المتداخلة
-                  Stack(
+                  // نحيط الـ Stack بـ SizedBox يحجز مساحة تدلّي الصورة الشخصية
+                  // حتى تبقى أيقونة الكاميرا داخل حدود الـ Stack وتكون قابلة للنقر.
+                  SizedBox(
+                    height: AppHeight.h220 + AppHeight.h50,
+                    child: Stack(
                     clipBehavior: Clip.none,
                     alignment: Alignment.bottomCenter,
                     children: [
-                      InkWell(
-                        onTap: () => cubit.pickCarCoverImage(context),
-                        child: ImageView(
-                          imagePath: cubit.carCoverImagePath ?? AppAssets.defult,
-                          height: AppHeight.h220,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: InkWell(
+                          onTap: () => cubit.pickCarCoverImage(context),
+                          child: ImageView(
+                            imagePath: cubit.carCoverImagePath ?? AppAssets.defult,
+                            height: AppHeight.h220,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       Positioned(
@@ -119,7 +130,7 @@ class _ProfileContent extends StatelessWidget {
                         left: isRtl ? null : AppWidth.w15,
                         right: isRtl ? AppWidth.w15 : null,
                         child: CircleAvatar(
-                          backgroundColor: AppColors.white,
+                          backgroundColor: context.appColors.white,
                           radius: AppRadius.r18,
                           child: IconButton(
                             padding: EdgeInsets.zero,
@@ -128,7 +139,7 @@ class _ProfileContent extends StatelessWidget {
                               isRtl
                                   ? FontAwesomeIcons.chevronRight
                                   : FontAwesomeIcons.chevronLeft,
-                              color: AppColors.blackText,
+                              color: context.appColors.blackText,
                               size: AppSize.s16,
                             ),
                           ),
@@ -139,7 +150,7 @@ class _ProfileContent extends StatelessWidget {
                         left: isRtl ? AppWidth.w15 : null,
                         right: isRtl ? null : AppWidth.w15,
                         child: CircleAvatar(
-                          backgroundColor: AppColors.white,
+                          backgroundColor: context.appColors.white,
                           radius: AppRadius.r18,
                           child: IconButton(
                             padding: EdgeInsets.zero,
@@ -151,22 +162,22 @@ class _ProfileContent extends StatelessWidget {
                                   ? FontAwesomeIcons.triangleExclamation
                                   : FontAwesomeIcons.ellipsisVertical,
                               color: isOtherUser
-                                  ? AppColors.red
-                                  : AppColors.blackText,
+                                  ? context.appColors.red
+                                  : context.appColors.blackText,
                               size: AppSize.s16,
                             ),
                           ),
                         ),
                       ),
                       Positioned(
-                        bottom: -AppHeight.h50,
+                        bottom: 0,
                         child: Stack(
                           alignment: Alignment.bottomRight,
                           children: [
                             Container(
                               padding: EdgeInsets.all(AppPaddingWidth.p4),
-                              decoration: const BoxDecoration(
-                                color: AppColors.white,
+                              decoration: BoxDecoration(
+                                color: context.appColors.white,
                                 shape: BoxShape.circle,
                               ),
                               child: ImageView(
@@ -184,11 +195,11 @@ class _ProfileContent extends StatelessWidget {
                               onTap: () => cubit.pickProfileImage(context),
                               child: CircleAvatar(
                                 radius: AppRadius.r18,
-                                backgroundColor: AppColors.primary,
+                                backgroundColor: context.appColors.primary,
                                 child: FaIcon(
                                   FontAwesomeIcons.camera,
                                   size: AppSize.s14,
-                                  color: AppColors.white,
+                                  color: context.appColors.white,
                                 ),
                               ),
                             ),
@@ -196,9 +207,8 @@ class _ProfileContent extends StatelessWidget {
                         ),
                       ),
                     ],
+                    ),
                   ),
-
-                  SizedBox(height: AppHeight.h35),
 
                   // البيانات الأساسية
                   Column(
@@ -215,7 +225,7 @@ class _ProfileContent extends StatelessWidget {
                           ),
                           FaIcon(
                             FontAwesomeIcons.circleCheck,
-                            color: AppColors.primaryLight,
+                            color: context.appColors.primaryLight,
                             size: AppSize.s18,
                           ),
                         ],
@@ -226,7 +236,7 @@ class _ProfileContent extends StatelessWidget {
                         children: [
                           FaIcon(
                             FontAwesomeIcons.solidStar,
-                            color: AppColors.orange,
+                            color: context.appColors.orange,
                             size: AppSize.s14,
                           ),
                           BodyTitle(
@@ -242,12 +252,12 @@ class _ProfileContent extends StatelessWidget {
                         children: [
                           FaIcon(
                             FontAwesomeIcons.calendarDay,
-                            color: AppColors.greyText,
+                            color: context.appColors.greyText,
                             size: AppSize.s12,
                           ),
                           BodyTitle(
                             text: tr.joined_date,
-                            color: AppColors.greyText,
+                            color: context.appColors.greyText,
                             fontSize: AppFontSize.s12,
                           ),
                         ],
@@ -266,9 +276,9 @@ class _ProfileContent extends StatelessWidget {
                           child: CustomElevatedButton(
                             height: AppHeight.h45,
                             borderRadius: AppRadius.r12,
-                            color: AppColors.backGround,
+                            color: context.appColors.backGround,
                             borderSide:
-                                const BorderSide(color: AppColors.greyDivider),
+                                BorderSide(color: context.appColors.greyDivider),
                             onPressed: () {
                               LaunchUrlHelper.call(cubit.phone);
                             },
@@ -278,12 +288,12 @@ class _ProfileContent extends StatelessWidget {
                               children: [
                                 FaIcon(
                                   FontAwesomeIcons.phone,
-                                  color: AppColors.primary,
+                                  color: context.appColors.primary,
                                   size: AppSize.s16,
                                 ),
                                 BodyTitle(
                                   text: tr.call,
-                                  color: AppColors.primary,
+                                  color: context.appColors.primary,
                                   fontWeight: AppFontWeight.bold,
                                 ),
                               ],
@@ -296,8 +306,8 @@ class _ProfileContent extends StatelessWidget {
                             child: CustomElevatedButton(
                               height: AppHeight.h45,
                               borderRadius: AppRadius.r12,
-                              color: AppColors.white,
-                              borderSide: const BorderSide(color: AppColors.red),
+                              color: context.appColors.white,
+                              borderSide: BorderSide(color: context.appColors.red),
                               onPressed: () {
                                 SendReportRoute(userId: otherUserId ?? 0)
                                     .push(context);
@@ -308,12 +318,12 @@ class _ProfileContent extends StatelessWidget {
                                 children: [
                                   FaIcon(
                                     FontAwesomeIcons.flag,
-                                    color: AppColors.red,
+                                    color: context.appColors.red,
                                     size: AppSize.s16,
                                   ),
                                   BodyTitle(
                                     text: tr.report,
-                                    color: AppColors.red,
+                                    color: context.appColors.red,
                                     fontWeight: AppFontWeight.bold,
                                   ),
                                 ],
@@ -335,14 +345,14 @@ class _ProfileContent extends StatelessWidget {
                         SectionTitle(
                           text: tr.contact_info_header,
                           fontSize: AppFontSize.s14,
-                          color: AppColors.primary,
+                          color: context.appColors.primary,
                         ),
                         Container(
                           padding: EdgeInsets.all(AppPaddingWidth.p14),
                           decoration: BoxDecoration(
-                            color: AppColors.white,
+                            color: context.appColors.white,
                             borderRadius: BorderRadius.circular(AppRadius.r14),
-                            border: Border.all(color: AppColors.lightGreySec),
+                            border: Border.all(color: context.appColors.lightGreySec),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -353,7 +363,7 @@ class _ProfileContent extends StatelessWidget {
                                   FaIcon(
                                     FontAwesomeIcons.phone,
                                     size: AppSize.s16,
-                                    color: AppColors.primary,
+                                    color: context.appColors.primary,
                                   ),
                                   BodyTitle(text: cubit.phone),
                                 ],
@@ -361,7 +371,7 @@ class _ProfileContent extends StatelessWidget {
                               FaIcon(
                                 FontAwesomeIcons.chevronLeft,
                                 size: AppSize.s12,
-                                color: AppColors.greyText,
+                                color: context.appColors.greyText,
                               ),
                             ],
                           ),
@@ -382,31 +392,34 @@ class _ProfileContent extends StatelessWidget {
                           SectionTitle(
                             text: tr.car_info_header,
                             fontSize: AppFontSize.s14,
-                            color: AppColors.primary,
+                            color: context.appColors.primary,
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              color: AppColors.white,
+                              color: context.appColors.white,
                               borderRadius: BorderRadius.circular(AppRadius.r16),
-                              border: Border.all(color: AppColors.lightGreySec),
+                              border: Border.all(color: context.appColors.lightGreySec),
                             ),
                             child: Column(
                               children: [
                                 _buildCarDetailRow(
+                                  context,
                                   icon: FontAwesomeIcons.car,
                                   label: tr.car_type,
                                   value: cubit.carName,
                                 ),
                                 Divider(
-                                    color: AppColors.lightGreySec, height: 0),
+                                    color: context.appColors.lightGreySec, height: 0),
                                 _buildCarDetailRow(
+                                  context,
                                   icon: FontAwesomeIcons.palette,
                                   label: tr.car_color,
                                   value: cubit.carColor,
                                 ),
                                 Divider(
-                                    color: AppColors.lightGreySec, height: 0),
+                                    color: context.appColors.lightGreySec, height: 0),
                                 _buildCarDetailRow(
+                                  context,
                                   icon: FontAwesomeIcons.calendarDay,
                                   label: tr.plate_number,
                                   value: cubit.carPlate,
@@ -431,15 +444,16 @@ class _ProfileContent extends StatelessWidget {
                           SectionTitle(
                             text: tr.current_location,
                             fontSize: AppFontSize.s14,
-                            color: AppColors.primary,
+                            color: context.appColors.primary,
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              color: AppColors.white,
+                              color: context.appColors.white,
                               borderRadius: BorderRadius.circular(AppRadius.r16),
-                              border: Border.all(color: AppColors.lightGreySec),
+                              border: Border.all(color: context.appColors.lightGreySec),
                             ),
                             child: _buildCarDetailRow(
+                              context,
                               icon: FontAwesomeIcons.locationDot,
                               label: tr.current_location,
                               value: cubit.currentLocation,
@@ -461,11 +475,11 @@ class _ProfileContent extends StatelessWidget {
                         height: AppHeight.h50,
                         width: double.infinity,
                         borderRadius: AppRadius.r12,
-                        color: AppColors.primary,
+                        color: context.appColors.primary,
                         onPressed: () => EditDriverProfileRoute().push(context),
                         child: BodyTitle(
                           text: tr.edit_profile_btn,
-                          color: AppColors.white,
+                          color: context.appColors.white,
                           fontSize: AppFontSize.s16,
                           fontWeight: AppFontWeight.bold,
                         ),
@@ -474,13 +488,30 @@ class _ProfileContent extends StatelessWidget {
                 ],
               ),
             );
-          }, listener: (BuildContext context, DriverProfileState state) {  },
+          }, listener: (BuildContext context, DriverProfileState state) {
+            if (state is DriverProfileImageUploadedState) {
+              showCustomSnackBar(
+                context: context,
+                title: context.loc.success_title,
+                message: context.loc.success_title,
+                contentType: ContentType.success,
+              );
+            } else if (state is DriverProfileImageUploadFailedState) {
+              showCustomSnackBar(
+                context: context,
+                title: context.loc.error_title,
+                message: state.message,
+                contentType: ContentType.failure,
+              );
+            }
+          },
         ),
       ),
     );
   }
 
-  Widget _buildCarDetailRow({
+  Widget _buildCarDetailRow(
+    BuildContext context, {
     required FaIconData icon,
     required String label,
     required String value,
@@ -493,7 +524,7 @@ class _ProfileContent extends StatelessWidget {
           Row(
             spacing: AppWidth.w10,
             children: [
-              FaIcon(icon, size: AppSize.s16, color: AppColors.primary),
+              FaIcon(icon, size: AppSize.s16, color: context.appColors.primary),
               BodyTitle(text: label, fontSize: AppFontSize.s14),
             ],
           ),
@@ -508,7 +539,7 @@ class _ProfileContent extends StatelessWidget {
               FaIcon(
                 FontAwesomeIcons.chevronLeft,
                 size: AppSize.s12,
-                color: AppColors.greyText,
+                color: context.appColors.greyText,
               ),
             ],
           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 
 class BodyTitle extends StatelessWidget {
@@ -39,7 +39,7 @@ class BodyTitle extends StatelessWidget {
       overflow: overflow ?? TextOverflow.ellipsis,
       maxLines: maxLines,
       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-            color: color ?? AppColors.blackText,
+            color: color ?? context.appColors.blackText,
             fontSize: fontSize ?? AppFontSize.s14,
             fontWeight: fontWeight ?? AppFontWeight.medium,
             decoration: decoration,

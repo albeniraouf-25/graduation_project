@@ -17,10 +17,14 @@ import 'dart:convert';
 @Injectable()
 class NetworkHelper {
   late final Dio _dio;
+  // Dio منفصل بدون معترضات لاستدعاء تجديد الرمز (تفادي الحلقات اللانهائية)
+  late final Dio _refreshDio;
   void Function()? _onUserArchived;
   void Function()? _onSessionExpired;
   bool _archiveFlowHandled = false;
   bool _sessionExpiredFlowHandled = false;
+  // مشاركة نفس عملية التجديد بين كل الطلبات المتزامنة التي تلقّت 401
+  Future<String?>? _refreshInProgress;
 
   // Singleton pattern
   static final NetworkHelper _instance = NetworkHelper._internal();
@@ -29,6 +33,14 @@ class NetworkHelper {
 
   NetworkHelper._internal() {
     _dio = _initializeDio();
+    _refreshDio = Dio(
+      BaseOptions(
+        baseUrl: ApiEndpoints.baseUrl,
+        connectTimeout: const Duration(seconds: 120),
+        receiveTimeout: const Duration(seconds: 120),
+        headers: {'Accept': 'application/json'},
+      ),
+    );
   }
 
   Dio get dio => _dio;
@@ -49,7 +61,101 @@ class NetworkHelper {
       receiveTimeout: const Duration(seconds: 120),
       headers: {'Accept': 'application/json'},
     );
-    return Dio(options)..interceptors.addAll([_createLogger(), PrettyLoggerInterceptor()]);
+    return Dio(options)
+      ..interceptors.addAll([
+        _createRefreshInterceptor(),
+        _createLogger(),
+        PrettyLoggerInterceptor(),
+      ]);
+  }
+
+  /// معترض يجدّد رمز الوصول تلقائياً عند استلام 401 ثم يعيد تنفيذ الطلب.
+  QueuedInterceptorsWrapper _createRefreshInterceptor() {
+    return QueuedInterceptorsWrapper(
+      onError: (DioException error, ErrorInterceptorHandler handler) async {
+        final requestPath = error.requestOptions.path;
+
+        final shouldTryRefresh = error.response?.statusCode == 401 &&
+            // لا نجدّد على طلبات المصادقة نفسها لتفادي الحلقات
+            !requestPath.contains(ApiEndpoints.login) &&
+            !requestPath.contains(ApiEndpoints.refreshToken) &&
+            // نتفادى إعادة المحاولة أكثر من مرة لنفس الطلب
+            error.requestOptions.extra['__retried__'] != true;
+
+        if (!shouldTryRefresh) {
+          return handler.next(error);
+        }
+
+        final newToken = await _refreshAccessToken();
+
+        if (newToken == null || newToken.isEmpty) {
+          // فشل التجديد ⇒ الجلسة منتهية فعلاً
+          if (!_sessionExpiredFlowHandled) {
+            _sessionExpiredFlowHandled = true;
+            _onSessionExpired?.call();
+          }
+          return handler.next(error);
+        }
+
+        try {
+          final options = error.requestOptions;
+          options.extra['__retried__'] = true;
+          options.headers['Authorization'] = 'Bearer $newToken';
+
+          final response = await _dio.fetch<dynamic>(options);
+          return handler.resolve(response);
+        } on DioException catch (e) {
+          return handler.next(e);
+        }
+      },
+    );
+  }
+
+  /// يجدّد رمز الوصول باستخدام رمز التحديث المخزّن.
+  /// يعيد رمز الوصول الجديد أو null عند الفشل. يشارك عملية واحدة بين الطلبات المتزامنة.
+  Future<String?> _refreshAccessToken() {
+    return _refreshInProgress ??= _performTokenRefresh()
+      ..whenComplete(() => _refreshInProgress = null);
+  }
+
+  Future<String?> _performTokenRefresh() async {
+    final authStorage = locator<AuthStorageDataSource>();
+    final refreshToken =
+        await authStorage.getRefreshToken().then((r) => r.fold((l) => null, (r) => r));
+
+    if (refreshToken == null || refreshToken.isEmpty) {
+      return null;
+    }
+
+    try {
+      final response = await _refreshDio.post<Map<String, dynamic>>(
+        '${ApiEndpoints.users}${ApiEndpoints.refreshToken}',
+        data: {'refresh_token': refreshToken},
+      );
+
+      final body = response.data ?? const {};
+      final newAccess = body['access_token'] as String?;
+      final newRefresh = body['refresh_token'] as String?;
+
+      if (newAccess == null || newAccess.isEmpty) {
+        return null;
+      }
+
+      await authStorage.storeToken(newAccess);
+      // OAuth2 يدوّر رمز التحديث في كل مرة، فنخزّن الجديد
+      if (newRefresh != null && newRefresh.isNotEmpty) {
+        await authStorage.storeRefreshToken(newRefresh);
+      }
+      return newAccess;
+    } on DioException catch (e, s) {
+      log('Token refresh failed: ${e.message}');
+      log(s.toString());
+      return null;
+    } catch (e, s) {
+      log('Token refresh failed: $e');
+      log(s.toString());
+      return null;
+    }
   }
 
   /// Creates a Dio interceptor for logging.

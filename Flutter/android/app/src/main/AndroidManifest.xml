@@ -5,9 +5,12 @@
     <uses-permission android:name="android.permission.CAMERA"/>
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <!-- مطلوب لإظهار الإشعارات على Android 13+ -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <application
         android:label="waygo"
         android:name="${applicationName}"
+        android:largeHeap="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -39,6 +42,10 @@
             <meta-data
     android:name="com.google.android.geo.API_KEY"
     android:value="AIzaSyBg2VINhyL9iFiPVwGRJj_I2A_Dd3Ph3Kc"/>
+        <!-- القناة الافتراضية لإشعارات FCM (يجب أن تطابق قناة أنشأها التطبيق) -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="notification_channel"/>
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

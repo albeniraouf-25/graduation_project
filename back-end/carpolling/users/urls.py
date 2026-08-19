@@ -7,6 +7,7 @@ urlpatterns = [
    path('verify_email/', VerifyEmail.as_view(), name="verify_email"),
    path('resend_verification/', ResendVerificationCode.as_view(), name="resend-verification"),
    path('login/', Login.as_view(), name="login"),
+   path('refresh_token/', RefreshTokenView.as_view(), name="refresh_token"),
    path('view_profile/', ViewProfile.as_view(), name="view_profile"),
    path('view_profile/<int:user_id>/', ViewProfileUser.as_view(), name= "view_p"),
    path('update_driver_profile/', UpdateDriverProfile.as_view(), name="update_driver_profile"),

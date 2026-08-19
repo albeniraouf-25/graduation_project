@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/text/section_title.dart';
 import '../../core/resources/app_fonts.dart';
@@ -67,8 +67,8 @@ class CustomDialog extends StatelessWidget {
                       )
                   ],
                 ),
-                const Divider(
-                  color: AppColors.lightBlack,
+                Divider(
+                  color: context.appColors.lightBlack,
                   thickness: 0.1,
                   height: 20,
                 ),

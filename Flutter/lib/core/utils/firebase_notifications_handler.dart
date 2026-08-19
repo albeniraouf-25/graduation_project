@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:a_tareqaak/core/constants/api_endpoints.dart';
+import 'package:a_tareqaak/core/helper/network_helper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -208,7 +210,8 @@ class FirebaseNotificationsHandler {
     AppleNotification? ios = message.notification?.apple;
 
     if (notification != null) {
-      String channelId = message.notification?.android?.channelId ?? 'high_importance_channel';
+      // القناة الافتراضية يجب أن تطابق قناة أنشأناها فعلاً في _setupNotificationChannels
+      String channelId = message.notification?.android?.channelId ?? 'notification_channel';
       _flutterLocalNotificationsPlugin.show(
         id: notification.hashCode,
         title: notification.title,
@@ -248,9 +251,49 @@ class FirebaseNotificationsHandler {
     if (newMessage != null) {}
   }
 
-  void _registerToken(String token) {
+  /// يرسل رمز FCM إلى الخادم لتسجيل الجهاز.
+  /// يُسجّل فقط عندما يكون المستخدم مسجّل الدخول (يوجد رمز وصول)،
+  /// لتفادي إطلاق تدفّق انتهاء الجلسة على استجابة 401.
+  Future<void> _registerToken(String token) async {
     if (kDebugMode) {
       print('FCM Token: $token');
+    }
+
+    if (token.isEmpty) return;
+
+    try {
+      final networkHelper = NetworkHelper();
+      final authToken = await networkHelper.getToken();
+      // بدون تسجيل دخول لا يمكن ربط الجهاز بالمستخدم — نؤجّل حتى تسجيل الدخول
+      if (authToken == null || authToken.isEmpty) {
+        if (kDebugMode) {
+          print('Skipping device token registration: user not authenticated.');
+        }
+        return;
+      }
+
+      await networkHelper.post(
+        '${ApiEndpoints.notifications}${ApiEndpoints.registerDevice}',
+        data: {'token': token},
+        isFormDate: false,
+      );
+
+      if (kDebugMode) {
+        print('Device token registered with backend.');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Failed to register device token: $e');
+      }
+    }
+  }
+
+  /// يُستدعى بعد تسجيل الدخول لضمان تسجيل رمز الجهاز الحالي بالخادم.
+  Future<void> registerTokenAfterLogin() async {
+    final token = _cachedFcmToken ?? await _safeGetFcmToken();
+    if (token != null) {
+      _cachedFcmToken = token;
+      await _registerToken(token);
     }
   }
 }

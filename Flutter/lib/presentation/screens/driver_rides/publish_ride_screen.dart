@@ -1,5 +1,5 @@
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/domain/entity/rides/create_ride_entity.dart';
@@ -101,7 +101,7 @@ class _PublishRideContentState extends State<_PublishRideContent> {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: BlocListener<CreateRideBloc, ICreateRideState>(
           listener: (context, state) {
@@ -138,7 +138,7 @@ class _PublishRideContentState extends State<_PublishRideContent> {
                       onPressed: () => context.pop(),
                       icon: FaIcon(
                         FontAwesomeIcons.xmark,
-                        color: AppColors.blackText,
+                        color: context.appColors.blackText,
                         size: AppSize.s20,
                       ),
                     ),
@@ -153,7 +153,7 @@ class _PublishRideContentState extends State<_PublishRideContent> {
                         isRtl
                             ? FontAwesomeIcons.chevronRight
                             : FontAwesomeIcons.chevronLeft,
-                        color: AppColors.blackText,
+                        color: context.appColors.blackText,
                         size: AppSize.s20,
                       ),
                     ),
@@ -176,7 +176,7 @@ class _PublishRideContentState extends State<_PublishRideContent> {
                     widthFactor: 1.0,
                     child: FaIcon(
                       FontAwesomeIcons.locationDot,
-                      color: AppColors.grey,
+                      color: context.appColors.grey,
                       size: AppSize.s18,
                     ),
                   ),
@@ -203,7 +203,7 @@ class _PublishRideContentState extends State<_PublishRideContent> {
                     SectionTitle(
                       text: tr.date_and_time,
                       fontSize: AppFontSize.s14,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                     ),
                     Row(
                       spacing: AppWidth.w10,
@@ -230,7 +230,7 @@ class _PublishRideContentState extends State<_PublishRideContent> {
                               widthFactor: 1.0,
                               child: FaIcon(
                                 FontAwesomeIcons.calendarDay,
-                                color: AppColors.grey,
+                                color: context.appColors.grey,
                                 size: AppSize.s18,
                               ),
                             ),
@@ -276,7 +276,7 @@ class _PublishRideContentState extends State<_PublishRideContent> {
                     widthFactor: 1.0,
                     child: FaIcon(
                       FontAwesomeIcons.tag,
-                      color: AppColors.grey,
+                      color: context.appColors.grey,
                       size: AppSize.s18,
                     ),
                   ),
@@ -289,7 +289,7 @@ class _PublishRideContentState extends State<_PublishRideContent> {
                     SectionTitle(
                       text: tr.available_seats,
                       fontSize: AppFontSize.s14,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                     ),
                     Container(
                       padding: EdgeInsets.symmetric(
@@ -297,9 +297,9 @@ class _PublishRideContentState extends State<_PublishRideContent> {
                         vertical: AppPaddingHeight.p8,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         borderRadius: BorderRadius.circular(AppRadius.r12),
-                        border: Border.all(color: AppColors.greyDivider),
+                        border: Border.all(color: context.appColors.greyDivider),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -312,7 +312,7 @@ class _PublishRideContentState extends State<_PublishRideContent> {
                             },
                             icon: FaIcon(
                               FontAwesomeIcons.minus,
-                              color: AppColors.blackText,
+                              color: context.appColors.blackText,
                               size: AppSize.s16,
                             ),
                           ),
@@ -329,7 +329,7 @@ class _PublishRideContentState extends State<_PublishRideContent> {
                             },
                             icon: FaIcon(
                               FontAwesomeIcons.plus,
-                              color: AppColors.blackText,
+                              color: context.appColors.blackText,
                               size: AppSize.s16,
                             ),
                           ),
@@ -346,12 +346,12 @@ class _PublishRideContentState extends State<_PublishRideContent> {
                       height: AppHeight.h50,
                       width: double.infinity,
                       borderRadius: AppRadius.r12,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                       loading: isLoading,
                       onPressed: () => _submitRide(context),
                       child: BodyTitle(
                         text: tr.publish_ride_btn,
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         fontSize: AppFontSize.s16,
                         fontWeight: AppFontWeight.bold,
                       ),

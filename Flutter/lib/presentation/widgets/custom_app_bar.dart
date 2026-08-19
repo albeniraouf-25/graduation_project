@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 
-import '../../core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import '../../core/resources/app_values.dart';
 import 'text/body_title.dart';
 import 'text/section_title.dart';
@@ -23,7 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   const CustomAppBar({
     super.key,
-    this.backgroundColor = AppColors.backGround,
+    this.backgroundColor,
     this.showBackButton = false,
     this.showSkipButton = false,
     this.showScrolledUnderElevation = true,
@@ -43,15 +43,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       centerTitle: centerTitle,
       automaticallyImplyLeading: false,
-      backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor ?? context.appColors.backGround,
       scrolledUnderElevation: showScrolledUnderElevation ? 2 : 0,
-      surfaceTintColor: AppColors.backGround,
-      shadowColor: AppColors.lightGrey,
+      surfaceTintColor: context.appColors.backGround,
+      shadowColor: context.appColors.lightGrey,
       actionsPadding: EdgeInsetsDirectional.zero,
       leading: showBackButton
           ? InkWell(
-              splashColor: AppColors.none,
-              highlightColor: AppColors.none,
+              splashColor: context.appColors.none,
+              highlightColor: context.appColors.none,
               onTap:
                   onTapBackButton ??
                   () {
@@ -67,7 +67,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   },
               child: Icon(
                 Icons.arrow_back_ios,
-                color: AppColors.lightBlack,
+                color: context.appColors.lightBlack,
                 size: AppSize.s25,
               ),
             )

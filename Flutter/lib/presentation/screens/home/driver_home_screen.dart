@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_assets.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/core/routes/app_routes.dart';
@@ -43,7 +43,7 @@ class _DriverHomeContent extends StatelessWidget {
         final cubit = context.read<DriverHomeCubit>();
 
         return Scaffold(
-          backgroundColor: AppColors.backGround,
+          backgroundColor: context.appColors.backGround,
           body: SafeArea(
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(
@@ -71,7 +71,7 @@ class _DriverHomeContent extends StatelessWidget {
                             icon: FaIcon(
                               FontAwesomeIcons.bell,
                               size: AppSize.s20,
-                              color: AppColors.blackText,
+                              color: context.appColors.blackText,
                             ),
                           ),
                           IconButton(
@@ -79,7 +79,7 @@ class _DriverHomeContent extends StatelessWidget {
                             icon: FaIcon(
                               FontAwesomeIcons.gear,
                               size: AppSize.s20,
-                              color: AppColors.blackText,
+                              color: context.appColors.blackText,
                             ),
                           ),
                         ],
@@ -91,11 +91,11 @@ class _DriverHomeContent extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.all(AppPaddingWidth.p15),
                     decoration: BoxDecoration(
-                      color: AppColors.white,
+                      color: context.appColors.white,
                       borderRadius: BorderRadius.circular(AppRadius.r16),
                       boxShadow: [
                         BoxShadow(
-                          color: AppColors.primary.withOpacity(0.15),
+                          color: context.appColors.primary.withOpacity(0.15),
                           blurRadius: 12,
                           spreadRadius: 1,
                         ),
@@ -114,19 +114,19 @@ class _DriverHomeContent extends StatelessWidget {
                                 BodyTitle(
                                   text: tr.current_location,
                                   fontSize: AppFontSize.s12,
-                                  color: AppColors.greyText,
+                                  color: context.appColors.greyText,
                                 ),
                                 SectionTitle(
                                   text: cubit.currentLocationName ?? tr.location_not_available,
                                   fontSize: AppFontSize.s14,
-                                  color: AppColors.primary,
+                                  color: context.appColors.primary,
                                 ),
                               ],
                             ),
                             FaIcon(
                               FontAwesomeIcons.locationDot,
                               size: AppSize.s24,
-                              color: AppColors.primary,
+                              color: context.appColors.primary,
                             ),
                           ],
                         ),
@@ -143,7 +143,7 @@ class _DriverHomeContent extends StatelessWidget {
                           Container(
                             height: AppHeight.h180,
                             decoration: BoxDecoration(
-                              color: AppColors.backGround,
+                              color: context.appColors.backGround,
                               borderRadius: BorderRadius.circular(AppRadius.r16),
                             ),
                             child: Column(
@@ -152,13 +152,13 @@ class _DriverHomeContent extends StatelessWidget {
                                 FaIcon(
                                   FontAwesomeIcons.locationCrosshairs,
                                   size: AppSize.s35,
-                                  color: AppColors.greyText,
+                                  color: context.appColors.greyText,
                                 ),
                                 SizedBox(height: AppHeight.h10),
                                 BodyTitle(
                                   text: tr.location_not_available,
                                   fontSize: AppFontSize.s13,
-                                  color: AppColors.greyText,
+                                  color: context.appColors.greyText,
                                 ),
                               ],
                             ),
@@ -169,7 +169,7 @@ class _DriverHomeContent extends StatelessWidget {
                           height: AppHeight.h40,
                           width: double.infinity,
                           borderRadius: AppRadius.r10,
-                          color: AppColors.primary,
+                          color: context.appColors.primary,
                           loading: state is DriverHomeLocationLoadingState,
                           onPressed: () {
                             cubit.requestLocationAndFetch(
@@ -194,7 +194,7 @@ class _DriverHomeContent extends StatelessWidget {
                           },
                           child: BodyTitle(
                             text: tr.update_location,
-                            color: AppColors.white,
+                            color: context.appColors.white,
                             fontSize: AppFontSize.s14,
                           ),
                         ),
@@ -218,21 +218,21 @@ class _DriverHomeContent extends StatelessWidget {
                             context,
                             title: tr.publish_ride,
                             icon: FontAwesomeIcons.plus,
-                            iconColor: AppColors.primary,
+                            iconColor: context.appColors.primary,
                             onTap: () => PublishRideRoute().push(context),
                           ),
                           _buildQuickActionCard(
                             context,
                             title: tr.edit_ride,
                             icon: FontAwesomeIcons.penToSquare,
-                            iconColor: AppColors.primary,
+                            iconColor: context.appColors.primary,
                             onTap: () => EditRideListRoute().push(context),
                           ),
                           _buildQuickActionCard(
                             context,
                             title: tr.delete_ride,
                             icon: FontAwesomeIcons.trashCan,
-                            iconColor: AppColors.red,
+                            iconColor: context.appColors.red,
                             onTap: () => DeleteRideRoute().push(context),
                           ),
                         ],
@@ -252,9 +252,10 @@ class _DriverHomeContent extends StatelessWidget {
                       Row(
                         spacing: AppWidth.w10,
                         children: [
-                          _buildStatCard(tr.active_rides, '12'),
-                          _buildStatCard(tr.completed_rides, '83'),
+                          _buildStatCard(context, tr.active_rides, '12'),
+                          _buildStatCard(context, tr.completed_rides, '83'),
                           _buildStatCard(
+                            context,
                             tr.rating,
                             '4.8',
                             icon: FontAwesomeIcons.solidStar,
@@ -287,11 +288,11 @@ class _DriverHomeContent extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.symmetric(vertical: AppPaddingHeight.p15),
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: context.appColors.white,
             borderRadius: BorderRadius.circular(AppRadius.r12),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primary.withOpacity(0.15),
+                color: context.appColors.primary.withOpacity(0.15),
                 blurRadius: 10,
                 spreadRadius: 1,
               ),
@@ -321,14 +322,15 @@ class _DriverHomeContent extends StatelessWidget {
     );
   }
 
-  Widget _buildStatCard(String title, String value, {FaIconData? icon}) {
+  Widget _buildStatCard(BuildContext context, String title, String value,
+      {FaIconData? icon}) {
     return Expanded(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: AppPaddingHeight.p12),
         decoration: BoxDecoration(
-          color: AppColors.white,
+          color: context.appColors.white,
           borderRadius: BorderRadius.circular(AppRadius.r12),
-          border: Border.all(color: AppColors.lightGreySec),
+          border: Border.all(color: context.appColors.lightGreySec),
         ),
         child: Column(
           spacing: AppHeight.h4,
@@ -336,7 +338,7 @@ class _DriverHomeContent extends StatelessWidget {
             BodyTitle(
               text: title,
               fontSize: AppFontSize.s12,
-              color: AppColors.greyText,
+              color: context.appColors.greyText,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -346,13 +348,13 @@ class _DriverHomeContent extends StatelessWidget {
                   text: value,
                   fontSize: AppFontSize.s18,
                   fontWeight: AppFontWeight.bold,
-                  color: AppColors.primary,
+                  color: context.appColors.primary,
                 ),
                 if (icon != null)
                   FaIcon(
                     icon,
                     size: AppSize.s14,
-                    color: AppColors.orange,
+                    color: context.appColors.orange,
                   ),
               ],
             ),

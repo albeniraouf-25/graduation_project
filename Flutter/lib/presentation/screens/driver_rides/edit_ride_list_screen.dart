@@ -1,6 +1,6 @@
 
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/data/models/rides/ride_data_model.dart';
@@ -44,7 +44,7 @@ class _EditRideListContentState extends State<_EditRideListContent> {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: Column(
           children: [
@@ -60,7 +60,7 @@ class _EditRideListContentState extends State<_EditRideListContent> {
                     onPressed: () => context.pop(),
                     icon: FaIcon(
                       FontAwesomeIcons.xmark,
-                      color: AppColors.blackText,
+                      color: context.appColors.blackText,
                       size: AppSize.s20,
                     ),
                   ),
@@ -75,7 +75,7 @@ class _EditRideListContentState extends State<_EditRideListContent> {
                       isRtl
                           ? FontAwesomeIcons.chevronRight
                           : FontAwesomeIcons.chevronLeft,
-                      color: AppColors.blackText,
+                      color: context.appColors.blackText,
                       size: AppSize.s20,
                     ),
                   ),
@@ -123,11 +123,11 @@ class _EditRideListContentState extends State<_EditRideListContent> {
     return Container(
       padding: EdgeInsets.all(AppPaddingWidth.p16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.appColors.white,
         borderRadius: BorderRadius.circular(AppRadius.r16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.08),
+            color: context.appColors.primary.withOpacity(0.08),
             blurRadius: 12,
             spreadRadius: 1,
             offset: const Offset(0, 4),
@@ -150,7 +150,7 @@ class _EditRideListContentState extends State<_EditRideListContent> {
                   FaIcon(
                     FontAwesomeIcons.arrowRightLong,
                     size: AppSize.s14,
-                    color: AppColors.primary,
+                    color: context.appColors.primary,
                   ),
                   SectionTitle(
                     text: ride.destination ?? '',
@@ -170,11 +170,11 @@ class _EditRideListContentState extends State<_EditRideListContent> {
                 },
                 icon: CircleAvatar(
                   radius: AppRadius.r18,
-                  backgroundColor: AppColors.lightGrey,
+                  backgroundColor: context.appColors.lightGrey,
                   child: FaIcon(
                     FontAwesomeIcons.penToSquare,
                     size: AppSize.s14,
-                    color: AppColors.blackText,
+                    color: context.appColors.blackText,
                   ),
                 ),
               ),
@@ -186,12 +186,12 @@ class _EditRideListContentState extends State<_EditRideListContent> {
               BodyTitle(
                 text: '${ride.departureDate ?? ''} - ${ride.departureTime ?? ''}',
                 fontSize: AppFontSize.s13,
-                color: AppColors.greyText,
+                color: context.appColors.greyText,
               ),
               BodyTitle(
                 text: '${ride.cost ?? ''} ${tr.syrian_pound}',
                 fontSize: AppFontSize.s13,
-                color: AppColors.blackText,
+                color: context.appColors.blackText,
                 fontWeight: AppFontWeight.bold,
               ),
             ],
@@ -201,7 +201,7 @@ class _EditRideListContentState extends State<_EditRideListContent> {
             child: BodyTitle(
               text: '${ride.availableSeats ?? 0} ${tr.available_seats_count}',
               fontSize: AppFontSize.s13,
-              color: AppColors.primary,
+              color: context.appColors.primary,
             ),
           ),
         ],

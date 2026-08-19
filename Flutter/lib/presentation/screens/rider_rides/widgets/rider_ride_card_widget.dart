@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 
@@ -37,11 +37,11 @@ class RiderRideCardWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(AppPaddingWidth.p16),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.appColors.white,
         borderRadius: BorderRadius.circular(AppRadius.r16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.08),
+            color: context.appColors.primary.withOpacity(0.08),
             blurRadius: 12,
             spreadRadius: 1,
             offset: const Offset(0, 4),
@@ -68,7 +68,7 @@ class RiderRideCardWidget extends StatelessWidget {
                     FaIcon(
                       FontAwesomeIcons.arrowRightLong,
                       size: AppSize.s14,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                     ),
                     SectionTitle(
                       text: ride.destinationCity,
@@ -83,13 +83,13 @@ class RiderRideCardWidget extends StatelessWidget {
                       vertical: AppPaddingHeight.p4,
                     ),
                     decoration: BoxDecoration(
-                      color: (statusColor ?? AppColors.primary).withOpacity(0.1),
+                      color: (statusColor ?? context.appColors.primary).withOpacity(0.1),
                       borderRadius: BorderRadius.circular(AppRadius.r6),
                     ),
                     child: BodyTitle(
                       text: statusTag!,
                       fontSize: AppFontSize.s12,
-                      color: statusColor ?? AppColors.primary,
+                      color: statusColor ?? context.appColors.primary,
                       fontWeight: AppFontWeight.bold,
                     ),
                   ),
@@ -100,7 +100,7 @@ class RiderRideCardWidget extends StatelessWidget {
             BodyTitle(
               text: 'اليوم - ${ride.departureDateTime.hour}:${ride.departureDateTime.minute.toString().padLeft(2, '0')} صباحاً',
               fontSize: AppFontSize.s13,
-              color: AppColors.greyText,
+              color: context.appColors.greyText,
             ),
 
             // السعر والمقاعد المتاحة مع أزرار الإجراء (حجز / إلغاء)
@@ -114,13 +114,13 @@ class RiderRideCardWidget extends StatelessWidget {
                     BodyTitle(
                       text: '${ride.availableSeats} ${tr.available_seats_count}',
                       fontSize: AppFontSize.s12,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                       fontWeight: AppFontWeight.bold,
                     ),
                     SectionTitle(
                       text: '${ride.price.toInt()} ${tr.syrian_pound}',
                       fontSize: AppFontSize.s15,
-                      color: AppColors.blackText,
+                      color: context.appColors.blackText,
                     ),
                   ],
                 ),
@@ -128,11 +128,11 @@ class RiderRideCardWidget extends StatelessWidget {
                   CustomElevatedButton(
                     height: AppHeight.h35,
                     borderRadius: AppRadius.r10,
-                    color: AppColors.primary,
+                    color: context.appColors.primary,
                     onPressed: onBookTap!,
                     child: BodyTitle(
                       text: tr.book_btn,
-                      color: AppColors.white,
+                      color: context.appColors.white,
                       fontSize: AppFontSize.s13,
                       fontWeight: AppFontWeight.bold,
                     ),
@@ -141,12 +141,12 @@ class RiderRideCardWidget extends StatelessWidget {
                   CustomElevatedButton(
                     height: AppHeight.h35,
                     borderRadius: AppRadius.r10,
-                    color: AppColors.lightRed,
-                    borderSide: const BorderSide(color: AppColors.red),
+                    color: context.appColors.lightRed,
+                    borderSide: BorderSide(color: context.appColors.red),
                     onPressed: onCancelTap!,
                     child: BodyTitle(
                       text: tr.cancel_booking_btn,
-                      color: AppColors.red,
+                      color: context.appColors.red,
                       fontSize: AppFontSize.s13,
                       fontWeight: AppFontWeight.bold,
                     ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/text/body_title.dart';
@@ -28,7 +28,7 @@ class CustomWeekDayField extends StatelessWidget {
                 TextSpan(
                   text: title,
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    color: AppColors.primary,
+                    color: context.appColors.primary,
                     fontSize: AppFontSize.s15,
                   ),
                 ),
@@ -36,7 +36,7 @@ class CustomWeekDayField extends StatelessWidget {
                   TextSpan(
                     text: ' *',
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: AppColors.red,
+                      color: context.appColors.red,
                       fontSize: AppFontSize.s18,
                     ),
                   ),
@@ -91,9 +91,9 @@ class _WeekdaySelectorState extends State<WeekdaySelector> {
               }
             });
           },
-          checkmarkColor: isSelected ? AppColors.white : AppColors.primary,
-          backgroundColor: AppColors.backGround,
-          selectedColor: AppColors.primary,
+          checkmarkColor: isSelected ? context.appColors.white : context.appColors.primary,
+          backgroundColor: context.appColors.backGround,
+          selectedColor: context.appColors.primary,
         );
       }),
     );

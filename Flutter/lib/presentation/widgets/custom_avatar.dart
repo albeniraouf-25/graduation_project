@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import '../../core/resources/app_fonts.dart';
 import 'text/body_title.dart';
 
@@ -13,15 +13,15 @@ class CustomAvatar extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: AppColors.yellow,
+        color: context.appColors.yellow,
         // color: Color.fromRGBO(name.codeUnitAt(0), name.codeUnitAt(0) ~/ 2, name.codeUnitAt(0) ~/ 3, 0.5),
       ),
       alignment: Alignment.center,
       child: BodyTitle(
         text: name[0],
-        color: AppColors.white,
+        color: context.appColors.white,
         fontSize: AppFontSize.s40,
         fontWeight: AppFontWeight.medium,
       ),

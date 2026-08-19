@@ -1,5 +1,5 @@
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 
 import 'package:a_tareqaak/core/resources/app_values.dart';
@@ -101,7 +101,7 @@ class _EditRideContentState extends State<_EditRideContent> {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: BlocListener<UpdateRideBloc, IUpdateRideState>(
           listener: (context, state) {
@@ -138,7 +138,7 @@ class _EditRideContentState extends State<_EditRideContent> {
                       onPressed: () => context.pop(),
                       icon: FaIcon(
                         FontAwesomeIcons.xmark,
-                        color: AppColors.blackText,
+                        color: context.appColors.blackText,
                         size: AppSize.s20,
                       ),
                     ),
@@ -153,7 +153,7 @@ class _EditRideContentState extends State<_EditRideContent> {
                         isRtl
                             ? FontAwesomeIcons.chevronRight
                             : FontAwesomeIcons.chevronLeft,
-                        color: AppColors.blackText,
+                        color: context.appColors.blackText,
                         size: AppSize.s20,
                       ),
                     ),
@@ -176,7 +176,7 @@ class _EditRideContentState extends State<_EditRideContent> {
                     widthFactor: 1.0,
                     child: FaIcon(
                       FontAwesomeIcons.locationDot,
-                      color: AppColors.grey,
+                      color: context.appColors.grey,
                       size: AppSize.s18,
                     ),
                   ),
@@ -203,7 +203,7 @@ class _EditRideContentState extends State<_EditRideContent> {
                     SectionTitle(
                       text: tr.date_and_time,
                       fontSize: AppFontSize.s14,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                     ),
                     Row(
                       spacing: AppWidth.w10,
@@ -267,7 +267,7 @@ class _EditRideContentState extends State<_EditRideContent> {
                     widthFactor: 1.0,
                     child: FaIcon(
                       FontAwesomeIcons.tag,
-                      color: AppColors.grey,
+                      color: context.appColors.grey,
                       size: AppSize.s18,
                     ),
                   ),
@@ -280,7 +280,7 @@ class _EditRideContentState extends State<_EditRideContent> {
                     SectionTitle(
                       text: tr.available_seats,
                       fontSize: AppFontSize.s14,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                     ),
                     Container(
                       padding: EdgeInsets.symmetric(
@@ -288,9 +288,9 @@ class _EditRideContentState extends State<_EditRideContent> {
                         vertical: AppPaddingHeight.p8,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         borderRadius: BorderRadius.circular(AppRadius.r12),
-                        border: Border.all(color: AppColors.greyDivider),
+                        border: Border.all(color: context.appColors.greyDivider),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -303,7 +303,7 @@ class _EditRideContentState extends State<_EditRideContent> {
                             },
                             icon: FaIcon(
                               FontAwesomeIcons.minus,
-                              color: AppColors.blackText,
+                              color: context.appColors.blackText,
                               size: AppSize.s16,
                             ),
                           ),
@@ -320,7 +320,7 @@ class _EditRideContentState extends State<_EditRideContent> {
                             },
                             icon: FaIcon(
                               FontAwesomeIcons.plus,
-                              color: AppColors.blackText,
+                              color: context.appColors.blackText,
                               size: AppSize.s16,
                             ),
                           ),
@@ -336,12 +336,12 @@ class _EditRideContentState extends State<_EditRideContent> {
                       height: AppHeight.h50,
                       width: double.infinity,
                       borderRadius: AppRadius.r12,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                       loading: state is UpdateRideLoading,
                       onPressed: () => _saveChanges(context),
                       child: BodyTitle(
                         text: tr.save_changes,
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         fontSize: AppFontSize.s16,
                         fontWeight: AppFontWeight.bold,
                       ),

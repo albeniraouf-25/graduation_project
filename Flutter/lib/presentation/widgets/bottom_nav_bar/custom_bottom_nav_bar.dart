@@ -1,6 +1,6 @@
 
 
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/cubit/bottom_bar/bottom_bar_cubit.dart';
 import 'package:a_tareqaak/presentation/widgets/bottom_nav_bar/custom_nav_item.dart';
@@ -38,7 +38,7 @@ class CustomBottomNavBar extends StatelessWidget {
             AppPaddingWidth.p12,
             0,
           ),
-          color: AppColors.none,
+          color: context.appColors.none,
           child: Container(
             padding: EdgeInsetsDirectional.fromSTEB(
               AppPaddingWidth.p12,

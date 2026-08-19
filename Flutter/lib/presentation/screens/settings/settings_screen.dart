@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/text/body_title.dart';
@@ -36,8 +36,8 @@ class SettingsScreen extends StatelessWidget {
     tr.my_reports,
     tr.logout];
     return Scaffold(
-      backgroundColor: AppColors.backGround,
-    
+      backgroundColor: context.appColors.backGround,
+
       body: SafeArea(
         child: Column(
           children: [
@@ -62,6 +62,7 @@ class SettingsScreen extends StatelessWidget {
                   itemCount: 7,
                   separatorBuilder: (context, index) => SizedBox(height: AppHeight.h12),
                  itemBuilder:(context, index) => _buildSettingCard(
+                      context,
                       icon: index !=3 ?
                       icons[index] :
                        context.watch<ThemeCubit>().isDarkMode
@@ -95,7 +96,8 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSettingCard({
+  Widget _buildSettingCard(
+    BuildContext context, {
     required FaIconData icon,
     required String title,
     Color? color,
@@ -103,27 +105,27 @@ class SettingsScreen extends StatelessWidget {
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: context.appColors.white,
         borderRadius: BorderRadius.circular(AppRadius.r14),
-        border: Border.all(color: AppColors.lightGreySec),
+        border: Border.all(color: context.appColors.lightGreySec),
       ),
       child: ListTile(
         onTap: onTap,
         leading: FaIcon(
           icon,
           size: AppSize.s18,
-          color: color ?? AppColors.primary,
+          color: color ?? context.appColors.primary,
         ),
         title: BodyTitle(
           text: title,
           fontSize: AppFontSize.s15,
           fontWeight: AppFontWeight.bold,
-          color: color ?? AppColors.blackText,
+          color: color ?? context.appColors.blackText,
         ),
         trailing: FaIcon(
           FontAwesomeIcons.chevronLeft,
           size: AppSize.s14,
-          color: AppColors.greyText,
+          color: context.appColors.greyText,
         ),
       ),
     );

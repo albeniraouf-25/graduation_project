@@ -424,6 +424,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get my_rides => 'My Rides';
 
   @override
+  String get my_reservations => 'My Reservations';
+
+  @override
   String get uncompleted => 'Uncompleted';
 
   @override

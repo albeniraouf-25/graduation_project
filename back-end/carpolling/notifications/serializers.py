@@ -1,5 +1,20 @@
 from rest_framework import serializers
-from .models import DeviceToken
+from .models import DeviceToken, Notification
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Notification
+        fields = [
+            "id",
+            "title",
+            "body",
+            "notification_type",
+            "data",
+            "is_read",
+            "created_at",
+        ]
 
 
 class DeviceTokenSerializer(serializers.ModelSerializer):

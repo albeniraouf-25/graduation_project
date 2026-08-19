@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 
 class CurrentLocationMapWidget extends StatefulWidget {
@@ -67,7 +67,7 @@ class _CurrentLocationMapWidgetState
       return Container(
         height: AppHeight.h250,
         decoration: BoxDecoration(
-          color: AppColors.lightGreySec,
+          color: context.appColors.lightGreySec,
           borderRadius:
               BorderRadius.circular(AppRadius.r16),
         ),

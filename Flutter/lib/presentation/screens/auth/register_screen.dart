@@ -9,8 +9,8 @@ import 'package:go_router/go_router.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/extension/validation_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/bloc/auth/register/register_bloc.dart';
@@ -89,7 +89,7 @@ class _RegisterContentState extends State<_RegisterContent> {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: BlocConsumer<RegisterBloc, IRegisterState>(
           listener: (context, apiState) {
@@ -137,7 +137,7 @@ class _RegisterContentState extends State<_RegisterContent> {
                           isRtl
                               ? FontAwesomeIcons.chevronRight
                               : FontAwesomeIcons.chevronLeft,
-                          color: AppColors.blackText,
+                          color: context.appColors.blackText,
                           size: AppSize.s20,
                         ),
                       ),
@@ -162,7 +162,7 @@ class _RegisterContentState extends State<_RegisterContent> {
                         widthFactor: 1.0,
                         child: FaIcon(
                           FontAwesomeIcons.user,
-                          color: AppColors.grey,
+                          color: context.appColors.grey,
                           size: AppSize.s20,
                         ),
                       ),
@@ -201,7 +201,7 @@ class _RegisterContentState extends State<_RegisterContent> {
                         widthFactor: 1.0,
                         child: FaIcon(
                           FontAwesomeIcons.envelope,
-                          color: AppColors.grey,
+                          color: context.appColors.grey,
                           size: AppSize.s20,
                         ),
                       ),
@@ -228,7 +228,7 @@ class _RegisterContentState extends State<_RegisterContent> {
                             widthFactor: 1.0,
                             child: FaIcon(
                               FontAwesomeIcons.lock,
-                              color: AppColors.grey,
+                              color: context.appColors.grey,
                               size: AppSize.s20,
                             ),
                           ),
@@ -237,7 +237,7 @@ class _RegisterContentState extends State<_RegisterContent> {
                               cubitState.isPasswordObscured
                                   ? FontAwesomeIcons.eyeSlash
                                   : FontAwesomeIcons.eye,
-                              color: AppColors.grey,
+                              color: context.appColors.grey,
                               size: AppSize.s20,
                             ),
                             onPressed: () {
@@ -271,7 +271,7 @@ class _RegisterContentState extends State<_RegisterContent> {
                             widthFactor: 1.0,
                             child: FaIcon(
                               FontAwesomeIcons.lock,
-                              color: AppColors.grey,
+                              color: context.appColors.grey,
                               size: AppSize.s20,
                             ),
                           ),
@@ -280,7 +280,7 @@ class _RegisterContentState extends State<_RegisterContent> {
                               cubitState.isConfirmPasswordObscured
                                   ? FontAwesomeIcons.eyeSlash
                                   : FontAwesomeIcons.eye,
-                              color: AppColors.grey,
+                              color: context.appColors.grey,
                               size: AppSize.s20,
                             ),
                             onPressed: () {
@@ -306,7 +306,7 @@ class _RegisterContentState extends State<_RegisterContent> {
                           children: [
                             Checkbox(
                               value: cubitState.isTermsAccepted,
-                              activeColor: AppColors.primary,
+                              activeColor: context.appColors.primary,
                               shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.circular(AppRadius.r4),
@@ -319,7 +319,7 @@ class _RegisterContentState extends State<_RegisterContent> {
                               child: BodyTitle(
                                 text: tr.agree_terms,
                                 fontSize: AppFontSize.s12,
-                                color: AppColors.blackText,
+                                color: context.appColors.blackText,
                               ),
                             ),
                           ],
@@ -332,12 +332,12 @@ class _RegisterContentState extends State<_RegisterContent> {
                       height: AppHeight.h50,
                       width: double.infinity,
                       borderRadius: AppRadius.r12,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                       loading: apiState is RegisterLoading,
                       onPressed: () => _onRegisterPressed(context),
                       child: BodyTitle(
                         text: tr.create_account_btn,
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         fontSize: AppFontSize.s16,
                         fontWeight: AppFontWeight.bold,
                       ),
@@ -350,7 +350,7 @@ class _RegisterContentState extends State<_RegisterContent> {
                       children: [
                         BodyTitle(
                           text: tr.already_have_account,
-                          color: AppColors.greyText,
+                          color: context.appColors.greyText,
                           fontSize: AppFontSize.s14,
                         ),
                         InkWell(
@@ -359,7 +359,7 @@ class _RegisterContentState extends State<_RegisterContent> {
                           },
                           child: BodyTitle(
                             text: tr.login,
-                            color: AppColors.primary,
+                            color: context.appColors.primary,
                             fontSize: AppFontSize.s14,
                             fontWeight: AppFontWeight.bold,
                           ),

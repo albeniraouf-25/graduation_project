@@ -1,5 +1,5 @@
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/data/models/rides/ride_data_model.dart';
@@ -58,7 +58,7 @@ class _SearchResultsContent extends StatelessWidget {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: BlocListener<CreateReservationBloc, ICreateReservationState>(
           listener: (context, state) {
@@ -92,7 +92,7 @@ class _SearchResultsContent extends StatelessWidget {
                       onPressed: () => context.pop(),
                       icon: FaIcon(
                         FontAwesomeIcons.xmark,
-                        color: AppColors.blackText,
+                        color: context.appColors.blackText,
                         size: AppSize.s20,
                       ),
                     ),
@@ -107,7 +107,7 @@ class _SearchResultsContent extends StatelessWidget {
                         isRtl
                             ? FontAwesomeIcons.chevronRight
                             : FontAwesomeIcons.chevronLeft,
-                        color: AppColors.blackText,
+                        color: context.appColors.blackText,
                         size: AppSize.s20,
                       ),
                     ),
@@ -124,7 +124,7 @@ class _SearchResultsContent extends StatelessWidget {
                       return Center(
                         child: BodyTitle(
                           text: state.message,
-                          color: AppColors.greyText,
+                          color: context.appColors.greyText,
                         ),
                       );
                     }
@@ -136,7 +136,7 @@ class _SearchResultsContent extends StatelessWidget {
                       return Center(
                         child: BodyTitle(
                           text: tr.no_matching_rides,
-                          color: AppColors.greyText,
+                          color: context.appColors.greyText,
                         ),
                       );
                     }
@@ -151,7 +151,7 @@ class _SearchResultsContent extends StatelessWidget {
                         return Container(
                           padding: EdgeInsets.all(AppPaddingWidth.p16),
                           decoration: BoxDecoration(
-                            color: AppColors.white,
+                            color: context.appColors.white,
                             borderRadius: BorderRadius.circular(AppRadius.r16),
                           ),
                           child: Column(
@@ -169,19 +169,19 @@ class _SearchResultsContent extends StatelessWidget {
                                   SectionTitle(
                                     text: '${r.cost} ${tr.syrian_pound}',
                                     fontSize: AppFontSize.s14,
-                                    color: AppColors.primary,
+                                    color: context.appColors.primary,
                                   ),
                                 ],
                               ),
                               BodyTitle(
                                 text:
                                     '${r.departureDate} - ${r.departureTime}',
-                                color: AppColors.greyText,
+                                color: context.appColors.greyText,
                                 fontSize: AppFontSize.s12,
                               ),
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.primary,
+                                  backgroundColor: context.appColors.primary,
                                 ),
                                 onPressed: () {
                                   context.read<CreateReservationBloc>().add(
@@ -195,7 +195,7 @@ class _SearchResultsContent extends StatelessWidget {
                                 },
                                 child: Text(
                                   tr.book_btn,
-                                  style: const TextStyle(color: AppColors.white),
+                                  style: TextStyle(color: context.appColors.white),
                                 ),
                               ),
                             ],

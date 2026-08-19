@@ -22,6 +22,7 @@ import 'package:a_tareqaak/presentation/screens/report/report_details_screen.dar
 import 'package:a_tareqaak/presentation/screens/report/my_reports_screen.dart';
 import 'package:a_tareqaak/presentation/screens/report/send_report_screen.dart';
 import 'package:a_tareqaak/presentation/screens/ride_tracking/ride_tracking_screen.dart';
+import 'package:a_tareqaak/presentation/screens/rider_rides/my_reservations_screen.dart';
 import 'package:a_tareqaak/presentation/screens/rider_rides/search_results_screen.dart';
 import 'package:a_tareqaak/presentation/screens/rider_rides/widgets/rider_bottom_nav_bar.dart';
 import 'package:a_tareqaak/presentation/screens/settings/settings_screen.dart';
@@ -246,7 +247,7 @@ class SettingsRoute extends GoRouteData with $SettingsRoute{
 class RiderRidesRoute extends GoRouteData with $RiderRidesRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) {
-    return const MyRidesScreen();
+    return const MyReservationsScreen();
   }
 }
 

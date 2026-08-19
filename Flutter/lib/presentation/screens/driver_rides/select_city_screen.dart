@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/custom_search.dart';
@@ -62,7 +62,7 @@ class _SelectCityScreenState extends State<SelectCityScreen> {
         .toList();
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: Column(
           children: [
@@ -80,7 +80,7 @@ class _SelectCityScreenState extends State<SelectCityScreen> {
                       isRtl
                           ? FontAwesomeIcons.chevronRight
                           : FontAwesomeIcons.chevronLeft,
-                      color: AppColors.blackText,
+                      color: context.appColors.blackText,
                       size: AppSize.s20,
                     ),
                   ),
@@ -93,7 +93,7 @@ class _SelectCityScreenState extends State<SelectCityScreen> {
                     onPressed: () => context.pop(),
                     icon: FaIcon(
                       FontAwesomeIcons.xmark,
-                      color: AppColors.blackText,
+                      color: context.appColors.blackText,
                       size: AppSize.s20,
                     ),
                   ),
@@ -105,7 +105,7 @@ class _SelectCityScreenState extends State<SelectCityScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: AppPaddingWidth.p20),
               child: CustomSearch(
-                color: AppColors.white,
+                color: context.appColors.white,
                 onChanged: (val) {
                   setState(() {
                     searchQuery = val;
@@ -126,13 +126,13 @@ class _SelectCityScreenState extends State<SelectCityScreen> {
                       child: SectionTitle(
                         text: tr.coastal_cities,
                         fontSize: AppFontSize.s14,
-                        color: AppColors.primary,
+                        color: context.appColors.primary,
                       ),
                     ),
                     SizedBox(height: AppHeight.h10),
                     Container(
                       decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         borderRadius: BorderRadius.circular(AppRadius.r16),
                       ),
                       child: Column(
@@ -148,13 +148,13 @@ class _SelectCityScreenState extends State<SelectCityScreen> {
                       child: SectionTitle(
                         text: tr.other_governorates,
                         fontSize: AppFontSize.s14,
-                        color: AppColors.primary,
+                        color: context.appColors.primary,
                       ),
                     ),
                     SizedBox(height: AppHeight.h10),
                     Container(
                       decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         borderRadius: BorderRadius.circular(AppRadius.r16),
                       ),
                       child: Column(
@@ -189,7 +189,7 @@ class _SelectCityScreenState extends State<SelectCityScreen> {
             FaIcon(
               FontAwesomeIcons.locationDot,
               size: AppSize.s16,
-              color: AppColors.primary,
+              color: context.appColors.primary,
             ),
             BodyTitle(
               text: cityName,

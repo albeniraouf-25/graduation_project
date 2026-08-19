@@ -1,4 +1,4 @@
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +38,7 @@ class CustomImageField extends StatelessWidget {
                 TextSpan(
                   text: title,
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: AppColors.primary,
+                        color: context.appColors.primary,
                         fontSize: AppFontSize.s15,
                       ),
                 ),
@@ -46,7 +46,7 @@ class CustomImageField extends StatelessWidget {
                   TextSpan(
                     text: ' *',
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: AppColors.red,
+                          color: context.appColors.red,
                           fontSize: AppFontSize.s18,
                         ),
                   ),
@@ -60,7 +60,7 @@ class CustomImageField extends StatelessWidget {
           ),
           strokeCap: StrokeCap.butt,
           dashPattern: const [3],
-          color: AppColors.lightBlack,
+          color: context.appColors.lightBlack,
           borderType: BorderType.RRect,
           radius: Radius.circular(AppRadius.r16),
           child: ClipRRect(
@@ -78,13 +78,13 @@ class CustomImageField extends StatelessWidget {
                         children: [
                           FaIcon(
                             FontAwesomeIcons.image,
-                            color: AppColors.grey,
+                            color: context.appColors.grey,
                             size: AppSize.s30,
                           ),
                           SizedBox(height: AppHeight.h7),
                           BodyTitle(
                             text: hintText,
-                            color: AppColors.greyText,
+                            color: context.appColors.greyText,
                           ),
                         ],
                       )

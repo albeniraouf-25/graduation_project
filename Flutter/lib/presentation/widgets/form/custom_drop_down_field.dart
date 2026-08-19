@@ -1,6 +1,6 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/custom_drop_down_widget.dart';
 
@@ -65,14 +65,14 @@ class CustomDropDownField extends StatelessWidget {
                 TextSpan(
                   text: title,
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    color: AppColors.primaryLight,
+                    color: context.appColors.primaryLight,
                     fontSize: AppFontSize.s15,
                   ),
                 ),
                 TextSpan(
                   text:requiredInput? ' *':'',
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: AppColors.red,
+                    color: context.appColors.red,
                     fontSize: AppFontSize.s18,
                   ),
                 ),
@@ -87,7 +87,7 @@ class CustomDropDownField extends StatelessWidget {
               child: CustomDropDownWidget(
                 initialItem: initialItem,
                 // color: AppColors.grey.withAlpha(40),
-                color: AppColors.backGround,
+                color: context.appColors.backGround,
                 searchHintText: searchHintText,
                 onChanged: onDropDownChanged,
                 hintText: dropDownHint,

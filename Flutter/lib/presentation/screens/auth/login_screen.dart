@@ -9,7 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/bloc/auth/login/login_bloc.dart';
@@ -54,7 +54,7 @@ class _LoginContentState extends State<_LoginContent> {
     final tr = context.loc;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: BlocConsumer<LoginBloc, ILoginState>(
           listener: (context, apiState) {
@@ -114,7 +114,7 @@ class _LoginContentState extends State<_LoginContent> {
                           children: [
                             FaIcon(
                               FontAwesomeIcons.globe,
-                              color: AppColors.blackText,
+                              color: context.appColors.blackText,
                               size: AppSize.s18,
                             ),
                             BodyTitle(
@@ -147,7 +147,7 @@ class _LoginContentState extends State<_LoginContent> {
                         widthFactor: 1.0,
                         child: FaIcon(
                           FontAwesomeIcons.envelope,
-                          color: AppColors.grey,
+                          color: context.appColors.grey,
                           size: AppSize.s20,
                         ),
                       ),
@@ -176,7 +176,7 @@ class _LoginContentState extends State<_LoginContent> {
                             widthFactor: 1.0,
                             child: FaIcon(
                               FontAwesomeIcons.lock,
-                              color: AppColors.grey,
+                              color: context.appColors.grey,
                               size: AppSize.s20,
                             ),
                           ),
@@ -185,7 +185,7 @@ class _LoginContentState extends State<_LoginContent> {
                               cubitState.isPasswordObscured
                                   ? FontAwesomeIcons.eyeSlash
                                   : FontAwesomeIcons.eye,
-                              color: AppColors.grey,
+                              color: context.appColors.grey,
                               size: AppSize.s18,
                             ),
                             onPressed: () {
@@ -206,7 +206,7 @@ class _LoginContentState extends State<_LoginContent> {
                         },
                         child: BodyTitle(
                           text: tr.forgot_password,
-                          color: AppColors.primary,
+                          color: context.appColors.primary,
                           fontSize: AppFontSize.s13,
                           fontWeight: AppFontWeight.semiBold,
                         ),
@@ -218,7 +218,7 @@ class _LoginContentState extends State<_LoginContent> {
                       height: AppHeight.h50,
                       width: double.infinity,
                       borderRadius: AppRadius.r12,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                       loading: apiState is LoginLoading,
                       onPressed: () {
                         if (_formKey.currentState?.validate() ?? false) {
@@ -231,7 +231,7 @@ class _LoginContentState extends State<_LoginContent> {
                       },
                       child: BodyTitle(
                         text: tr.login,
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         fontSize: AppFontSize.s16,
                         fontWeight: AppFontWeight.bold,
                       ),
@@ -244,7 +244,7 @@ class _LoginContentState extends State<_LoginContent> {
                       children: [
                         BodyTitle(
                           text: tr.dont_have_account,
-                          color: AppColors.greyText,
+                          color: context.appColors.greyText,
                           fontSize: AppFontSize.s14,
                         ),
                         InkWell(
@@ -253,7 +253,7 @@ class _LoginContentState extends State<_LoginContent> {
                           },
                           child: BodyTitle(
                             text: tr.create_new_account,
-                            color: AppColors.primary,
+                            color: context.appColors.primary,
                             fontSize: AppFontSize.s14,
                             fontWeight: AppFontWeight.bold,
                           ),

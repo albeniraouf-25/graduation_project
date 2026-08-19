@@ -6,8 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/extension/validation_extension.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/domain/entity/payment/payment_entity.dart';
@@ -69,10 +69,10 @@ class _ChargeWalletContentState extends State<_ChargeWalletContent> {
         children: [
           CircleAvatar(
             radius: AppRadius.r30,
-            backgroundColor: AppColors.green,
+            backgroundColor: context.appColors.green,
             child: FaIcon(
               FontAwesomeIcons.check,
-              color: AppColors.white,
+              color: context.appColors.white,
               size: AppSize.s24,
             ),
           ),
@@ -85,14 +85,14 @@ class _ChargeWalletContentState extends State<_ChargeWalletContent> {
             height: AppHeight.h45,
             width: double.infinity,
             borderRadius: AppRadius.r12,
-            color: AppColors.primary,
+            color: context.appColors.primary,
             onPressed: () {
               context.pop(); // إغلاق الـ bottom sheet
               context.pop(); // العودة لشاشة المحفظة
             },
             child: BodyTitle(
               text: tr.ok,
-              color: AppColors.white,
+              color: context.appColors.white,
               fontWeight: AppFontWeight.bold,
             ),
           ),
@@ -142,7 +142,7 @@ class _ChargeWalletContentState extends State<_ChargeWalletContent> {
     final bool isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Scaffold(
-      backgroundColor: AppColors.backGround,
+      backgroundColor: context.appColors.backGround,
       body: SafeArea(
         child: BlocListener<CreateDepositRequestBloc,
             ICreateDepositRequestState>(
@@ -178,7 +178,7 @@ class _ChargeWalletContentState extends State<_ChargeWalletContent> {
                         isRtl
                             ? FontAwesomeIcons.chevronRight
                             : FontAwesomeIcons.chevronLeft,
-                        color: AppColors.blackText,
+                        color: context.appColors.blackText,
                         size: AppSize.s20,
                       ),
                     ),
@@ -226,12 +226,12 @@ class _ChargeWalletContentState extends State<_ChargeWalletContent> {
                       height: AppHeight.h50,
                       width: double.infinity,
                       borderRadius: AppRadius.r12,
-                      color: AppColors.primary,
+                      color: context.appColors.primary,
                       loading: state is CreateDepositRequestLoading,
                       onPressed: () => _submit(context),
                       child: BodyTitle(
                         text: tr.charge_balance,
-                        color: AppColors.white,
+                        color: context.appColors.white,
                         fontSize: AppFontSize.s16,
                         fontWeight: AppFontWeight.bold,
                       ),
@@ -253,9 +253,9 @@ class _ChargeWalletContentState extends State<_ChargeWalletContent> {
         child: Container(
           padding: EdgeInsets.symmetric(vertical: AppPaddingHeight.p8),
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: context.appColors.white,
             borderRadius: BorderRadius.circular(AppRadius.r8),
-            border: Border.all(color: AppColors.lightGreySec),
+            border: Border.all(color: context.appColors.lightGreySec),
           ),
           child: BodyTitle(
             text: label,

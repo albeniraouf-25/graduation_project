@@ -11,6 +11,8 @@ class ApiEndpoints {
   static const String verifyEmail = '/verify_email/';
   static const String resendVerification = '/resend_verification/';
   static const String login = '/login/';
+  // مسار تجديد رمز الوصول (تحت /users)
+  static const String refreshToken = '/refresh_token/';
   static const String forgotPassword = '/forgot_password/';
   static const String verifyResetCode = '/verify_reset_code/';
   static const String resendResetCode= '/resend_reset_code/';
@@ -44,6 +46,13 @@ class ApiEndpoints {
   static String shareRides(int id) => '/shared_rides/$id/';
   static const String myReports = '/my_reports/';
   static String viewReportDetails(int id) => '/view_report_details/$id/';
+
+  // Notifications
+  static const String notifications = '/notifications';
+  static const String registerDevice = '/register-device/';
+  static const String notificationsList = '/';
+  static const String notificationsReadAll = '/read-all/';
+  static String notificationRead(int id) => '/$id/read/';
 
   // Payment
   static const String payments = '/payments';

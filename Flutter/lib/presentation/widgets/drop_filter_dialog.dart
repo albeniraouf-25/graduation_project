@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:flutter/material.dart';
 
 
@@ -17,7 +17,7 @@ void dropFilterDialog({
     context: context,
     barrierDismissible: true,
     barrierColor: Colors.black.withOpacity(0.5),
-    builder: (_) {
+    builder: (context) {
       return BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
         child: Center(
@@ -29,10 +29,10 @@ void dropFilterDialog({
               height: height,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(AppRadius.r16),
-                color: AppColors.white,
+                color: context.appColors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.primary.withOpacity(0.5),
+                    color: context.appColors.primary.withOpacity(0.5),
                     blurRadius: 10,
                     //offset: const Offset(0, 4),
                   ),

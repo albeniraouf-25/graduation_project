@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/animated_visibility_section.dart';
 import 'package:a_tareqaak/presentation/widgets/custom_search.dart';
@@ -20,9 +20,9 @@ class SearchSection extends StatelessWidget {
             // end: AppMarginWidth.m17,
             // start: AppMarginWidth.m17,
           ),
-          color: AppColors.backGround,
+          color: context.appColors.backGround,
           child: CustomSearch(
-            color: AppColors.searchColor,
+            color: context.appColors.searchColor,
             paddingBottom: AppPaddingHeight.p13,
             paddingTop: AppPaddingHeight.p10,
             paddingStart: AppPaddingWidth.p8,

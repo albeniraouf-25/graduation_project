@@ -1,15 +1,15 @@
 import 'package:a_tareqaak/core/extension/localization_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import '../../core/resources/app_values.dart';
 
 import 'custom_text_from_field.dart';
 
 class CustomSearch extends StatelessWidget {
   final Color color;
-  final Color prefixIconColor;
-  final Color hintColor;
+  final Color? prefixIconColor;
+  final Color? hintColor;
   final double? paddingEnd;
   final double? paddingStart;
   final double? paddingBottom;
@@ -30,8 +30,8 @@ class CustomSearch extends StatelessWidget {
     this.paddingTop,
     this.borderRadius,
     this.readOnly = false,
-    this.prefixIconColor = AppColors.primary,
-    this.hintColor = AppColors.greyText,
+    this.prefixIconColor,
+    this.hintColor,
     this.controller,
     this.onChanged,
     this.onFieldSubmitted,
@@ -59,10 +59,10 @@ class CustomSearch extends StatelessWidget {
           readOnly: readOnly,
           prefixIcon: FaIcon(
             FontAwesomeIcons.search,
-            color: AppColors.primary,
+            color: context.appColors.primary,
             size: AppSize.s20,
           ),
-          hintColor: hintColor,
+          hintColor: hintColor ?? context.appColors.greyText,
           onTap: onTap,
           borderRadius: borderRadius ?? AppRadius.r45,
           hintText: context.loc.search_city_hint,

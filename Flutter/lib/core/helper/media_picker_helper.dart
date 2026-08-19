@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/text/body_title.dart';
 import 'package:a_tareqaak/presentation/widgets/custom_snack_bar.dart';
@@ -41,11 +40,19 @@ class MediaPickerHelper {
     }
 
     try {
-      selectedImage = await picker.pickImage(source: ImageSource.camera);
+      // تصغير الصورة عند الالتقاط لتقليل استهلاك الذاكرة أثناء القص
+      // (يمنع قتل النظام للتطبيق أثناء شاشة UCrop وخطأ "Reply already submitted")
+      selectedImage = await picker.pickImage(
+        source: ImageSource.camera,
+        maxWidth: 1080,
+        maxHeight: 1080,
+        imageQuality: 85,
+      );
 
       if (selectedImage != null) {
-        final croppedImagePath = await _cropImage(selectedImage!.path);
-        return croppedImagePath ?? selectedImage!.path;
+        // نستخدم الصورة المصغّرة مباشرة بدون image_cropper لتفادي انهيار
+        // الحزمة الأصلي (Reply already submitted) عند إلغاء شاشة القص.
+        return selectedImage!.path;
       } else {
         debugPrint('No image selected.');
         return null;
@@ -67,11 +74,19 @@ class MediaPickerHelper {
     }
 
     try {
-      selectedImage = await picker.pickImage(source: ImageSource.gallery);
+      // تصغير الصورة عند الاختيار لتقليل استهلاك الذاكرة أثناء القص
+      // (يمنع قتل النظام للتطبيق أثناء شاشة UCrop وخطأ "Reply already submitted")
+      selectedImage = await picker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 1080,
+        maxHeight: 1080,
+        imageQuality: 85,
+      );
 
       if (selectedImage != null) {
-        final croppedImagePath = await _cropImage(selectedImage!.path);
-        return croppedImagePath ?? selectedImage!.path;
+        // نستخدم الصورة المصغّرة مباشرة بدون image_cropper لتفادي انهيار
+        // الحزمة الأصلي (Reply already submitted) عند إلغاء شاشة القص.
+        return selectedImage!.path;
       } else {
         debugPrint('No image selected.');
         return null;
@@ -100,7 +115,7 @@ class MediaPickerHelper {
   Future<String?> pickImage(BuildContext context) async {
     final tr = context.loc;
     final result = await showModalBottomSheet<String>(
-      backgroundColor: AppColors.white,
+      backgroundColor: context.appColors.white,
       context: context,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.r13)),
@@ -110,16 +125,16 @@ class MediaPickerHelper {
           child: Wrap(
             children: [
               ListTile(
-                leading: const Icon(Icons.camera_alt, color: AppColors.primary),
-                title: BodyTitle(text: tr.photo_shoot, color: AppColors.blueText),
+                leading: Icon(Icons.camera_alt, color: context.appColors.primary),
+                title: BodyTitle(text: tr.photo_shoot, color: context.appColors.blueText),
                 onTap: () {
                   Navigator.pop(context, 'camera');
                 },
               ),
-              Divider(color: AppColors.greyDivider, height: 0, thickness: 0.7, endIndent: AppHeight.h20, indent: AppHeight.h20),
+              Divider(color: context.appColors.greyDivider, height: 0, thickness: 0.7, endIndent: AppHeight.h20, indent: AppHeight.h20),
               ListTile(
-                leading: const Icon(Icons.photo_library, color: AppColors.primary),
-                title: BodyTitle(text: tr.selection_from_gallery, color: AppColors.blueText),
+                leading: Icon(Icons.photo_library, color: context.appColors.primary),
+                title: BodyTitle(text: tr.selection_from_gallery, color: context.appColors.blueText),
                 onTap: () {
                   Navigator.pop(context, 'gallery');
                 },
@@ -136,34 +151,6 @@ class MediaPickerHelper {
       return await pickImageFromGallery(context);
     }
     return null;
-  }
-
-  Future<String?> _cropImage(String imagePath) async {
-    try {
-      final croppedFile = await ImageCropper().cropImage(
-        sourcePath: imagePath,
-        compressFormat: ImageCompressFormat.jpg,
-        compressQuality: 90,
-        uiSettings: [
-          AndroidUiSettings(
-            toolbarTitle: 'قص الصورة',
-            toolbarColor: AppColors.primary,
-            toolbarWidgetColor: AppColors.white,
-            activeControlsWidgetColor: AppColors.primary,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false,
-          ),
-          IOSUiSettings(
-            title: 'قص الصورة',
-          ),
-        ],
-      );
-
-      return croppedFile?.path;
-    } catch (e) {
-      debugPrint('Error cropping image: $e');
-      return null;
-    }
   }
 
   void _showPermissionSnackBar(BuildContext context, String message) {

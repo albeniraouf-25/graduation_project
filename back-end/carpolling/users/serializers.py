@@ -106,9 +106,12 @@ class RiderProfileSerializer(serializers.ModelSerializer):
 
 class DriverProfileUpdateSerializer(serializers.ModelSerializer):
     
-    name = serializers.CharField(source="user.name", required=False) 
+    name = serializers.CharField(source="user.name", required=False)
     phone = serializers.CharField(source="user.phone", required=False)
     email = serializers.EmailField(source="user.email", required=False)
+    profile_picture = serializers.ImageField(
+        source="user.profile_picture", required=False
+    )
 
     class Meta:
         model = Driver
@@ -116,6 +119,7 @@ class DriverProfileUpdateSerializer(serializers.ModelSerializer):
             "name",
             "phone",
             "email",
+            "profile_picture",
             "car_number",
             "car_color",
             "car_image"
@@ -141,6 +145,9 @@ class RiderProfileUpdateSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source="user.name", required=False)
     phone = serializers.CharField(source="user.phone", required=False)
     email = serializers.EmailField(source="user.email", required=False)
+    profile_picture = serializers.ImageField(
+        source="user.profile_picture", required=False
+    )
 
     class Meta:
         model = Rider
@@ -148,6 +155,7 @@ class RiderProfileUpdateSerializer(serializers.ModelSerializer):
             "name",
             "phone",
             "email",
+            "profile_picture",
             "current_location"
         ]
 

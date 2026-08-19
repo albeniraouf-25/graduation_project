@@ -1,4 +1,4 @@
-import 'package:a_tareqaak/core/resources/app_colors.dart';
+import 'package:a_tareqaak/core/extension/theme_color_extension.dart';
 import 'package:a_tareqaak/core/resources/app_fonts.dart';
 import 'package:a_tareqaak/core/resources/app_values.dart';
 import 'package:a_tareqaak/presentation/widgets/custom_text_from_field.dart';
@@ -33,10 +33,10 @@ class FieldItem extends StatelessWidget {
         Row(
           spacing: AppWidth.w5,
           children: [
-            Icon(icon, color: AppColors.primary),
+            Icon(icon, color: context.appColors.primary),
             SectionTitle(
               text: title,
-              color: AppColors.primary,
+              color: context.appColors.primary,
               fontSize: AppFontSize.s16,
             ),
           ],
@@ -48,19 +48,19 @@ class FieldItem extends StatelessWidget {
             contentPaddingStart: AppPaddingWidth.p17,
             enableInputBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppRadius.r16),
-              borderSide: const BorderSide(color: AppColors.grey),
+              borderSide: BorderSide(color: context.appColors.grey),
             ),
             focusedInputBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppRadius.r16),
-              borderSide: const BorderSide(color: AppColors.primary),
+              borderSide: BorderSide(color: context.appColors.primary),
             ),
             errorInputBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppRadius.r16),
-              borderSide: const BorderSide(color: AppColors.red),
+              borderSide: BorderSide(color: context.appColors.red),
             ),
             labelText: labelText,
             validator: validator,
-            cursorColor: AppColors.primary,
+            cursorColor: context.appColors.primary,
             onChanged: onChanged,
             textInputType: textInputType,
             obscureText: obscureText,
