@@ -530,6 +530,45 @@ class ViewProfile(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class ViewProfileUser(APIView):
+
+    def get(self, request, user_id):
+        try:
+            user = MainUser.objects.get(id=user_id)
+        except MainUser.DoesNotExist:
+            return Response(
+                {"error": "User not found"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        if user.user_type == "driver":
+            try:
+                driver = user.driver
+                serializer = DriverProfileSerializer(driver)
+            except Driver.DoesNotExist:
+                return Response(
+                    {"error": "Driver profile not found"},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+        elif user.user_type == "rider":
+            try:
+                rider = user.rider
+                serializer = RiderProfileSerializer(rider)
+            except Rider.DoesNotExist:
+                return Response(
+                    {"error": "Rider profile not found"},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+
+        else:
+            return Response(
+                {"error": "Invalid user type"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class UpdateDriverProfile(APIView):
 

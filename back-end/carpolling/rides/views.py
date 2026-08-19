@@ -406,10 +406,19 @@ class ViewRideDetails(APIView):
             )
 
         if request.user.user_type == "driver" and ride.driver.user == request.user:
+
             serializer = RideDetailsSerializer(ride)
 
+            reservations = ReservationDetailSerializer(
+                ride.reservations.all(),
+                many=True
+            )
+
+            data = serializer.data
+            data["reservations"] = reservations.data
+
             return Response(
-                {"ride": serializer.data},
+                {"ride": data},
                 status=status.HTTP_200_OK
             )
 

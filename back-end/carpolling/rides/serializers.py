@@ -112,18 +112,26 @@ class ReservationDetailSerializer(serializers.ModelSerializer):
         fields= ['id', 'rider_name', 'status', 'payment', 'ride_location', 'ride_destination', "created_at", "pickup_location", ]
 
 class RideDetailsSerializer(serializers.ModelSerializer):
+
     available_seats = serializers.IntegerField(read_only=True)
-    driver_info= DriverInfoSerializers(source= 'driver', read_only= True)
+
+    driver_info = DriverInfoSerializers(
+        source='driver',
+        read_only=True
+    )
+
     class Meta:
         model = Ride
-        fields = ["id",
-                   "location", 
-                   "destination", 
-                   "departure_time", 
-                   "departure_date", 
-                   "expected_duration",
-                   "cost",
-                   "capacity", 
-                   "available_seats", 
-                   "status", 
-                   "driver_info"]
+        fields = [
+            "id",
+            "location",
+            "destination",
+            "departure_time",
+            "departure_date",
+            "expected_duration",
+            "cost",
+            "capacity",
+            "available_seats",
+            "status",
+            "driver_info",
+        ]
