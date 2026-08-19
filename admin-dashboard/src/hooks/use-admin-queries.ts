@@ -16,7 +16,8 @@ import {
   fetchDashboardReportsPage,
   fetchDashboardReservations,
   fetchDashboardReservationsPage,
-  fetchDashboardStatistics,
+  fetchStatisticsCatalog,
+  fetchStatisticsView,
   fetchDashboardRideDetail,
   fetchDashboardRides,
   fetchDashboardRidesPage,
@@ -88,10 +89,24 @@ export function useDashboardStats() {
 // views and a once-a-day summary job, so they change slowly — cache generously.
 const STATISTICS_STALE_TIME = 5 * 60 * 1000
 
-export function useDashboardStatistics() {
+/** The catalog of available analytics views (used to build the views menu). */
+export function useStatisticsCatalog() {
   return useQuery({
-    queryKey: qk.statistics,
-    queryFn: fetchDashboardStatistics,
+    queryKey: qk.statisticsCatalog,
+    queryFn: fetchStatisticsCatalog,
+    staleTime: STATISTICS_STALE_TIME,
+  })
+}
+
+/**
+ * A single analytics view's data. Only fetches once a view is selected, so the
+ * endpoint returns one view at a time instead of all of them at once.
+ */
+export function useStatisticsView(view: string | null) {
+  return useQuery({
+    queryKey: qk.statisticsView(view ?? ''),
+    queryFn: () => fetchStatisticsView(view as string),
+    enabled: Boolean(view),
     staleTime: STATISTICS_STALE_TIME,
   })
 }

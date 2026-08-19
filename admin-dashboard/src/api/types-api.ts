@@ -142,6 +142,21 @@ export type ApiDashboardStatistics = {
   popular_pickup_locations: ApiPopularPickupLocation[]
 }
 
+/** Catalog of available analytics views, from GET /api/dashboard/statistics/. */
+export type ApiStatisticsCatalog = {
+  views: string[]
+}
+
+/**
+ * A single analytics view's data, from GET /api/dashboard/statistics/?view=<key>.
+ * `columns` preserves the DB column order; each row is a column→value map.
+ */
+export type ApiStatisticsView = {
+  view: string
+  columns: string[]
+  rows: Array<Record<string, string | number | boolean | null>>
+}
+
 /**
  * Row from the daily_platform_summary table (daily_summary/), populated once a
  * day by the `daily_summary_job` MySQL event. `total_revenue` exists in the

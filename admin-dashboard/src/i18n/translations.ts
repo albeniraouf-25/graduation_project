@@ -81,6 +81,17 @@ export const translations: Record<Locale, Record<string, string>> = {
     'statistics.dailyTable.date': 'Date',
     'statistics.dailyTable.rides': 'Rides created',
     'statistics.dailyTable.reservations': 'Reservations made',
+    'statistics.views.title': 'Database views',
+    'statistics.views.description':
+      'Every analytics view in the database. Pick one to load it on its own.',
+    'statistics.views.menuTitle': 'Views',
+    'statistics.views.rowCount': '{count} rows',
+    'statistics.views.emptyTitle': 'No data yet',
+    'statistics.views.emptyDescription':
+      'This view has no rows to show right now.',
+    'statistics.views.error':
+      'Something went wrong loading this view. Try another or refresh.',
+    'statistics.views.truncated': 'Showing the first {shown} of {total} rows.',
     'dashboard.error':
       'Something went wrong loading this page. Try refreshing.',
     'dashboard.title': 'Overview',
@@ -372,6 +383,17 @@ export const translations: Record<Locale, Record<string, string>> = {
     'statistics.dailyTable.date': 'التاريخ',
     'statistics.dailyTable.rides': 'الرحلات المنشورة',
     'statistics.dailyTable.reservations': 'الحجوزات',
+    'statistics.views.title': 'عروض قاعدة البيانات',
+    'statistics.views.description':
+      'كل عروض التحليلات في قاعدة البيانات. اختر عرضًا لتحميله وحده.',
+    'statistics.views.menuTitle': 'العروض',
+    'statistics.views.rowCount': '{count} صفوف',
+    'statistics.views.emptyTitle': 'لا توجد بيانات بعد',
+    'statistics.views.emptyDescription':
+      'لا توجد صفوف لعرضها في هذا العرض حاليًا.',
+    'statistics.views.error':
+      'حدث خطأ أثناء تحميل هذا العرض. جرّب عرضًا آخر أو حدّث الصفحة.',
+    'statistics.views.truncated': 'عرض أول {shown} من {total} صفًا.',
     'dashboard.error':
       'حدث خطأ أثناء تحميل الصفحة. جرّب التحديث.',
     'dashboard.title': 'نظرة عامة',

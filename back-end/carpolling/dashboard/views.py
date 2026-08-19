@@ -284,45 +284,72 @@ class RejectDepositRequestView(APIView):
             )
 
 
+# Whitelist of the analytics SQL views the statistics endpoint may expose.
+# Keys are the identifiers the client sends via `?view=`; values are the trusted
+# DB object names interpolated into the query. Only these fixed values ever reach
+# the SQL string — the raw client value is never interpolated, so there is no
+# injection surface.
+STATISTICS_VIEWS = {
+    "view_admin_dashboard_summary": "view_admin_dashboard_summary",
+    "view_active_sessions_count": "view_active_sessions_count",
+    "view_driver_trips_count": "view_driver_trips_count",
+    "view_most_active_riders": "view_most_active_riders",
+    "view_popular_destinations": "view_popular_destinations",
+    "view_popular_pickup_locations": "view_popular_pickup_locations",
+    "view_ride_occupancy_rate": "view_ride_occupancy_rate",
+    "view_user_role_summary": "view_user_role_summary",
+    "view_inactive_users": "view_inactive_users",
+    "view_most_reported_users": "view_most_reported_users",
+    "view_wallet_summary": "view_wallet_summary",
+    "view_suspicious_deposits": "view_suspicious_deposits",
+    "view_audit_activity_by_day": "view_audit_activity_by_day",
+    "view_last_known_location": "view_last_known_location",
+    "view_location_data_footprint": "view_location_data_footprint",
+}
+
+
 class DashboardStatisticsAPIView(APIView):
+    """Serve a single analytics view at a time.
 
-    def execute_view_query(self, query):
+    - ``GET /statistics/``            -> ``{"views": [<available view keys>]}``
+      (catalog the client uses to build its menu).
+    - ``GET /statistics/?view=<key>`` -> ``{"view", "columns", "rows"}`` for that
+      one view only, instead of loading every view at once.
+    """
+
+    def _run_view(self, view_name):
+        # ``view_name`` is a trusted value from STATISTICS_VIEWS, never the raw
+        # client input, so this f-string is safe from SQL injection.
         with connection.cursor() as cursor:
-            cursor.execute(query)
-
+            cursor.execute(f"SELECT * FROM {view_name}")
             columns = [column[0] for column in cursor.description]
-
-            return [
-                dict(zip(columns, row))
-                for row in cursor.fetchall()
-            ]
+            rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
+        return columns, rows
 
     def get(self, request):
-        driver_trips = self.execute_view_query("""
-                    SELECT *
-                    FROM view_driver_trips_count
-                """)
+        user = request.user
+        if getattr(user, "user_type", None) != "admin":
+            return Response({"error": "Only Admin access this."}, status=status.HTTP_403_FORBIDDEN)
 
-        active_riders = self.execute_view_query("""
-            SELECT *
-            FROM view_most_active_riders
-        """)
+        requested = request.query_params.get("view")
 
-        popular_destinations = self.execute_view_query("""
-            SELECT *
-            FROM view_popular_destinations
-            """)
+        # No view requested -> return the catalog so the client can render its
+        # menu and then request views one by one.
+        if not requested:
+            return Response({"views": list(STATISTICS_VIEWS.keys())})
 
-        popular_pickup_locations = self.execute_view_query("""
-            SELECT *
-            FROM view_popular_pickup_locations
-            """)
-        return Response({
-                "driver_trips": driver_trips,
-                "active_riders": active_riders,
-                "popular_destinations": popular_destinations,
-                "popular_pickup_locations": popular_pickup_locations,
-                })
+        view_name = STATISTICS_VIEWS.get(requested)
+        if view_name is None:
+            return Response(
+                {
+                    "error": "Unknown statistics view.",
+                    "available_views": list(STATISTICS_VIEWS.keys()),
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        columns, rows = self._run_view(view_name)
+        return Response({"view": requested, "columns": columns, "rows": rows})
 
 class DailyPlatformSummaryView(APIView):
 

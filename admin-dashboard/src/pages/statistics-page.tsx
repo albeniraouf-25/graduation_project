@@ -1,125 +1,46 @@
-import { useMemo } from 'react'
-import { Link } from 'react-router-dom'
-import { DashboardOverviewChart } from '@/components/dashboard-overview-chart'
+import { useMemo, useState } from 'react'
 import { DailySummaryChart } from '@/components/daily-summary-chart'
-import { ListEmptyState } from '@/components/empty-state'
+import { StatViewPanel } from '@/components/stat-view-panel'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
-import { Users } from 'lucide-react'
-import {
   useDailySummary,
-  useDashboardStatistics,
-  useUsers,
+  useStatisticsCatalog,
 } from '@/hooks/use-admin-queries'
-import { formatDate, formatNumber } from '@/lib/format'
+import { cn } from '@/lib/utils'
+import {
+  STAT_CATEGORIES,
+  STAT_VIEWS,
+  STAT_VIEWS_BY_KEY,
+} from '@/lib/stat-views'
 import { useI18n } from '@/contexts/i18n'
-import type { User } from '@/types/domain'
-
-/** How many rows/bars to show in the "top" lists and charts. */
-const TOP_N = 8
-const TABLE_ROWS = 10
-
-/**
- * The statistics views expose driver/rider email but no display name, and their
- * `*_id` is the driver/rider profile id — not the main user id the user page
- * expects. Resolve both from the users list by matching on email.
- */
-function UserCell({
-  email,
-  user,
-}: {
-  email: string
-  user: User | undefined
-}) {
-  const hasName = Boolean(user && user.fullName && user.fullName !== email)
-  if (!user) {
-    return <span>{email || '—'}</span>
-  }
-  return (
-    <Link
-      to={`/users/${user.id}`}
-      className="inline-flex flex-col rounded-sm hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-    >
-      <span className="text-primary hover:underline">
-        {hasName ? user.fullName : email}
-      </span>
-      {hasName ? (
-        <span className="text-muted-foreground text-xs font-normal">
-          {email}
-        </span>
-      ) : null}
-    </Link>
-  )
-}
 
 export function StatisticsPage() {
-  const { t } = useI18n()
-  const statistics = useDashboardStatistics()
+  const { locale, t } = useI18n()
   const dailySummary = useDailySummary()
-  // Loaded in the background to resolve emails → names + user page links. The
-  // page renders without waiting for it; names/links fill in once it arrives.
-  const users = useUsers()
+  const catalog = useStatisticsCatalog()
 
-  const isLoading = statistics.isLoading || dailySummary.isLoading
-  const isError = statistics.isError || dailySummary.isError
+  // The static config is the source of truth for how each view renders; the
+  // catalog (when loaded) narrows it to what the backend actually exposes.
+  const views = useMemo(() => {
+    const available = catalog.data?.views
+    if (!available || available.length === 0) return STAT_VIEWS
+    const allowed = new Set(available)
+    const filtered = STAT_VIEWS.filter((v) => allowed.has(v.key))
+    return filtered.length > 0 ? filtered : STAT_VIEWS
+  }, [catalog.data])
 
-  const userByEmail = useMemo(() => {
-    const map = new Map<string, User>()
-    for (const u of users.data ?? []) {
-      if (u.email) map.set(u.email.toLowerCase(), u)
-    }
-    return map
-  }, [users.data])
-
-  const destinationChart = useMemo(() => {
-    const rows = statistics.data?.popular_destinations ?? []
-    return [...rows]
-      .sort((a, b) => b.total_trips_to_destination - a.total_trips_to_destination)
-      .slice(0, TOP_N)
-      .map((r) => ({
-        name: r.destination_city || '—',
-        value: r.total_trips_to_destination,
-      }))
-  }, [statistics.data])
-
-  const pickupChart = useMemo(() => {
-    const rows = statistics.data?.popular_pickup_locations ?? []
-    return [...rows]
-      .sort((a, b) => b.total_requests - a.total_requests)
-      .slice(0, TOP_N)
-      .map((r) => ({
-        name: r.student_pickup_point || '—',
-        value: r.total_requests,
-      }))
-  }, [statistics.data])
-
-  const topDrivers = useMemo(() => {
-    const rows = statistics.data?.driver_trips ?? []
-    return [...rows]
-      .sort((a, b) => b.total_rides - a.total_rides)
-      .slice(0, TABLE_ROWS)
-  }, [statistics.data])
-
-  const topRiders = useMemo(() => {
-    const rows = statistics.data?.active_riders ?? []
-    return [...rows]
-      .sort((a, b) => b.total_reservations - a.total_reservations)
-      .slice(0, TABLE_ROWS)
-  }, [statistics.data])
+  const [selectedKey, setSelectedKey] = useState<string>(STAT_VIEWS[0].key)
+  // Guard against a selection that isn't in the available set.
+  const activeKey = views.some((v) => v.key === selectedKey)
+    ? selectedKey
+    : views[0]?.key
+  const activeConfig = activeKey ? STAT_VIEWS_BY_KEY[activeKey] : undefined
 
   // The API returns rows newest-first; a time series needs oldest-first.
   const dailyChart = useMemo(() => {
@@ -133,22 +54,6 @@ export function StatisticsPage() {
       }))
   }, [dailySummary.data])
 
-  if (isError) {
-    return <p className="text-destructive text-sm">{t('statistics.error')}</p>
-  }
-
-  if (isLoading) {
-    return (
-      <div className="space-y-6">
-        <Skeleton className="h-72 rounded-xl" />
-        <div className="grid gap-4 lg:grid-cols-2">
-          <Skeleton className="h-72 rounded-xl" />
-          <Skeleton className="h-72 rounded-xl" />
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="space-y-6">
       <div>
@@ -160,171 +65,88 @@ export function StatisticsPage() {
         </p>
       </div>
 
-      <DailySummaryChart
-        data={dailyChart}
-        title={t('statistics.daily.title')}
-        description={t('statistics.daily.description')}
-      />
+      {dailySummary.isLoading ? (
+        <Skeleton className="h-80 rounded-xl" />
+      ) : (
+        <DailySummaryChart
+          data={dailyChart}
+          title={t('statistics.daily.title')}
+          description={t('statistics.daily.description')}
+        />
+      )}
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <DashboardOverviewChart
-          data={destinationChart}
-          title={t('statistics.destinations.title')}
-          description={t('statistics.destinations.description')}
-        />
-        <DashboardOverviewChart
-          data={pickupChart}
-          title={t('statistics.pickups.title')}
-          description={t('statistics.pickups.description')}
-        />
+      <div>
+        <h3 className="text-lg font-semibold tracking-tight">
+          {t('statistics.views.title')}
+        </h3>
+        <p className="text-muted-foreground mt-1 text-sm max-w-2xl">
+          {t('statistics.views.description')}
+        </p>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Card>
+      <div className="grid gap-4 lg:grid-cols-[16rem_1fr] lg:items-start">
+        {/* Views menu, grouped by category */}
+        <Card className="lg:sticky lg:top-4">
           <CardHeader className="pb-2">
-            <CardTitle className="text-base">
-              {t('statistics.drivers.title')}
+            <CardTitle className="text-sm text-muted-foreground font-medium">
+              {t('statistics.views.menuTitle')}
             </CardTitle>
-            <CardDescription>
-              {t('statistics.drivers.description')}
-            </CardDescription>
           </CardHeader>
-          <CardContent>
-            {topDrivers.length === 0 ? (
-              <ListEmptyState
-                icon={Users}
-                title={t('statistics.drivers.emptyTitle')}
-                description={t('statistics.drivers.emptyDescription')}
-              />
-            ) : (
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>{t('statistics.table.driver')}</TableHead>
-                      <TableHead className="text-end">
-                        {t('statistics.table.trips')}
-                      </TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {topDrivers.map((row) => (
-                      <TableRow key={row.driver_id}>
-                        <TableCell className="font-medium">
-                          <UserCell
-                            email={row.driver_email}
-                            user={userByEmail.get(
-                              row.driver_email.toLowerCase(),
+          <CardContent className="space-y-4">
+            {STAT_CATEGORIES.map((category) => {
+              const items = views.filter((v) => v.category === category.key)
+              if (items.length === 0) return null
+              return (
+                <div key={category.key} className="space-y-1">
+                  <p className="text-muted-foreground px-2 text-[0.7rem] font-semibold uppercase tracking-wider">
+                    {category.label[locale]}
+                  </p>
+                  <div className="space-y-0.5">
+                    {items.map((view) => {
+                      const Icon = view.icon
+                      const isActive = view.key === activeKey
+                      return (
+                        <button
+                          key={view.key}
+                          type="button"
+                          onClick={() => setSelectedKey(view.key)}
+                          aria-pressed={isActive}
+                          className={cn(
+                            'flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-start text-sm transition-colors',
+                            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                            isActive
+                              ? 'bg-primary text-primary-foreground font-medium shadow-sm'
+                              : 'text-foreground/80 hover:bg-accent hover:text-accent-foreground',
+                          )}
+                        >
+                          <Icon
+                            className={cn(
+                              'size-4 shrink-0',
+                              isActive
+                                ? 'text-primary-foreground'
+                                : 'text-muted-foreground',
                             )}
                           />
-                        </TableCell>
-                        <TableCell className="text-end tabular-nums">
-                          {formatNumber(row.total_rides)}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            )}
+                          <span className="truncate">{view.label[locale]}</span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              )
+            })}
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base">
-              {t('statistics.riders.title')}
-            </CardTitle>
-            <CardDescription>
-              {t('statistics.riders.description')}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {topRiders.length === 0 ? (
-              <ListEmptyState
-                icon={Users}
-                title={t('statistics.riders.emptyTitle')}
-                description={t('statistics.riders.emptyDescription')}
-              />
-            ) : (
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>{t('statistics.table.rider')}</TableHead>
-                      <TableHead className="text-end">
-                        {t('statistics.table.reservations')}
-                      </TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {topRiders.map((row) => (
-                      <TableRow key={row.rider_id}>
-                        <TableCell className="font-medium">
-                          <UserCell
-                            email={row.rider_email}
-                            user={userByEmail.get(
-                              row.rider_email.toLowerCase(),
-                            )}
-                          />
-                        </TableCell>
-                        <TableCell className="text-end tabular-nums">
-                          {formatNumber(row.total_reservations)}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            )}
+        {/* Selected view */}
+        <Card className="min-w-0">
+          <CardContent className="pt-6">
+            {activeConfig ? (
+              <StatViewPanel key={activeConfig.key} config={activeConfig} />
+            ) : null}
           </CardContent>
         </Card>
       </div>
-
-      {dailyChart.length > 0 ? (
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base">
-              {t('statistics.dailyTable.title')}
-            </CardTitle>
-            <CardDescription>
-              {t('statistics.dailyTable.description')}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>{t('statistics.dailyTable.date')}</TableHead>
-                    <TableHead className="text-end">
-                      {t('statistics.dailyTable.rides')}
-                    </TableHead>
-                    <TableHead className="text-end">
-                      {t('statistics.dailyTable.reservations')}
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {[...dailyChart].reverse().map((row) => (
-                    <TableRow key={row.date}>
-                      <TableCell className="font-medium">
-                        {formatDate(row.date)}
-                      </TableCell>
-                      <TableCell className="text-end tabular-nums">
-                        {formatNumber(row.rides)}
-                      </TableCell>
-                      <TableCell className="text-end tabular-nums">
-                        {formatNumber(row.reservations)}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </CardContent>
-        </Card>
-      ) : null}
     </div>
   )
 }

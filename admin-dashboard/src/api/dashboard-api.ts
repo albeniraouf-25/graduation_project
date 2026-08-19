@@ -1,7 +1,8 @@
 import { apiFetch } from '@/api/http'
 import type {
   ApiDailySummaryRow,
-  ApiDashboardStatistics,
+  ApiStatisticsCatalog,
+  ApiStatisticsView,
   ApiDepositRequestDetail,
   ApiDepositRequestRow,
   ApiPaginatedResponse,
@@ -196,9 +197,16 @@ export function rejectDepositRequest(depositRequestId: number) {
   )
 }
 
-/** Aggregated platform statistics from the DB analytics views. */
-export function fetchDashboardStatistics() {
-  return apiFetch<ApiDashboardStatistics>('/api/dashboard/statistics/')
+/** Catalog of available analytics views (no `view` param returns the menu). */
+export function fetchStatisticsCatalog() {
+  return apiFetch<ApiStatisticsCatalog>('/api/dashboard/statistics/')
+}
+
+/** Data for a single analytics view — the endpoint returns only this one view. */
+export function fetchStatisticsView(view: string) {
+  return apiFetch<ApiStatisticsView>(
+    `/api/dashboard/statistics/?view=${encodeURIComponent(view)}`,
+  )
 }
 
 /** Per-day platform totals, newest first (as returned by the API). */
